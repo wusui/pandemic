@@ -229,6 +229,9 @@ var drawBoard = function() {
         for (bkey in but_keys) {
             var binfo = but_keys[bkey]
             ctx.strokeRect(boardLocations.BUTTONS[binfo][0], boardLocations.BUTTONS[binfo][1], boardLocations.BUTTON_X_LEN, boardLocations.BUTTON_Y_HGT) 
+            ctx.fillStyle = WHITE
+            ctx.fillRect(boardLocations.BUTTONS[binfo][0], boardLocations.BUTTONS[binfo][1], boardLocations.BUTTON_X_LEN, boardLocations.BUTTON_Y_HGT)
+            ctx.fillStyle = BLACK
             ctx.fillText(binfo, boardLocations.BUTTONS[binfo][2], boardLocations.BUTTONS[binfo][1] + boardLocations.BUTTON_YDIFF)
         }
         draw_sep_line(ctx, SEPLINE2)
