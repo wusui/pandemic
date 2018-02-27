@@ -242,7 +242,7 @@ var drawBoard = function() {
             var colorp = utilities.get_color_name(i)
             var tcol = info.diseases[colorp]
             var dstatus = 'ACTIVE'
-            if (tcol.exterminated > 0) {
+            if (tcol.eradicated > 0) {
                 dstatus = 'ERADICATED'
             }
             else {

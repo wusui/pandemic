@@ -40,7 +40,7 @@ var setupBoard = function() {
         plyr_d['moves_left'] = moves_left
 
         for (var i=0; i<utilities.NO_OF_GERM_TYPES; i++) {
-            dis_data[utilities.get_color_name(i)] = {'count': utilities.MAX_GERMS_TOTAL, 'infections': {}, 'inf_range': i * utilities.CITIES_PER_DISEASE, 'cured': 0, 'exterminated': 0}
+            dis_data[utilities.get_color_name(i)] = {'count': utilities.MAX_GERMS_TOTAL, 'infections': {}, 'inf_range': i * utilities.CITIES_PER_DISEASE, 'cured': 0, 'eradicated': 0}
         }
 
         var pcards = []
