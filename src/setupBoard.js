@@ -24,6 +24,9 @@ var setupBoard = function() {
         misc_data['epid_values'] = [2,2,2,3,3,4,4]
         misc_data['game_status'] = 0
         misc_data['game_modes'] = params[3]
+        misc_data['contingency_card'] = 0
+        misc_data['op_exp_used_power'] = 0
+        misc_data['command_stack'] = []
 
         plyr_move = 0
         moves_left = utilities.PLAYER_TURNS

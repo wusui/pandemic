@@ -274,6 +274,36 @@ var drawBoard = function() {
         otherstats.push(["Actions Left: ",info.players.moves_left.toString()])
         otherstats.push(["Player #: ",info.players.plyr_move.toString()])
         disp_oth_stats(ctx, otherstats)
+
+        var no_contingency = true
+        for (var ii=0; ii < info.players.plist.length; ii++) {
+            if (info.players.plist[ii].name == 'C') {
+                no_contingency = false
+                break
+            }
+        }
+        if (no_contingency) {
+            return
+        }
+
+        var no_card_avail = true
+        for (ii=0; ii<info.card_decks.player_disc.length; ii++) {
+            if (info.card_decks.player_disc[ii] >= utilities.FIRST_SPECIAL_CARD) {
+                no_card_avail = false
+                break
+            }
+        }
+        var cardval = "+"
+        if (no_card_avail) {
+            ctx.fillStyle = GREY
+        }
+        else {
+            ctx.fillStyle = utilities.get_card_color(utilities.EVENT_CARD_TYPE)
+        }
+        if (info.misc.contingency_card > 0) {
+            cardval = utilities.xcard_color[info.misc.contingency_card - utilities.FIRST_SPECIAL_CARD]
+        }
+        centerRightTxt(ctx, cardval, boardLocations.CONTINGENCY_CARD_Y)
     }
 
     return {

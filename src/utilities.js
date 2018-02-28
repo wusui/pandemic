@@ -11,6 +11,7 @@ var utilities = function() {
     var MAX_GERMS = 3
     var NO_OF_GERM_TYPES = 4
     var PLAYER_TURNS = 4
+    var EVENT_CARD_TYPE = 4
     var R_STA_MAX = 6
     var MAX_GERMS_TOTAL = 24
     var MAX_INF_CITIES = 48
@@ -79,6 +80,7 @@ var utilities = function() {
         MAX_INF_CITIES:MAX_INF_CITIES,
         FIRST_SPECIAL_CARD:FIRST_SPECIAL_CARD,
         BEYOND_LAST_SPECIAL_CARD:BEYOND_LAST_SPECIAL_CARD,
-        EPIDEMIC:EPIDEMIC 
+        EPIDEMIC:EPIDEMIC,
+        EVENT_CARD_TYPE:EVENT_CARD_TYPE
     }
 }()
