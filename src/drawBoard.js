@@ -221,7 +221,7 @@ var drawBoard = function() {
         }
         draw_sep_line(ctx, SEPLINE1)
 
-        centerRightTxt(ctx, 'Special  Buttons', SPEC_BUTTONS_HEAD)
+        centerRightTxt(ctx, 'Special Buttons', SPEC_BUTTONS_HEAD)
         ctx.fillStyle = BLACK
         ctx.strokeStyle = BLACK
         var bkey

@@ -18,15 +18,15 @@ var setupBoard = function() {
     var MAGIC_CARD_INFO = 6
 
     function initialize(params) {
-        misc_data['research_stations'] = [0]
-        misc_data['outbreak_count'] = 0
-        misc_data['epid_counter'] = 0
-        misc_data['epid_values'] = [2,2,2,3,3,4,4]
-        misc_data['game_status'] = 0
-        misc_data['game_modes'] = params[3]
-        misc_data['contingency_card'] = 0
-        misc_data['op_exp_used_power'] = 0
-        misc_data['command_stack'] = []
+        misc_data.research_stations = [0]
+        misc_data.outbreak_count = 0
+        misc_data.epid_counter = 0
+        misc_data.epid_values = [2,2,2,3,3,4,4]
+        misc_data.game_status = 0
+        misc_data.game_modes = params[3]
+        misc_data.contingency_card = 0
+        misc_data.op_exp_used_power = 0
+        misc_data.command_stack = []
 
         plyr_move = 0
         moves_left = utilities.PLAYER_TURNS
@@ -38,9 +38,9 @@ var setupBoard = function() {
             plist.push(npl)   
         }
 
-        plyr_d['plist'] = plist
-        plyr_d['plyr_move'] = plyr_move
-        plyr_d['moves_left'] = moves_left
+        plyr_d.plist = plist
+        plyr_d.plyr_move = plyr_move
+        plyr_d.moves_left = moves_left
 
         for (var i=0; i<utilities.NO_OF_GERM_TYPES; i++) {
             dis_data[utilities.get_color_name(i)] = {'count': utilities.MAX_GERMS_TOTAL, 'infections': {}, 'inf_range': i * utilities.CITIES_PER_DISEASE, 'cured': 0, 'eradicated': 0}
@@ -82,7 +82,7 @@ var setupBoard = function() {
 
         retv = {"misc": misc_data, "players": plyr_d, "diseases": dis_data, "card_decks": card_data}
         results = JSON.stringify(retv)
-        sessionStorage.setItem("game_data", results)
+        sessionStorage.setItem('game_data', results)
         return results
     }
 
@@ -106,7 +106,7 @@ var setupBoard = function() {
             }
         }
         results = JSON.stringify(info)
-        sessionStorage.setItem("game_data", results)
+        sessionStorage.setItem('game_data', results)
         return results
     }
 
