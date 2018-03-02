@@ -12,6 +12,7 @@ var utilities = function() {
     var NO_OF_GERM_TYPES = 4
     var PLAYER_TURNS = 4
     var EVENT_CARD_TYPE = 4
+    var NO_CARDS_TO_CURE = 5
     var R_STA_MAX = 6
     var MAX_GERMS_TOTAL = 24
     var MAX_INF_CITIES = 48

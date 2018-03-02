@@ -27,7 +27,7 @@ var boardLocations = function() {
     var BUTTON_Y_HGT = 14
     var BUTTON_YDIFF = 12
     var CONTINGENCY_CARD_Y = 680
-    var BUTTONS = {'Restart': [1052, 213, 1054], 'Help': [1122, 213, 1133], 'Quit': [1192, 213, 1203], 'Build': [1016, 248, 1024], 'Heal': [1083, 248, 1094], 'Cure': [1152, 248, 1162], 'Skip': [1223, 248, 1234]}
+    var BUTTONS = {'Reset': [1052, 213, 1058], 'Help': [1122, 213, 1133], 'Quit': [1192, 213, 1203], 'Build': [1016, 248, 1024], 'Heal': [1083, 248, 1094], 'Cure': [1152, 248, 1162], 'Skip': [1223, 248, 1234]}
 
     function conv_to_map(loc) {
         return loc * SQ_SIZE + OFFSET_TO_CENTER

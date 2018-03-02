@@ -124,7 +124,7 @@ var drawBoard = function() {
         var cur_locs = {}
         for (var iloc in info.players.plist) {
             var lname = info.players.plist[iloc].name
-            var lloc = info.players.plist[iloc].location
+            var lloc = info.players.plist[iloc].xlocation
             if (lloc in Object.keys(cur_locs)) {
                 cur_locs[lloc] = cur_locs[lloc].concat(lname)
             }
@@ -224,12 +224,18 @@ var drawBoard = function() {
         centerRightTxt(ctx, 'Special Buttons', SPEC_BUTTONS_HEAD)
         ctx.fillStyle = BLACK
         ctx.strokeStyle = BLACK
+        moveOps.init(info, citymap)
         var bkey
         var but_keys = Object.keys(boardLocations.BUTTONS)
         for (bkey in but_keys) {
             var binfo = but_keys[bkey]
             ctx.strokeRect(boardLocations.BUTTONS[binfo][0], boardLocations.BUTTONS[binfo][1], boardLocations.BUTTON_X_LEN, boardLocations.BUTTON_Y_HGT) 
-            ctx.fillStyle = WHITE
+            if (moveOps.set_button_color(binfo)) {
+                ctx.fillStyle = WHITE
+            }
+            else {
+                ctx.fillStyle = GREY
+            }
             ctx.fillRect(boardLocations.BUTTONS[binfo][0], boardLocations.BUTTONS[binfo][1], boardLocations.BUTTON_X_LEN, boardLocations.BUTTON_Y_HGT)
             ctx.fillStyle = BLACK
             ctx.fillText(binfo, boardLocations.BUTTONS[binfo][2], boardLocations.BUTTONS[binfo][1] + boardLocations.BUTTON_YDIFF)

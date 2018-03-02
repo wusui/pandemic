@@ -34,7 +34,7 @@ var setupBoard = function() {
         utilities.shuffle(plyr_list)
         plist = []
         for (var i=0; i<params[0]; i++) {
-            npl = {'name': plyr_list[i], 'cards': [], 'location': 0}
+            npl = {'name': plyr_list[i], 'cards': [], 'xlocation': 0}
             plist.push(npl)   
         }
 
@@ -43,7 +43,7 @@ var setupBoard = function() {
         plyr_d.moves_left = moves_left
 
         for (var i=0; i<utilities.NO_OF_GERM_TYPES; i++) {
-            dis_data[utilities.get_color_name(i)] = {'count': utilities.MAX_GERMS_TOTAL, 'infections': {}, 'inf_range': i * utilities.CITIES_PER_DISEASE, 'cured': 0, 'eradicated': 0}
+            dis_data[utilities.get_color_name(i)] = {'count': utilities.MAX_GERMS_TOTAL, 'infections': {}, 'inf_type': i, 'cured': 0, 'eradicated': 0}
         }
 
         var pcards = []
