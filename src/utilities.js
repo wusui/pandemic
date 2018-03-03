@@ -7,6 +7,7 @@ var utilities = function() {
     var occupations = {'M': "MEDIC", 'R': "RESEARCHER", 'S': "SCIENTIST", 'D': "DISPATCHER", 'O': "OPERATIONS EXP.", 'Q': "QUARANTINER", 'C': "CONT. PLANNER"}
     var event_cards = ['Quiet Night', 'Airlift', 'Gov. Grant', 'Forecast', 'Resillient Pop.']
 
+    var BOARD_WIDTH = 11
     var CITIES_PER_DISEASE = 12
     var MAX_GERMS = 3
     var NO_OF_GERM_TYPES = 4
@@ -72,6 +73,7 @@ var utilities = function() {
         get_card_color:get_card_color,
         occupation_name:occupation_name,
         id_event_card:id_event_card,
+        BOARD_WIDTH:BOARD_WIDTH,
         CITIES_PER_DISEASE:CITIES_PER_DISEASE,
         MAX_GERMS:MAX_GERMS,
         NO_OF_GERM_TYPES:NO_OF_GERM_TYPES,

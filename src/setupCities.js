@@ -1,6 +1,7 @@
 var setupCities = function() {
     var city_by_name = {}
     var city_by_numb = {}
+    var city_by_coord = {}
     var cont_function
     var params
 
@@ -16,6 +17,7 @@ var setupCities = function() {
             cdata.ycoord = parseInt(coords[1])
             city_by_name[iname] = cdata
             city_by_numb[city] = iname
+            city_by_coord[cdata.ycoord*utilities.BOARD_WIDTH + cdata.xcoord] = iname
         }
         cont_function(params)
     }
@@ -49,7 +51,7 @@ var setupCities = function() {
     }
 
     function save_me() {
-        mapped_data = {"byname": city_by_name, "bynumb": city_by_numb}
+        mapped_data = {"byname": city_by_name, "bynumb": city_by_numb, "bycoord": city_by_coord}
         rval = JSON.stringify(mapped_data)
         sessionStorage.setItem("citymap", rval)
         return rval

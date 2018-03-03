@@ -1,7 +1,3 @@
-/**********************************************************************
-    Copyright (C) 2018  Warren Usui (warrenusui@eartlink.net)
-    Licensed under the GPL 3 license.
- **********************************************************************/
 var setupBoard = function() {
 
     var misc_data = {}
