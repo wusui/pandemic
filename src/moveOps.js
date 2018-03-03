@@ -17,10 +17,7 @@ var moveOps = function() {
         if (weare.name == 'O') {
             return true
         }
-        if (info.misc.command_stack.length == 0) {
-            return false
-        }
-        if (info.misc.command_stack[0] == weare.xlocation) {
+        if (info.misc.card_played == weare.xlocation) {
             return true
         }
         return false
@@ -74,7 +71,7 @@ var moveOps = function() {
     }
 
     function canReset() {
-        if (info.misc.command_stack.length == 0) {
+        if (info.misc.card_played < 0) {
             return false
         }
         return true

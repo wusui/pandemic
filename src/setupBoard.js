@@ -22,8 +22,8 @@ var setupBoard = function() {
         misc_data.game_modes = params[3]
         misc_data.contingency_card = 0
         misc_data.op_exp_used_power = 0
-        misc_data.command_stack = []
-
+        misc_data.card_played = -1
+        misc_data.dispatched_player = -1
         plyr_move = 0
         moves_left = utilities.PLAYER_TURNS
         plyr_list = params[1].split('')
