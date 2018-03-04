@@ -14,6 +14,7 @@ var drawBoard = function() {
     var GREY = "#c0c0c0"
     var MEDIUM_GREEN = "#c0ffc0" 
     var PURPLE = "#ff00ff"
+    var OFF_YELLOW = "#ffffa0"
 
     var DISP_OPT_HEADER = 50
     var SPEC_BUTTONS_HEAD = 190
@@ -28,6 +29,9 @@ var drawBoard = function() {
     var SEP_X_END = 1290
     var START_OTHER = 470
     var SEP_STATS = 20
+
+    var chkstrs = ['Play-by-play Mode', 'Careful Mode', 'Helpful Mode']
+    var chk_abbrevs = ['P', 'C', 'H']
 
     function init() {
         pcanvas = document.getElementById("myMap")
@@ -169,7 +173,7 @@ var drawBoard = function() {
             var pname = pentry.name
             var occ = utilities.occupation_name(pname)
             var maxn = Math.floor(ctx.measureText(occ).width+1)
-            var indent = (spacing - maxn) / 2
+            var indent = Math.floor((spacing - maxn) / 2)
             var xover = ncount * spacing + indent + boardLocations.CITY_SIZE
             ctx.fillStyle = GREY
             if (ncount == parseInt(info.players.plyr_move)) {
@@ -190,9 +194,14 @@ var drawBoard = function() {
                     ctext = citymap.bynumb[deck[card]]
                 }
                 maxn = Math.floor(ctx.measureText(ctext).width+1)
-                indent = (spacing - maxn) / 2
+                indent = Math.floor((spacing - maxn) / 2)
                 xover = ncount * spacing + indent + boardLocations.CITY_SIZE
                 vline += boardLocations.CARD_SPACING
+                var nindent = Math.floor((spacing - boardLocations.CARD_WIDTH) / 2)
+                var cdsp = ncount * spacing + nindent + boardLocations.CITY_SIZE
+                cdsp = Math.floor(cdsp)
+                ctx.fillStyle = OFF_YELLOW
+                ctx.fillRect(cdsp, vline-boardLocations.CARD_OFFSET, boardLocations.CARD_WIDTH, boardLocations.CARD_HEIGHT)
                 cindex = Math.floor(deck[card]/utilities.CITIES_PER_DISEASE)
                 ctx.fillStyle = utilities.get_card_color(cindex)
                 ctx.fillText(ctext, xover, vline)
@@ -200,8 +209,6 @@ var drawBoard = function() {
         }
 
         var gm_modes = info.misc.game_modes
-        var chkstrs = ['Play-by-play Mode', 'Careful Mode', 'Helpful Mode']
-        var chk_abbrevs = ['P', 'C', 'H']
         var chk_yloc = boardLocations.CHECKBOX_Y_START
         ctx.fillStyle = BLACK
         centerRightTxt(ctx, 'Display Options', DISP_OPT_HEADER)
@@ -314,6 +321,7 @@ var drawBoard = function() {
 
     return {
         init:init,
+        chk_abbrevs:chk_abbrevs,
         drawBoard:drawBoard
     }
 }()
