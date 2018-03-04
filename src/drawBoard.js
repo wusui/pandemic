@@ -237,7 +237,7 @@ var drawBoard = function() {
         for (bkey in but_keys) {
             var binfo = but_keys[bkey]
             ctx.strokeRect(boardLocations.BUTTONS[binfo][0], boardLocations.BUTTONS[binfo][1], boardLocations.BUTTON_X_LEN, boardLocations.BUTTON_Y_HGT) 
-            if (moveOps.set_button_color(binfo)) {
+            if (moveOps.is_button_useable(binfo)) {
                 ctx.fillStyle = WHITE
             }
             else {

@@ -89,7 +89,18 @@ var handleInput = function() {
                     }
                 }
             }
-            alert(x.toString() + ', ' + y.toString())
+            for (var butn in boardLocations.BUTTONS) { 
+                var tx = boardLocations.BUTTONS[butn][0] - boardLocations.MARGIN
+                var ty = boardLocations.BUTTONS[butn][1] - boardLocations.MARGIN
+                var txl = tx + boardLocations.BUTTON_X_LEN
+                var tyl = ty + boardLocations.BUTTON_Y_HGT
+                if (x >= tx && x <= txl && y >= ty && y <=tyl) {
+                    if (moveOps.is_button_useable(butn)) {
+                        alert(butn)
+                    }
+                    return
+                }
+            }
         }
     }
 

@@ -76,8 +76,9 @@ var moveOps = function() {
         }
         return true
     }
+
     var button_table = {'Heal': canHeal, 'Build': canBuild, 'Cure': canCure, 'Reset': canReset}
-    function set_button_color(keyname) {
+    function is_button_useable(keyname) {
         if (!(Object.keys(button_table).includes(keyname))) {
             return true
         }
@@ -89,6 +90,6 @@ var moveOps = function() {
         canBuild:canBuild,
         canHeal:canHeal,
         canCure:canCure,
-        set_button_color:set_button_color
+        is_button_useable:is_button_useable
     }
 }()
