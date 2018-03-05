@@ -126,20 +126,20 @@ var drawBoard = function() {
         }
 
         var cur_locs = {}
-        for (var iloc in info.players.plist) {
+        for (var iloc = 0; iloc <  info.players.plist.length; iloc++) {
             var lname = info.players.plist[iloc].name
             var lloc = info.players.plist[iloc].xlocation
-            if (lloc in Object.keys(cur_locs)) {
-                cur_locs[lloc] = cur_locs[lloc].concat(lname)
+            if (lloc in cur_locs) {
+                cur_locs[lloc] = cur_locs[lloc] + lname
             }
             else {
                 cur_locs[lloc] = lname
             }
         }
-
         ctx.font = BIG_FONT
         ctx.fillStyle = BLACK
-        for (var cnumb in cur_locs) {
+        for (var tkey in Object.keys(cur_locs)) {
+            var cnumb = Object.keys(cur_locs)[tkey]
             var ocity = citymap.bynumb[cnumb]
             var xv = parseInt(citymap.byname[ocity].xcoord)
             var yv = parseInt(citymap.byname[ocity].ycoord)

@@ -30,8 +30,8 @@ var setupBoard = function() {
         utilities.shuffle(plyr_list)
         plist = []
         for (var i=0; i<params[0]; i++) {
-            npl = {'name': plyr_list[i], 'cards': [], 'xlocation': 0}
-            plist.push(npl)   
+            var npl = {'name': plyr_list[i], 'cards': [], 'xlocation': 0}
+            plist.push(npl)
         }
 
         plyr_d.plist = plist

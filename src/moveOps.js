@@ -71,7 +71,7 @@ var moveOps = function() {
     }
 
     function canReset() {
-        if (info.misc.card_played < 0) {
+        if (info.misc.card_played < 0 && info.misc.dispatched_player < 0) {
             return false
         }
         return true

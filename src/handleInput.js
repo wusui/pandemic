@@ -1,5 +1,11 @@
 var handleInput = function() {
 
+    function update_page(info) {
+        var results = JSON.stringify(info)
+        sessionStorage.setItem('game_data', results)
+        drawBoard.drawBoard()
+    }
+
     function change_checkbox(parm, info) {
         var thischar = drawBoard.chk_abbrevs[parm]
         if (info.misc.game_modes.indexOf(thischar) >= 0) {
@@ -8,9 +14,7 @@ var handleInput = function() {
         else {
             info.misc.game_modes += thischar
         }
-        var results = JSON.stringify(info)
-        sessionStorage.setItem('game_data', results)
-        drawBoard.drawBoard()
+        update_page(info)
     }
 
     function mouseSwitch(evt) {
@@ -34,7 +38,7 @@ var handleInput = function() {
                 }
                 var sqind = yoff * utilities.BOARD_WIDTH + xoff
                 if (Object.keys(citymap.bycoord).includes(sqind.toString())) {
-                    alert(citymap.bycoord[sqind.toString()])
+                    clickCity.clickCity(citymap.bycoord[sqind.toString()], info, citymap)
                 }
             }
             else {
@@ -56,7 +60,7 @@ var handleInput = function() {
                     return
                 }
                 if (y < boardLocations.EDGE_OF_NAMES) {
-                    alert(info.players.plist[lxcoord].name)
+                    alert(info.players.plist[lxcoord].name+":"+lxcoord.toString())
                     return
                 }
                 if (y < boardLocations.PLAYER_Y_COORD) {
@@ -71,7 +75,7 @@ var handleInput = function() {
                     return
                 }
                 var deck = info.players.plist[lxcoord].cards.sort(function(a,b){return a-b})
-                alert(deck[cindx].toString())
+                clickCard.clickCard(deck[cindx], info, citymap)
             }
         }
         else {
@@ -105,6 +109,7 @@ var handleInput = function() {
     }
 
     return {
-        mouseSwitch:mouseSwitch
+        mouseSwitch:mouseSwitch,
+        update_page:update_page
     }
 }()
