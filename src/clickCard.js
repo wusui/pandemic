@@ -12,10 +12,18 @@ var clickCard = function() {
     }
 
     function clickCard(action, info, citymap) {
-        if (action < utilities.MAX_INF_CITIES) {
-            info.misc.card_played = action
-            handleInput.update_page(info)
+        alert(action)
+        var curp = info.players.plyr_move
+        var hand = info.players.plist[curp].cards
+        alert(JSON.stringify(hand))
+        if (hand.includes(action)) {
+            if (action < utilities.MAX_INF_CITIES) {
+                info.misc.card_played = action
+                handleInput.update_page(info)
+                return
+            }
         }
+        // Add card taking code here
     }
 
     return {
