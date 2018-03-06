@@ -21,7 +21,35 @@ var clickCard = function() {
                 return
             }
         }
-        // Add card taking code here
+        for (var ii=0; ii<info.players.plist.length; ii++) {
+            var nmhnd = info.players.plist[ii].cards
+            if (nmhnd.includes(action)) {
+                break
+            }
+        }
+        var iam = info.players.plyr_move
+        var mloc = info.players.plist[iam].xlocation
+        var oloc = info.players.plist[ii].xlocation
+        if (mloc != oloc) {
+            return
+        }
+        var takeok = false
+        if (mloc == action) {
+            takeok = true
+        }
+        else {
+            if (info.players.plist[ii].name == 'R') {
+                takeok = true
+            }
+        }
+        if (takeok) {
+            alert('card taking '+citymap.bynumb[action]+' from '+ii.toString())
+            var fromguy = info.players.plist[ii].cards
+            fromguy.splice(fromguy.indexOf(action),1)
+            var toguy = info.players.plist[iam]
+            toguy.cards.push(action)
+            handleInput.update_page(info)
+        }
     }
 
     return {

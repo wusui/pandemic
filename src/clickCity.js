@@ -13,7 +13,7 @@ var clickCity = function() {
         if (info.players.plist[mover].name == 'D') {
             disptch = true
         }
-        if (info.misc.dispatached_player >= 0) {
+        if (info.misc.dispatched_player >= 0) {
             mover = info.misc.dispatched_player
             disptch = true
         }
@@ -46,6 +46,13 @@ var clickCity = function() {
             moveIt(mover, mloc, info)
             clickCard.discard(info)
             return
+        }
+        if (info.players.plist[mover].name == 'O') {
+            if (info.misc.op_exp_used_power == 0 && info.misc.card_played >= 0) {
+                info.misc.op_exp_used_power = 1
+                moveIt(mover, mloc, info)
+                clickCard.discard(info)
+            }
         }
     }
 

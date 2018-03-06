@@ -60,7 +60,7 @@ var handleInput = function() {
                     return
                 }
                 if (y < boardLocations.EDGE_OF_NAMES) {
-                    alert(info.players.plist[lxcoord].name+":"+lxcoord.toString())
+                    clickPlayer.clickPlayer(lxcoord, info, citymap)
                     return
                 }
                 if (y < boardLocations.PLAYER_Y_COORD) {
