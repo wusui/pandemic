@@ -100,7 +100,7 @@ var handleInput = function() {
                 var tyl = ty + boardLocations.BUTTON_Y_HGT
                 if (x >= tx && x <= txl && y >= ty && y <=tyl) {
                     if (moveOps.is_button_useable(butn)) {
-                        alert(butn)
+                        clickButton.clickButton(butn, info, citymap)
                     }
                     return
                 }

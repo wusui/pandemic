@@ -113,7 +113,7 @@ var drawBoard = function() {
             var cname = citymap.byname[key1].name
             var numb = parseInt(citymap.byname[key1].number)
             ctx.fillStyle = WHITE
-            if (numb in info.misc.research_stations) {
+            if (info.misc.research_stations.includes(numb)) {
                 ctx.fillStyle = MEDIUM_GREEN
             }
             ctx.fillRect(xc, yc, boardLocations.CITY_SIZE, boardLocations.CITY_SIZE)

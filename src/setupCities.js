@@ -64,4 +64,6 @@ var setupCities = function() {
     }
 }()
 
-setupCities.initialize(setupCities.callback)
+function panOnloadFunc() {
+    setupCities.initialize(setupCities.callback)
+}
