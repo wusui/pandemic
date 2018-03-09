@@ -37,6 +37,7 @@ var drawBoard = function() {
         pcanvas = document.getElementById("myMap")
         ctx = pcanvas.getContext("2d")
         pcanvas.addEventListener("click", handleInput.mouseSwitch, false)
+        pcanvas.addEventListener("keypress", htmlInterface.debug, false)
         drawBoard()
     }
 

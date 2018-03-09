@@ -63,7 +63,3 @@ var setupCities = function() {
         save_me:save_me
     }
 }()
-
-function panOnloadFunc() {
-    setupCities.initialize(setupCities.callback)
-}
