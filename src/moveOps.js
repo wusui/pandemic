@@ -47,7 +47,7 @@ var moveOps = function() {
             toCure--
         }
         if (cmax >= toCure) {
-            var ccolor = utilites.get_color_name(snumb)
+            var ccolor = utilities.get_color_name(snumb)
             if (info.diseases[ccolor].cured > 0) {
                 return false
             }
