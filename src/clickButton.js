@@ -1,13 +1,53 @@
 var clickButton = function() {
 
     function buttonHeal(info, citymap) {
-        alert('1 heal')
+        var dvals = [0, 0, 0, 0]
+        var iam = info.players.plyr_move
+        var iamat = info.players.plist[iam].xlocation
+        for (var i=0; i<utilities.NO_OF_GERM_TYPES; i++) {
+            var dname = utilities.get_color_name(i)
+            var diskey = info.diseases[dname].infections
+            for (var ikey in Object.keys(diskey)) {
+                var dloc = Object.keys(diskey)[ikey]
+                if (dloc == iamat) {
+                    dvals[i] = diskey[dloc]
+                }
+            }
+        }
+        var dtcount = 0
+        var lastfound = -1
+        for (var j=0; j<dvals.length; j++) {
+            if (dvals[j] > 0) {
+                dtcount++
+                lastfound = j
+            }
+        }
+        if (dtcount == 1) {
+            var dcured = 1
+            var cval = utilities.get_color_name(lastfound)
+            if (info.players.plist[iam].name == 'M') {
+                dcured = info.diseases[cval].infections[iamat]
+            }
+            info.diseases[cval].infections[iamat] -= dcured
+            info.diseases[cval].count += dcured
+            if (info.diseases[cval].infections[iamat] == 0) {
+                delete info.diseases[cval].infections[iamat]
+            }
+        }
+        else {
+            alert('multiple diseases. more complicated code needed')
+        }
+        info.players.moves_left--
     }
 
     function buttonBuild(info, citymap) {
         var iam = info.players.plist[info.players.plyr_move]
         var newr = iam.xlocation
         info.misc.research_stations.push(newr)
+        if (info.misc.research_stations.length > utilities.R_STA_MAX) {
+            alert('Code needed here to reduce number of stations')
+        }
+        info.players.moves_left--
         if (iam.name == 'O') {
             return
         }
@@ -15,7 +55,30 @@ var clickButton = function() {
     }
 
     function buttonCure(info, citymap) {
-        alert('3 cure')
+        var iam = info.players.plist[info.players.plyr_move]
+        var curecol = moveOps.canCure()
+        var ccount = []
+        for (var i=0; i<iam.cards.length; i++) {
+            var ccol = utilities.card_to_color(iam.cards[i])
+            if (ccol == curecol) {
+                ccount.push(iam.cards[i])
+            }
+        }
+        var needed = utilities.NO_CARDS_TO_CURE
+        if (iam.name == 'S') {
+            needed--
+        }
+        if (needed == ccount.length) {
+            info.diseases[curecol].cured = 1
+            for (var ii=0; ii<ccount.length; ii++) {
+                info.misc.card_played = ccount[ii]
+                clickCard.discard(info) 
+            }
+        }
+        else {
+            alert('Too many of the right cards.  This code will be more complicated.')
+        }
+        info.players.moves_left--
     }
 
     function buttonReset(info, citymap) {
@@ -24,15 +87,15 @@ var clickButton = function() {
     }
 
     function buttonSkip(info, citymap) {
-        info.players.moves_left = info.players.moves_left - 1
+        info.players.moves_left--
     }
 
     function buttonHelp(info, citymap) {
-        alert('6 help')
+        alert('Help button still needs to be implemented')
     }
 
     function buttonQuit(info, citymap) {
-        alert('7 quit')
+        close()
     }
 
 

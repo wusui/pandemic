@@ -21,7 +21,6 @@ var clickPlayer = function() {
                 }
             }
             if (takeok) {
-                alert('card passing '+citymap.bynumb[info.misc.card_played]+" to "+action.toString())
                 var fromguy = info.players.plist[iam].cards
                 fromguy.splice(fromguy.indexOf(info.misc.card_played),1)
                 var toguy = info.players.plist[action]

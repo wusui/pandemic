@@ -43,7 +43,6 @@ var clickCard = function() {
             }
         }
         if (takeok) {
-            alert('card taking '+citymap.bynumb[action]+' from '+ii.toString())
             var fromguy = info.players.plist[ii].cards
             fromguy.splice(fromguy.indexOf(action),1)
             var toguy = info.players.plist[iam]

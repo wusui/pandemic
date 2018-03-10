@@ -37,6 +37,7 @@ var htmlInterface = function() {
             else {
                 info.diseases[dindx].infections[dizloc] = 1
             }
+            info.diseases[dindx].count -= 1
             handleInput.update_page(info)
         }
     }

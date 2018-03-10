@@ -1,6 +1,34 @@
 var handleInput = function() {
 
+    function mop_up(info) {
+        var mloc = -1
+        for (var j=0; j < info.players.plist.length; j++) {
+            if (info.players.plist[j].name == 'M') {
+                mloc = info.players.plist[j].xlocation
+                break
+            }
+        }
+        for (var i=0; i < utilities.NO_OF_GERM_TYPES; i++) {
+            var colr = utilities.get_color_name(i)
+            if (mloc >= 0) {
+                if (info.diseases[colr].cured > 0) {
+                    if (info.diseases[colr].infections.hasOwnProperty(mloc)) {
+                        var count = info.diseases[colr].infections[mloc]
+                        delete info.diseases[colr].infections[mloc]
+                        info.diseases[colr].count += count
+                    }
+                }
+            }
+            if (info.diseases[colr].count == utilities.MAX_GERMS_TOTAL) {
+                if (info.diseases[colr].cured > 0) {
+                    info.diseases[colr].eradicated = 1
+                }
+            }
+        }
+    }
+
     function update_page(info) {
+        mop_up(info)
         var results = JSON.stringify(info)
         sessionStorage.setItem('game_data', results)
         drawBoard.drawBoard()

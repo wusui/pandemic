@@ -54,6 +54,11 @@ var utilities = function() {
         return xcard_color[cval]
     }
 
+    function card_to_color(card) {
+        var  indx = Math.floor(card / CITIES_PER_DISEASE)
+        return get_color_name(indx)
+    }
+
     function occupation_name(abbrev) {
         return occupations[abbrev]
     }
@@ -73,6 +78,7 @@ var utilities = function() {
         get_card_color:get_card_color,
         occupation_name:occupation_name,
         id_event_card:id_event_card,
+        card_to_color:card_to_color,
         BOARD_WIDTH:BOARD_WIDTH,
         CITIES_PER_DISEASE:CITIES_PER_DISEASE,
         MAX_GERMS:MAX_GERMS,
