@@ -17,17 +17,15 @@ var drawBoard = function() {
     var OFF_YELLOW = "#ffffa0"
 
     var DISP_OPT_HEADER = 50
-    var SPEC_BUTTONS_HEAD = 190
-    var DISEASES_HEAD = 305
-    var OTHER_STATS_HEAD = 440
-    var SEPLINE1 = 160
-    var SEPLINE2 = 280
-    var SEPLINE3 = 415
-    var OTHER_STATS_START = 470
+    var SPEC_BUTTONS_HEAD = 20
+    var DISEASES_HEAD = 135
+    var OTHER_STATS_HEAD = 270
+    var SEPLINE1 = 110
+    var SEPLINE2 = 245
     var OTHER_STATS_YDIFF = 20 
     var SEP_X_START = 1015
     var SEP_X_END = 1290
-    var START_OTHER = 470
+    var START_OTHER = 300
     var SEP_STATS = 20
 
     var chkstrs = ['Play-by-play Mode', 'Careful Mode', 'Helpful Mode']
@@ -209,28 +207,8 @@ var drawBoard = function() {
             }
         }
 
-        var gm_modes = info.misc.game_modes
-        var chk_yloc = boardLocations.CHECKBOX_Y_START
         ctx.fillStyle = BLACK
-        centerRightTxt(ctx, 'Display Options', DISP_OPT_HEADER)
-        ctx.strokeStyle = BLACK
-        for (var checkbx=0; checkbx<chk_abbrevs.length; checkbx++) {
-            gm_modes[checkbx] = false
-            ctx.fillStyle = WHITE
-            if (gm_modes.indexOf(chk_abbrevs[checkbx]) >= 0) {
-                ctx.fillStyle = BLACK
-                gm_modes[checkbx] = true
-            }
-            ctx.strokeRect(boardLocations.CHECKBOX_OFFSET, chk_yloc, boardLocations.CHECKBOX_SIZE, boardLocations.CHECKBOX_SIZE)
-            ctx.fillRect(boardLocations.CHECKBOX_OFFSET, chk_yloc, boardLocations.CHECKBOX_SIZE, boardLocations.CHECKBOX_SIZE)
-            ctx.fillStyle = BLACK
-            ctx.fillText(chkstrs[checkbx], boardLocations.CHECKBOX_OFFSET+2*boardLocations.CHECKBOX_SIZE, chk_yloc+boardLocations.CHECKBOX_SIZE)
-            chk_yloc += boardLocations.CHECKBOX_Y_SPACES
-        }
-        draw_sep_line(ctx, SEPLINE1)
-
         centerRightTxt(ctx, 'Special Buttons', SPEC_BUTTONS_HEAD)
-        ctx.fillStyle = BLACK
         ctx.strokeStyle = BLACK
         moveOps.init(info, citymap)
         var bkey
@@ -248,7 +226,7 @@ var drawBoard = function() {
             ctx.fillStyle = BLACK
             ctx.fillText(binfo, boardLocations.BUTTONS[binfo][2], boardLocations.BUTTONS[binfo][1] + boardLocations.BUTTON_YDIFF)
         }
-        draw_sep_line(ctx, SEPLINE2)
+        draw_sep_line(ctx, SEPLINE1)
 
         centerRightTxt(ctx, 'Diseases', DISEASES_HEAD)
         var dis_y_cnt = boardLocations.DIS_Y_START
@@ -271,7 +249,7 @@ var drawBoard = function() {
             ctx.fillText(msg2, boardLocations.DIS_X_START, dis_y_cnt)
             dis_y_cnt += boardLocations.DIS_Y_SPACES
         }
-        draw_sep_line(ctx, SEPLINE3)
+        draw_sep_line(ctx, SEPLINE2)
 
         ctx.fillStyle = BLACK
         centerRightTxt(ctx, 'Other Statistics', OTHER_STATS_HEAD)
@@ -288,6 +266,11 @@ var drawBoard = function() {
         otherstats.push(["Actions Left: ",info.players.moves_left.toString()])
         otherstats.push(["Player #: ",info.players.plyr_move.toString()])
         disp_oth_stats(ctx, otherstats)
+
+        ctx.strokeRect(boardLocations.TEXT_WINDOW_LEFT, boardLocations.TEXT_WINDOW_TOP, boardLocations.TEXT_WINDOW_WIDTH, boardLocations.TEXT_WINDOW_HEIGHT) 
+        ctx.fillStyle = WHITE
+        ctx.fillRect(boardLocations.TEXT_WINDOW_LEFT, boardLocations.TEXT_WINDOW_TOP, boardLocations.TEXT_WINDOW_WIDTH, boardLocations.TEXT_WINDOW_HEIGHT) 
+        ctx.fillStyle = BLACK
 
         var no_contingency = true
         for (var ii=0; ii < info.players.plist.length; ii++) {
@@ -317,7 +300,7 @@ var drawBoard = function() {
         if (info.misc.contingency_card > 0) {
             cardval = utilities.xcard_color[info.misc.contingency_card - utilities.FIRST_SPECIAL_CARD]
         }
-        centerRightTxt(ctx, cardval, boardLocations.CONTINGENCY_CARD_Y)
+        ctx.fillText(cardval, boardLocations.CONTINGENCY_CARD_X, boardLocations.CONTINGENCY_CARD_Y)
     }
 
     return {

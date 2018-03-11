@@ -25,14 +25,7 @@ handleFirstPage = function() {
                 {modal: true, height: 140, width: 400, title: 'ERROR'})
             return
         }
-        var odisp = ''
-        var disp = document.getElementsByName('display')
-        for (var j = 0; j < disp.length; j++) {
-            if (disp[j].checked) {
-                odisp = odisp.concat(disp[j].value)
-            }
-        }
-        gamev = "realgame.html".concat("?plyrs=", plyrs, "?epid=", epid, "?roles=", oroles, "?display=", odisp)
+        gamev = "realgame.html".concat("?plyrs=", plyrs, "?epid=", epid, "?roles=", oroles)
         window.open(gamev)
     }
 

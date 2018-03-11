@@ -16,24 +16,26 @@ var boardLocations = function() {
     var dis_locs = [-16, -7, 2, 11]
     var WIDTH_RIGHT_PART = 300
     var RIGHT_PART_START = 1000
-    var CHECKBOX_OFFSET = 1075
-    var CHECKBOX_SIZE = 10
-    var CHECKBOX_Y_START = 80
-    var CHECKBOX_Y_SPACES = 25
-    var DIS_Y_START = 340
+    var DIS_Y_START = 170
     var DIS_X_START = 1090
     var DIS_Y_SPACES = 20
     var BUTTON_X_LEN = 52
     var BUTTON_Y_HGT = 14
     var BUTTON_YDIFF = 12
-    var CONTINGENCY_CARD_Y = 680
+    var CONTINGENCY_CARD_X = 20
+    var CONTINGENCY_CARD_Y = 690
     var MOUSE_OFFSET = 18
     var CARD_WIDTH = 120
     var PNAME_WIDTH = 160
     var CARD_HEIGHT = 15
     var CARD_OFFSET = 12
     var EDGE_OF_NAMES = 475
-    var BUTTONS = {'Reset': [1052, 213, 1058], 'Help': [1122, 213, 1133], 'Quit': [1192, 213, 1203], 'Build': [1016, 248, 1024], 'Heal': [1083, 248, 1094], 'Cure': [1152, 248, 1162], 'Skip': [1223, 248, 1234]}
+    var MINIMUM_GAP = 5
+    var TEXT_WINDOW_LEFT = RIGHT_PART_START + MINIMUM_GAP
+    var TEXT_WINDOW_WIDTH = WIDTH_RIGHT_PART - 2 * MINIMUM_GAP
+    var TEXT_WINDOW_TOP = 420
+    var TEXT_WINDOW_HEIGHT = 270
+    var BUTTONS = {'Reset': [1052, 43, 1058], 'Help': [1122, 43, 1133], 'Quit': [1192, 43, 1203], 'Build': [1016, 78, 1024], 'Heal': [1083, 78, 1094], 'Cure': [1152, 78, 1162], 'Skip': [1223, 78, 1234]}
 
     function conv_to_map(loc) {
         return loc * SQ_SIZE + OFFSET_TO_CENTER
@@ -60,10 +62,6 @@ var boardLocations = function() {
         PLAYER_Y_COORD:PLAYER_Y_COORD,
         WIDTH_RIGHT_PART:WIDTH_RIGHT_PART,
 	RIGHT_PART_START:RIGHT_PART_START,
-        CHECKBOX_OFFSET:CHECKBOX_OFFSET,
-        CHECKBOX_SIZE:CHECKBOX_SIZE,
-        CHECKBOX_Y_START:CHECKBOX_Y_START,
-        CHECKBOX_Y_SPACES:CHECKBOX_Y_SPACES,
         DIS_Y_START:DIS_Y_START,
         DIS_X_START:DIS_X_START,
         DIS_Y_SPACES:DIS_Y_SPACES,
@@ -71,6 +69,7 @@ var boardLocations = function() {
         BUTTON_Y_HGT:BUTTON_Y_HGT,
         BUTTON_YDIFF:BUTTON_YDIFF,
         BUTTONS:BUTTONS,
+        CONTINGENCY_CARD_X:CONTINGENCY_CARD_X,
         CONTINGENCY_CARD_Y:CONTINGENCY_CARD_Y,
         MOUSE_OFFSET:MOUSE_OFFSET,
         SQ_SIZE:SQ_SIZE,
@@ -78,6 +77,10 @@ var boardLocations = function() {
         PNAME_WIDTH:PNAME_WIDTH,
         CARD_HEIGHT:CARD_HEIGHT,
         CARD_OFFSET:CARD_OFFSET,
-        EDGE_OF_NAMES:EDGE_OF_NAMES
+        EDGE_OF_NAMES:EDGE_OF_NAMES,
+        TEXT_WINDOW_LEFT:TEXT_WINDOW_LEFT,
+        TEXT_WINDOW_WIDTH:TEXT_WINDOW_WIDTH,
+        TEXT_WINDOW_TOP:TEXT_WINDOW_TOP,
+        TEXT_WINDOW_HEIGHT:TEXT_WINDOW_HEIGHT
     }
 }()

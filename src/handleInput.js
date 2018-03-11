@@ -34,17 +34,6 @@ var handleInput = function() {
         drawBoard.drawBoard()
     }
 
-    function change_checkbox(parm, info) {
-        var thischar = drawBoard.chk_abbrevs[parm]
-        if (info.misc.game_modes.indexOf(thischar) >= 0) {
-            info.misc.game_modes = info.misc.game_modes.replace(thischar,"")
-        }
-        else {
-            info.misc.game_modes += thischar
-        }
-        update_page(info)
-    }
-
     function mouseSwitch(evt) {
         var x = evt.clientX
         var y = evt.clientY
@@ -107,20 +96,6 @@ var handleInput = function() {
             }
         }
         else {
-            var chckbx_x = boardLocations.CHECKBOX_OFFSET - boardLocations.CHECKBOX_SIZE
-            var chckbx_xend = boardLocations.CHECKBOX_OFFSET
-            if (x >= chckbx_x && x <= chckbx_xend) {
-                var chckbx_y = boardLocations.CHECKBOX_Y_START - boardLocations.CHECKBOX_SIZE
-                for (var yoff=0; yoff<(boardLocations.CHECKBOX_Y_SPACES*2 + 1); yoff += boardLocations.CHECKBOX_Y_SPACES) {
-                    var ytemp = chckbx_y + yoff
-                    var ytemp_end = ytemp  + boardLocations.CHECKBOX_SIZE
-                    if (y >= ytemp && y <= ytemp_end) {
-                        var parm = yoff / boardLocations.CHECKBOX_Y_SPACES
-                        change_checkbox(parm, info)
-                        return
-                    }
-                }
-            }
             for (var butn in boardLocations.BUTTONS) { 
                 var tx = boardLocations.BUTTONS[butn][0] - boardLocations.MARGIN
                 var ty = boardLocations.BUTTONS[butn][1] - boardLocations.MARGIN

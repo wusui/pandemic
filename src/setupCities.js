@@ -38,7 +38,6 @@ var setupCities = function() {
         params.push(htmlparm.plyrs)
         params.push(htmlparm.roles)
         params.push(htmlparm.epid)
-        params.push(htmlparm.display)
 
         utilities.readr("atlas.txt", init_process)
     }

@@ -19,7 +19,6 @@ var setupBoard = function() {
         misc_data.epid_counter = 0
         misc_data.epid_values = [2,2,2,3,3,4,4]
         misc_data.game_status = 0
-        misc_data.game_modes = params[3]
         misc_data.contingency_card = 0
         misc_data.op_exp_used_power = 0
         misc_data.card_played = -1
