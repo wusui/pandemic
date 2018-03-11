@@ -25,7 +25,7 @@ var clickButton = function() {
         if (dtcount == 1) {
             var dcured = 1
             var cval = utilities.get_color_name(lastfound)
-            if (info.players.plist[iam].name == 'M') {
+            if (info.players.plist[iam].name == 'M' || info.diseases[cval].cured > 0) {
                 dcured = info.diseases[cval].infections[iamat]
             }
             info.diseases[cval].infections[iamat] -= dcured

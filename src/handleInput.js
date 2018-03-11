@@ -108,6 +108,16 @@ var handleInput = function() {
                     return
                 }
             }
+            x += boardLocations.MARGIN
+            y += boardLocations.MARGIN
+            var xx = x - boardLocations.TEXT_WINDOW_LEFT
+            if (xx > 0 && xx < boardLocations.TEXT_WINDOW_WIDTH) {
+                var yy = y - boardLocations.TEXT_WINDOW_TOP
+                if (yy > 0 && yy <  boardLocations.TEXT_WINDOW_HEIGHT) {
+                    /* In special text window */
+                    alert(x.toString()+":"+y.toString())
+                }
+            }
         }
     }
 
