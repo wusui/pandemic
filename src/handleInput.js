@@ -1,5 +1,7 @@
 var handleInput = function() {
 
+    //var callback_table = {"RES_STA_CALLBACK": useSpecWindow.res_callback}
+
     function mop_up(info) {
         var mloc = -1
         for (var j=0; j < info.players.plist.length; j++) {
@@ -42,6 +44,9 @@ var handleInput = function() {
         x = x - boardLocations.MOUSE_OFFSET
         y = y - boardLocations.MOUSE_OFFSET
         if (x < boardLocations.MAP_WIDTH) {
+            if (info.misc.use_special_window > 0) {
+                return
+            }
             if (y < boardLocations.MAP_HEIGHT) {
                 var xoff = Math.floor(x / boardLocations.SQ_SIZE)
                 var yoff = Math.floor(y / boardLocations.SQ_SIZE)
@@ -97,6 +102,11 @@ var handleInput = function() {
         }
         else {
             for (var butn in boardLocations.BUTTONS) { 
+                if (info.misc.use_special_window > 0) {
+                    if (!(['Quit', 'Help'].includes(butn))) {
+                        continue
+                    }
+                }
                 var tx = boardLocations.BUTTONS[butn][0] - boardLocations.MARGIN
                 var ty = boardLocations.BUTTONS[butn][1] - boardLocations.MARGIN
                 var txl = tx + boardLocations.BUTTON_X_LEN
@@ -114,8 +124,10 @@ var handleInput = function() {
             if (xx > 0 && xx < boardLocations.TEXT_WINDOW_WIDTH) {
                 var yy = y - boardLocations.TEXT_WINDOW_TOP
                 if (yy > 0 && yy <  boardLocations.TEXT_WINDOW_HEIGHT) {
-                    /* In special text window */
                     alert(x.toString()+":"+y.toString())
+                    if (info.special_callback == "RES_STA_CALLBACK") {
+                        useSpecWindow.res_callback(x,y,info)
+                    }
                 }
             }
         }

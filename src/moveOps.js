@@ -71,6 +71,9 @@ var moveOps = function() {
     }
 
     function canReset() {
+        if (info.misc.use_special_window > 0) {
+            return true
+        }
         if (info.misc.card_played < 0 && info.misc.dispatched_player < 0) {
             return false
         }

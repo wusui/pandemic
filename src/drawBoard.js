@@ -30,6 +30,8 @@ var drawBoard = function() {
 
     var chkstrs = ['Play-by-play Mode', 'Careful Mode', 'Helpful Mode']
     var chk_abbrevs = ['P', 'C', 'H']
+    
+    var text_data
 
     function init() {
         pcanvas = document.getElementById("myMap")
@@ -37,6 +39,10 @@ var drawBoard = function() {
         pcanvas.addEventListener("click", handleInput.mouseSwitch, false)
         pcanvas.addEventListener("keypress", htmlInterface.debug, false)
         drawBoard()
+    }
+
+    function get_ctx() {
+        return ctx
     }
 
     function centerRightTxt(contxt, instring, yval) {
@@ -271,6 +277,16 @@ var drawBoard = function() {
         ctx.fillStyle = WHITE
         ctx.fillRect(boardLocations.TEXT_WINDOW_LEFT, boardLocations.TEXT_WINDOW_TOP, boardLocations.TEXT_WINDOW_WIDTH, boardLocations.TEXT_WINDOW_HEIGHT) 
         ctx.fillStyle = BLACK
+        txt_data = info.special_text_fields
+        for (var itxt=0; itxt<txt_data.length; itxt++) {
+            if (txt_data[itxt]['iscard']) {
+                ctx.fillStyle = OFF_YELLOW
+                ctx.fillRect(info.card_start, txt_data[itxt]['top']-boardLocations.CARD_OFFSET, boardLocations.CARD_WIDTH, boardLocations.CARD_HEIGHT)
+            }
+            ctx.font = txt_data[itxt]['font']
+            ctx.fillStyle = txt_data[itxt]['color']
+            ctx.fillText(txt_data[itxt]['text'], txt_data[itxt]['left'], txt_data[itxt]['top'])
+        }
 
         var no_contingency = true
         for (var ii=0; ii < info.players.plist.length; ii++) {
@@ -305,7 +321,9 @@ var drawBoard = function() {
 
     return {
         init:init,
+        get_ctx:get_ctx,
         chk_abbrevs:chk_abbrevs,
+        MEDIUM_FONT:MEDIUM_FONT,
         drawBoard:drawBoard
     }
 }()

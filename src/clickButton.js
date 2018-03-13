@@ -44,14 +44,13 @@ var clickButton = function() {
         var iam = info.players.plist[info.players.plyr_move]
         var newr = iam.xlocation
         info.misc.research_stations.push(newr)
-        if (info.misc.research_stations.length > utilities.R_STA_MAX) {
-            alert('Code needed here to reduce number of stations')
-        }
         info.players.moves_left--
-        if (iam.name == 'O') {
-            return
+        if (iam.name != 'O') {
+            clickCard.discard(info)
         }
-        clickCard.discard(info)
+        if (info.misc.research_stations.length > utilities.R_STA_MAX) {
+            useSpecWindow.tooManyStations(info, citymap)
+        }
     }
 
     function buttonCure(info, citymap) {
@@ -84,6 +83,7 @@ var clickButton = function() {
     function buttonReset(info, citymap) {
         info.misc.card_played = -1
         info.misc.dispatched_player = -1
+        info.misc.use_special_window = 0
     }
 
     function buttonSkip(info, citymap) {

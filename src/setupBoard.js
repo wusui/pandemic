@@ -23,6 +23,7 @@ var setupBoard = function() {
         misc_data.op_exp_used_power = 0
         misc_data.card_played = -1
         misc_data.dispatched_player = -1
+        misc_data.use_special_window = 0
         plyr_move = 0
         moves_left = utilities.PLAYER_TURNS
         plyr_list = params[1].split('')
@@ -75,7 +76,7 @@ var setupBoard = function() {
         }
         card_data = {"infections": infections, "inf_disc": [], "player_cards": ndeck, "player_disc": []}
 
-        retv = {"misc": misc_data, "players": plyr_d, "diseases": dis_data, "card_decks": card_data}
+        retv = {"misc": misc_data, "players": plyr_d, "diseases": dis_data, "card_decks": card_data, "special_text_fields": []}
         results = JSON.stringify(retv)
         sessionStorage.setItem('game_data', results)
         return results
