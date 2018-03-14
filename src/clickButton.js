@@ -35,7 +35,7 @@ var clickButton = function() {
             }
         }
         else {
-            alert('multiple diseases. more complicated code needed')
+            useSpecWindow.tooManyGerms(info, citymap)
         }
         info.players.moves_left--
     }

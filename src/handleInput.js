@@ -1,7 +1,5 @@
 var handleInput = function() {
 
-    //var callback_table = {"RES_STA_CALLBACK": useSpecWindow.res_callback}
-
     function mop_up(info) {
         var mloc = -1
         for (var j=0; j < info.players.plist.length; j++) {
@@ -127,6 +125,9 @@ var handleInput = function() {
                     alert(x.toString()+":"+y.toString())
                     if (info.special_callback == "RES_STA_CALLBACK") {
                         useSpecWindow.res_callback(x,y,info)
+                    }
+                    if (info.special_callback == "HEAL_CALLBACK") {
+                        useSpecWindow.heal_callback(x,y,info)
                     }
                 }
             }

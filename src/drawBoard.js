@@ -279,7 +279,7 @@ var drawBoard = function() {
         ctx.fillStyle = BLACK
         txt_data = info.special_text_fields
         for (var itxt=0; itxt<txt_data.length; itxt++) {
-            if (txt_data[itxt]['iscard']) {
+            if (txt_data[itxt]['highlight']) {
                 ctx.fillStyle = OFF_YELLOW
                 ctx.fillRect(info.card_start, txt_data[itxt]['top']-boardLocations.CARD_OFFSET, boardLocations.CARD_WIDTH, boardLocations.CARD_HEIGHT)
             }
