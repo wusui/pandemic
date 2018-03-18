@@ -90,18 +90,11 @@ var useSpecWindow = function() {
         if (indx < 0) {
             return
         }
-        var dcured = 1
         var cval = info.special_germs[indx]
-        var iam = info.players.plyr_move
-        var iamat = info.players.plist[iam].xlocation
-        if (info.players.plist[iam].name == 'M' || info.diseases[cval].cured > 0) {
-            dcured = info.diseases[cval].infections[iamat]
-        }
-        info.diseases[cval].infections[iamat] -= dcured
-        info.diseases[cval].count += dcured
-        if (info.diseases[cval].infections[iamat] == 0) {
-            delete info.diseases[cval].infections[iamat]
-        }
+        alert(indx)
+        alert(info.special_germs[indx])
+        clickButton.do_cure(info, cval)
+        alert('after click')
         info.players.moves_left--
         clean_up(info)
     }
@@ -116,26 +109,19 @@ var useSpecWindow = function() {
         clean_up(info)
     }
 
-    function tooManyGerms(info, citymap) {
+    function tooManyGerms(info, citymap, dvals) {
         common_stuff(info, citymap)
         line_filler = print_head(["Click on the disease", "that you want to heal"])
         var nline_no = 4
         info.special_germs = []
         for (var i=0; i<utilities.NO_OF_GERM_TYPES; i++) {
-            var iam = info.players.plyr_move
-            var iamat = info.players.plist[iam].xlocation
-            var dname = utilities.get_color_name(i)
-            var diskey = info.diseases[dname].infections
-            for (var ikey in Object.keys(diskey)) {
-                var dloc = Object.keys(diskey)[ikey]
-                if (dloc == iamat) {
-                    lcolor = utilities.get_card_color(i)
-                    info.special_germs.push(dname)
-                    newtxt = write_gen_line(dname, lcolor, nline_no)
-                    line_filler.push(newtxt)
-                    nline_no++
-                    break
-                }
+            if (dvals[i] > 0) {
+                var dname = utilities.get_color_name(i)
+                var lcolor = utilities.get_card_color(i)
+                info.special_germs.push(dname)
+                newtxt = write_gen_line(dname, lcolor, nline_no)
+                line_filler.push(newtxt)
+                nline_no++
             }
         }
         info.special_text_fields = line_filler

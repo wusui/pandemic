@@ -1,5 +1,19 @@
 var clickButton = function() {
 
+    function do_cure(info, cval) {
+        var iam = info.players.plyr_move
+        var iamat = info.players.plist[iam].xlocation
+        var dcured = 1
+        if (info.players.plist[iam].name == 'M' || info.diseases[cval].cured > 0) {
+            dcured = info.diseases[cval].infections[iamat]
+        }
+        info.diseases[cval].infections[iamat] -= dcured
+        info.diseases[cval].count += dcured
+        if (info.diseases[cval].infections[iamat] == 0) {
+            delete info.diseases[cval].infections[iamat]
+        }
+    }
+
     function buttonHeal(info, citymap) {
         var dvals = [0, 0, 0, 0]
         var iam = info.players.plyr_move
@@ -23,19 +37,11 @@ var clickButton = function() {
             }
         }
         if (dtcount == 1) {
-            var dcured = 1
             var cval = utilities.get_color_name(lastfound)
-            if (info.players.plist[iam].name == 'M' || info.diseases[cval].cured > 0) {
-                dcured = info.diseases[cval].infections[iamat]
-            }
-            info.diseases[cval].infections[iamat] -= dcured
-            info.diseases[cval].count += dcured
-            if (info.diseases[cval].infections[iamat] == 0) {
-                delete info.diseases[cval].infections[iamat]
-            }
+            do_cure(info, cval)
         }
         else {
-            useSpecWindow.tooManyGerms(info, citymap)
+            useSpecWindow.tooManyGerms(info, citymap, dvals)
         }
         info.players.moves_left--
     }
@@ -107,6 +113,7 @@ var clickButton = function() {
     }
 
     return {
+        do_cure:do_cure,
         clickButton:clickButton
     }
 
