@@ -91,10 +91,7 @@ var useSpecWindow = function() {
             return
         }
         var cval = info.special_germs[indx]
-        alert(indx)
-        alert(info.special_germs[indx])
         clickButton.do_cure(info, cval)
-        alert('after click')
         info.players.moves_left--
         clean_up(info)
     }
