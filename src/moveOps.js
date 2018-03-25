@@ -1,91 +1,93 @@
+/* globals utilities */
+/* exported moveOps */
 var moveOps = function() {
 
-    var info
-    var citymap
+    var info;
+    var citymap;
 
     function init(sinfo, scitymap) {
-        info = sinfo
-        citymap = scitymap
+        info = sinfo;
+        citymap = scitymap;
     }
 
     function canBuild() {
-        var pnumb = info.players.plyr_move
-        var weare = info.players.plist[pnumb] 
+        var pnumb = info.players.plyr_move;
+        var weare = info.players.plist[pnumb];
         if (info.misc.research_stations.includes(weare.xlocation)) {
-            return false
+            return false;
         }
         if (weare.name == 'O') {
-            return true
+            return true;
         }
         if (info.misc.card_played == weare.xlocation) {
-            return true
+            return true;
         }
-        return false
+        return false;
     }
 
     function canCure() {
-        var pnumb = info.players.plyr_move
-        var weare = info.players.plist[pnumb] 
+        var pnumb = info.players.plyr_move;
+        var weare = info.players.plist[pnumb]; 
         if (!(info.misc.research_stations.includes(weare.xlocation))) {
-            return false
+            return false;
         }
-        var hist = [0, 0, 0, 0]
-        var cmax = 0
-        var snumb = 0
+        var hist = [0, 0, 0, 0];
+        var cmax = 0;
+        var snumb = 0;
         for (var indx=0; indx < weare.cards.length; indx++) {
-            var dindx = Math.floor(weare.cards[indx] / utilities.CITIES_PER_DISEASE)
+            var dindx = Math.floor(weare.cards[indx] / utilities.CITIES_PER_DISEASE);
             if (dindx < utilities.NO_OF_GERM_TYPES) {
-                hist[dindx]++
+                hist[dindx]++;
                 if (hist[dindx] > cmax) {
-                    cmax = hist[dindx]
-                    snumb = dindx
+                    cmax = hist[dindx];
+                    snumb = dindx;
                 }
             }
         }
-        var toCure = utilities.NO_CARDS_TO_CURE
+        var toCure = utilities.NO_CARDS_TO_CURE;
         if (weare.name == 'S') {
-            toCure--
+            toCure--;
         }
         if (cmax >= toCure) {
-            var ccolor = utilities.get_color_name(snumb)
+            var ccolor = utilities.get_color_name(snumb);
             if (info.diseases[ccolor].cured > 0) {
-                return false
+                return false;
             }
-            return ccolor
+            return ccolor;
         }
-        return false
+        return false;
     }
 
     function canHeal() {
-        var iamat = info.players.plist[info.players.plyr_move].xlocation
+        var iamat = info.players.plist[info.players.plyr_move].xlocation;
         for (var i=0; i<utilities.NO_OF_GERM_TYPES; i++) {
-            var dname = utilities.get_color_name(i)
-            var klist = Object.keys(info.diseases[dname].infections)
+            var dname = utilities.get_color_name(i);
+            var klist = Object.keys(info.diseases[dname].infections);
             for (var j=0; j<klist.length; j++) {
                 if (iamat == klist[j]) {
-                    return true
+                    return true;
                 }
             }
         }
-        return false
+        return false;
     }
 
     function canReset() {
         if (info.misc.use_special_window > 0) {
-            return true
+            return true;
         }
         if (info.misc.card_played < 0 && info.misc.dispatched_player < 0) {
-            return false
+            return false;
         }
-        return true
+        return true;
     }
 
-    var button_table = {'Heal': canHeal, 'Build': canBuild, 'Cure': canCure, 'Reset': canReset}
+    var button_table = {'Heal': canHeal, 'Build': canBuild, 'Cure': canCure, 'Reset': canReset};
     function is_button_useable(keyname) {
         if (!(Object.keys(button_table).includes(keyname))) {
-            return true
+            return true;
         }
-        return button_table[keyname]()
+        return button_table[keyname]();
     }
 
     return {
@@ -94,5 +96,5 @@ var moveOps = function() {
         canHeal:canHeal,
         canCure:canCure,
         is_button_useable:is_button_useable
-    }
-}()
+    };
+}();

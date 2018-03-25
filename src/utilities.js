@@ -1,74 +1,76 @@
+/* globals $ */
+/* exported utilities */
 var utilities = function() {
 
-    var filename
-    var exec_func
-    var xcard_color = ['#0000ff', '#000000', '#c08000', '#ff0000', '#00ff00']
-    var color_name = ['BLUE', 'BLACK', 'YELLOW', 'RED']
-    var occupations = {'M': "MEDIC", 'R': "RESEARCHER", 'S': "SCIENTIST", 'D': "DISPATCHER", 'O': "OPERATIONS EXP.", 'Q': "QUARANTINER", 'C': "CONT. PLANNER"}
-    var event_cards = ['Quiet Night', 'Airlift', 'Gov. Grant', 'Forecast', 'Resillient Pop.']
+    var filename;
+    var exec_func;
+    var xcard_color = ['#0000ff', '#000000', '#c08000', '#ff0000', '#00ff00'];
+    var color_name = ['BLUE', 'BLACK', 'YELLOW', 'RED'];
+    var occupations = {'M': "MEDIC", 'R': "RESEARCHER", 'S': "SCIENTIST", 'D': "DISPATCHER", 'O': "OPERATIONS EXP.", 'Q': "QUARANTINER", 'C': "CONT. PLANNER"};
+    var event_cards = ['Quiet Night', 'Airlift', 'Gov. Grant', 'Forecast', 'Resillient Pop.'];
 
-    var BOARD_WIDTH = 11
-    var CITIES_PER_DISEASE = 12
-    var MAX_GERMS = 3
-    var NO_OF_GERM_TYPES = 4
-    var PLAYER_TURNS = 4
-    var EVENT_CARD_TYPE = 4
-    var NO_CARDS_TO_CURE = 5
-    var R_STA_MAX = 6
-    var MAX_GERMS_TOTAL = 24
-    var MAX_INF_CITIES = 48
-    var FIRST_SPECIAL_CARD = 50
-    var BEYOND_LAST_SPECIAL_CARD = 55
-    var EPIDEMIC = 60
+    var BOARD_WIDTH = 11;
+    var CITIES_PER_DISEASE = 12;
+    var MAX_GERMS = 3;
+    var NO_OF_GERM_TYPES = 4;
+    var PLAYER_TURNS = 4;
+    var EVENT_CARD_TYPE = 4;
+    var NO_CARDS_TO_CURE = 5;
+    var R_STA_MAX = 6;
+    var MAX_GERMS_TOTAL = 24;
+    var MAX_INF_CITIES = 48;
+    var FIRST_SPECIAL_CARD = 50;
+    var BEYOND_LAST_SPECIAL_CARD = 55;
+    var EPIDEMIC = 60;
 
     function cread(callback) {
         $.ajax({
             type: "GET",
             url: filename,
             success: callback
-        })
+        });
     }
 
     function readr(filen, pfunc) {
-        filename = filen
-        exec_func = pfunc
+        filename = filen;
+        exec_func = pfunc;
         cread(function(resp) {
-            exec_func(resp)
-        })
+            exec_func(resp);
+        });
     }
 
     function shuffle(deck)  {
         for (var i = deck.length - 1; i > 0; i -= 1) {
-            var j = Math.floor(Math.random() * (i + 1))
-            var temp = deck[i]
-            deck[i] = deck[j]
-            deck[j] = temp
+            var j = Math.floor(Math.random() * (i + 1));
+            var temp = deck[i];
+            deck[i] = deck[j];
+            deck[j] = temp;
         }
     }
 
     function get_color_name(val) {
-        return color_name[val]
+        return color_name[val];
     }
 
     function get_card_color(cval) {
-        return xcard_color[cval]
+        return xcard_color[cval];
     }
 
     function card_to_color(card) {
-        var  indx = Math.floor(card / CITIES_PER_DISEASE)
-        return get_color_name(indx)
+        var  indx = Math.floor(card / CITIES_PER_DISEASE);
+        return get_color_name(indx);
     }
 
     function occupation_name(abbrev) {
-        return occupations[abbrev]
+        return occupations[abbrev];
     }
 
     function id_event_card(numb) {
-        var ider = numb
+        var ider = numb;
         if (numb >= FIRST_SPECIAL_CARD) {
-            ider = ider - FIRST_SPECIAL_CARD
+            ider = ider - FIRST_SPECIAL_CARD;
         }
-        return event_cards[ider]
+        return event_cards[ider];
     }
 
     return {
@@ -92,5 +94,5 @@ var utilities = function() {
         EPIDEMIC:EPIDEMIC,
         EVENT_CARD_TYPE:EVENT_CARD_TYPE,
         NO_CARDS_TO_CURE:NO_CARDS_TO_CURE
-    }
-}()
+    };
+}();
