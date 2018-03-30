@@ -282,11 +282,11 @@ var drawBoard = function() {
         ctx.fillStyle = WHITE;
         ctx.fillRect(boardLocations.TEXT_WINDOW_LEFT, boardLocations.TEXT_WINDOW_TOP, boardLocations.TEXT_WINDOW_WIDTH, boardLocations.TEXT_WINDOW_HEIGHT); 
         ctx.fillStyle = BLACK;
-        var txt_data = info.special_text_fields;
+        var txt_data = info.display.special_text_fields;
         for (var itxt=0; itxt<txt_data.length; itxt++) {
             if (txt_data[itxt].highlight) {
                 ctx.fillStyle = OFF_YELLOW;
-                ctx.fillRect(info.card_start, txt_data[itxt].top-boardLocations.CARD_OFFSET, boardLocations.CARD_WIDTH, boardLocations.CARD_HEIGHT);
+                ctx.fillRect(info.display.card_start, txt_data[itxt].top-boardLocations.CARD_OFFSET, boardLocations.CARD_WIDTH, boardLocations.CARD_HEIGHT);
             }
             ctx.font = txt_data[itxt].font;
             ctx.fillStyle = txt_data[itxt].color;

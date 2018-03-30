@@ -78,7 +78,7 @@ var setupBoard = function() {
         }
         var card_data = {"infections": infections, "inf_disc": [], "player_cards": ndeck, "player_disc": []};
 
-        var retv = {"misc": misc_data, "players": plyr_d, "diseases": dis_data, "card_decks": card_data, "special_text_fields": []};
+        var retv = {"misc": misc_data, "players": plyr_d, "diseases": dis_data, "card_decks": card_data, "display": {}};
         var results = JSON.stringify(retv);
         sessionStorage.setItem('game_data', results);
         return results;

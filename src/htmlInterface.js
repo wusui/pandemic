@@ -1,17 +1,24 @@
 /* globals handleInput, utilities, setupCities */
 /* exported htmlInterface, panOnloadFunc */
 var htmlInterface = function() {
+    var LOTS_OF_MOVES = 1000;
+    var NUMBER_PART = 5;
+    var LETTER_PART = 3;
+    var TURN_ME_OFF = false;
     function debug(evnt) {
         var cmd = evnt.code.toString();
         var info = JSON.parse(sessionStorage.getItem('game_data'));
+        if (TURN_ME_OFF) {
+            return;
+        }
         if (cmd == "Period") {
-            info.players.moves_left += 1000;
+            info.players.moves_left += LOTS_OF_MOVES;
             handleInput.update_page(info);
             return;
         }
         if (cmd.startsWith("Digit")) {
-            var numb = parseInt(cmd.substring(5));
-            if (numb >= 4) {
+            var numb = parseInt(cmd.substring(NUMBER_PART));
+            if (numb >= info.players.plist.length) {
                 return;
             }
             info.players.plyr_move = numb;
@@ -26,7 +33,7 @@ var htmlInterface = function() {
             return;
         }
         if (cmd.startsWith("Key")) {
-            var letter = cmd.substring(3);
+            var letter = cmd.substring(LETTER_PART);
             var dptr = "ABCD".indexOf(letter);
             if (dptr < 0) {
                 return;

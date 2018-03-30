@@ -13,7 +13,7 @@ var useSpecWindow = function() {
         lcitymap = citymap;
         midpoint = left_pt + Math.floor(boardLocations.TEXT_WINDOW_WIDTH / 2);
         y_line_count = 0;
-        info.card_start = midpoint - boardLocations.CARD_WIDTH / 2;
+        info.display.card_start = midpoint - boardLocations.CARD_WIDTH / 2;
         info.misc.use_special_window = 1;
         ctx = drawBoard.get_ctx();
     }
@@ -31,8 +31,8 @@ var useSpecWindow = function() {
 
     function clean_up(info) {
         info.misc.use_special_window = 0;
-        info.special_callback = "";
-        info.special_text_fields = [];
+        info.display.special_callback = "";
+        info.display.special_text_fields = [];
         handleInput.update_page(info);
     }
 
@@ -86,11 +86,11 @@ var useSpecWindow = function() {
     }
 
     function heal_callback(x, y, info) {
-        var indx = gen_callback(x, y, info.special_germs.length, 4);
+        var indx = gen_callback(x, y, info.display.special_germs.length, 4);
         if (indx < 0) {
             return;
         }
-        var cval = info.special_germs[indx];
+        var cval = info.display.special_germs[indx];
         clickButton.do_cure(info, cval);
         info.players.moves_left--;
         clean_up(info);
@@ -110,19 +110,19 @@ var useSpecWindow = function() {
         common_stuff(info, citymap);
         var line_filler = print_head(["Click on the disease", "that you want to heal"]);
         var nline_no = 4;
-        info.special_germs = [];
+        info.display.special_germs = [];
         for (var i=0; i<utilities.NO_OF_GERM_TYPES; i++) {
             if (dvals[i] > 0) {
                 var dname = utilities.get_color_name(i);
                 var lcolor = utilities.get_card_color(i);
-                info.special_germs.push(dname);
+                info.display.special_germs.push(dname);
                 var newtxt = write_gen_line(dname, lcolor, nline_no);
                 line_filler.push(newtxt);
                 nline_no++;
             }
         }
-        info.special_text_fields = line_filler;
-        info.special_callback = "HEAL_CALLBACK";
+        info.display.special_text_fields = line_filler;
+        info.display.special_callback = "HEAL_CALLBACK";
     }
 
     function tooManyStations(info, citymap) {
@@ -135,8 +135,8 @@ var useSpecWindow = function() {
             line_filler.push(newtxt);
             nline_no++;
         }
-        info.special_text_fields = line_filler;
-        info.special_callback = "RES_STA_CALLBACK";
+        info.display.special_text_fields = line_filler;
+        info.display.special_callback = "RES_STA_CALLBACK";
     }
 
     return {
