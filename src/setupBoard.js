@@ -78,7 +78,13 @@ var setupBoard = function() {
         }
         var card_data = {"infections": infections, "inf_disc": [], "player_cards": ndeck, "player_disc": []};
 
-        var retv = {"misc": misc_data, "players": plyr_d, "diseases": dis_data, "card_decks": card_data, "display": {}};
+        var l_display = {};
+        l_display.card_start = 0;
+        l_display.special_callback = "";
+        l_display.special_text_fields = [];
+        l_display.special_germs = [];
+
+        var retv = {"misc": misc_data, "players": plyr_d, "diseases": dis_data, "card_decks": card_data, "display": l_display};
         var results = JSON.stringify(retv);
         sessionStorage.setItem('game_data', results);
         return results;

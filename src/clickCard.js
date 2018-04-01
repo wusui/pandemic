@@ -18,6 +18,9 @@ var clickCard = function() {
         var hand = info.players.plist[curp].cards;
         if (hand.includes(action)) {
             if (action < utilities.MAX_INF_CITIES) {
+                if (info.misc.card_played != -1) {
+                    info.misc.dispatched_player = -1;
+                }
                 info.misc.card_played = action;
                 handleInput.update_page(info);
                 return;

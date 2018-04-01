@@ -32,6 +32,9 @@ var clickPlayer = function() {
             }
         }
         if (info.players.plist[info.players.plyr_move].name == 'D') {
+            if (info.misc.dispatched_player != -1) {
+                info.misc.card_played = -1;
+            }
             info.misc.dispatched_player = action;
             handleInput.update_page(info);
         }
