@@ -2,7 +2,7 @@
 /* exported clickButton */
 var clickButton = function() {
 
-    function do_cure(info, cval) {
+    function do_heal(info, cval) {
         var iam = info.players.plyr_move;
         var iamat = info.players.plist[iam].xlocation;
         var dcured = 1;
@@ -40,10 +40,11 @@ var clickButton = function() {
         }
         if (dtcount == 1) {
             var cval = utilities.get_color_name(lastfound);
-            do_cure(info, cval);
+            do_heal(info, cval);
         }
         else {
             useSpecWindow.tooManyGerms(info, citymap, dvals);
+            return;
         }
         info.players.moves_left--;
     }
@@ -52,13 +53,14 @@ var clickButton = function() {
         var iam = info.players.plist[info.players.plyr_move];
         var newr = iam.xlocation;
         info.misc.research_stations.push(newr);
-        info.players.moves_left--;
         if (iam.name != 'O') {
             clickCard.discard(info);
         }
         if (info.misc.research_stations.length > utilities.R_STA_MAX) {
             useSpecWindow.tooManyStations(info, citymap);
+            return;
         }
+        info.players.moves_left--;
     }
 
     function buttonCure(info, citymap) {
@@ -76,14 +78,13 @@ var clickButton = function() {
             needed--;
         }
         if (needed == ccount.length) {
-            info.diseases[curecol].cured = 1;
-            for (var ii=0; ii<ccount.length; ii++) {
-                info.misc.card_played = ccount[ii];
-                clickCard.discard(info);
-            }
+            do_cure(info, ccount);
         }
         else {
-            alert('Too many of the right cards.  This code will be more complicated.');
+            info.display.cure_cards = ccount;
+            info.display.cure_c_needed = needed;
+            useSpecWindow.tooManyCureCards(info, citymap);
+            return
         }
         info.players.moves_left--;
     }
@@ -106,6 +107,15 @@ var clickButton = function() {
         close();
     }
 
+    function do_cure(info, ccount) {
+        var icolor = Math.floor(ccount[0] / utilities.CITIES_PER_DISEASE);
+        var curecolor = utilities.get_color_name(icolor);
+        info.diseases[curecolor].cured = 1;
+        for (var ii=0; ii<ccount.length; ii++) {
+            info.misc.card_played = ccount[ii];
+            clickCard.discard(info);
+        }
+    }
 
     var button_tbl = {'Heal': buttonHeal, 'Build': buttonBuild, 'Cure': buttonCure, 'Reset': buttonReset, 'Skip': buttonSkip, 'Help': buttonHelp, 'Quit': buttonQuit};
 
@@ -116,6 +126,7 @@ var clickButton = function() {
     }
 
     return {
+        do_heal:do_heal,
         do_cure:do_cure,
         clickButton:clickButton
     };

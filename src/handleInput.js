@@ -89,10 +89,10 @@ var handleInput = function() {
                     return;
                 }
                 var yindx = y - boardLocations.PLAYER_Y_COORD;
-                if ((yindx % 20) > 12) {
+                if ((yindx % boardLocations.CARD_SPACING) > boardLocations.CARD_OFFSET) {
                     return;
                 }
-                var cindx = Math.floor(yindx / 20);
+                var cindx = Math.floor(yindx / boardLocations.CARD_SPACING);
                 if (cindx >= info.players.plist[lxcoord].cards.length) {
                     return;
                 }
@@ -126,12 +126,15 @@ var handleInput = function() {
             if (xx > 0 && xx < boardLocations.TEXT_WINDOW_WIDTH) {
                 var yy = y - boardLocations.TEXT_WINDOW_TOP;
                 if (yy > 0 && yy <  boardLocations.TEXT_WINDOW_HEIGHT) {
-                    alert(x.toString()+":"+y.toString());
+                    //alert(x.toString()+":"+y.toString());
                     if (info.display.special_callback == "RES_STA_CALLBACK") {
                         useSpecWindow.res_callback(x,y,info);
                     }
                     if (info.display.special_callback == "HEAL_CALLBACK") {
                         useSpecWindow.heal_callback(x,y,info);
+                    }
+                    if (info.display.special_callback == "EXTRA_CURE_CALLBACK") {
+                        useSpecWindow.cure_callback(x,y,info);
                     }
                 }
             }

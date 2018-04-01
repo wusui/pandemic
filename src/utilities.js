@@ -8,6 +8,7 @@ var utilities = function() {
     var color_name = ['BLUE', 'BLACK', 'YELLOW', 'RED'];
     var occupations = {'M': "MEDIC", 'R': "RESEARCHER", 'S': "SCIENTIST", 'D': "DISPATCHER", 'O': "OPERATIONS EXP.", 'Q': "QUARANTINER", 'C': "CONT. PLANNER"};
     var event_cards = ['Quiet Night', 'Airlift', 'Gov. Grant', 'Forecast', 'Resillient Pop.'];
+    var num_text_val = ['zero', 'one', 'two', 'three'];
 
     var BOARD_WIDTH = 11;
     var CITIES_PER_DISEASE = 12;
@@ -48,6 +49,10 @@ var utilities = function() {
         }
     }
 
+    function num_to_text(val) {
+        return num_text_val[val];
+    }
+
     function get_color_name(val) {
         return color_name[val];
     }
@@ -76,6 +81,7 @@ var utilities = function() {
     return {
         readr:readr,
         shuffle:shuffle,
+        num_to_text:num_to_text,
         get_color_name:get_color_name,
         get_card_color:get_card_color,
         occupation_name:occupation_name,

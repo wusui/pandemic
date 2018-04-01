@@ -83,6 +83,8 @@ var setupBoard = function() {
         l_display.special_callback = "";
         l_display.special_text_fields = [];
         l_display.special_germs = [];
+        l_display.cure_cards = [];
+        l_display.cure_c_needed = -1;
 
         var retv = {"misc": misc_data, "players": plyr_d, "diseases": dis_data, "card_decks": card_data, "display": l_display};
         var results = JSON.stringify(retv);

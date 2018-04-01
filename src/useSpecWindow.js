@@ -25,7 +25,7 @@ var useSpecWindow = function() {
         var sz = ctx.measureText(text).width;
         var bckoff = Math.floor(sz / 2);
         txt_sline.left = midpoint - bckoff;
-        txt_sline.top = top_pt + 20*lineno;
+        txt_sline.top = top_pt + boardLocations.CARD_SPACING*lineno;
         return txt_sline;
     }
 
@@ -74,10 +74,10 @@ var useSpecWindow = function() {
         }
         var ctop = boardLocations.TEXT_WINDOW_TOP - boardLocations.MARGIN;
         var loc = y - ctop;
-        if (loc % boardLocations.DIS_Y_SPACES > 12) {
+        if (loc % boardLocations.DIS_Y_SPACES > boardLocations.CARD_OFFSET) {
             return -1;
         }
-        loc -= offset * 20;
+        loc -= offset * boardLocations.CARD_SPACING;
         var indx = Math.floor(loc / boardLocations.DIS_Y_SPACES);
         if (indx > numbr) {
             return -1;
@@ -91,7 +91,7 @@ var useSpecWindow = function() {
             return;
         }
         var cval = info.display.special_germs[indx];
-        clickButton.do_cure(info, cval);
+        clickButton.do_heal(info, cval);
         info.players.moves_left--;
         clean_up(info);
     }
@@ -104,6 +104,28 @@ var useSpecWindow = function() {
         info.misc.research_stations.splice(indx,1);
         info.players.moves_left--;
         clean_up(info);
+    }
+
+    function cure_callback(x, y, info) {
+        var ccards = info.display.cure_cards;
+        var needed = info.display.cure_c_needed;
+        var indx = gen_callback(x, y, ccards.length, 4);
+        if (indx < 0) {
+            return;
+        }
+        ccards.splice(indx,1);
+        info.display.cure_cards = ccards;
+        if (ccards.length > needed) {
+            info.display.cure_cards = ccards;
+            info.display.cure_c_needed = needed;
+            tooManyCureCards(info, lcitymap);
+            handleInput.update_page(info);
+        }
+        else {
+            clickButton.do_cure(info, ccards);
+            info.players.moves_left--;
+            clean_up(info);
+        }
     }
 
     function tooManyGerms(info, citymap, dvals) {
@@ -139,9 +161,32 @@ var useSpecWindow = function() {
         info.display.special_callback = "RES_STA_CALLBACK";
     }
 
+    function tooManyCureCards(info, citymap) {
+        var ccards = info.display.cure_cards;
+        var needed = info.display.cure_c_needed;
+        common_stuff(info, citymap);
+        var extras = ccards.length - needed;
+        var headr1 = "You have " + utilities.num_to_text(extras)  + " extra cure card";
+        if (extras > 1) {
+            headr1 = headr1 + "s";
+        }
+        var line_filler = print_head([headr1, "Click on card to keep."]);
+        var nline_no = 4;
+        for (var i=0; i<ccards.length; i++) {
+            var rnumb = ccards[i];
+            var newtxt = write_card(rnumb, nline_no);
+            line_filler.push(newtxt);
+            nline_no++;
+        }
+        info.display.special_text_fields = line_filler;
+        info.display.special_callback = "EXTRA_CURE_CALLBACK";
+    }
+
     return {
         res_callback:res_callback,
         heal_callback:heal_callback,
+        cure_callback:cure_callback,
+        tooManyCureCards:tooManyCureCards,
         tooManyStations:tooManyStations,
         tooManyGerms:tooManyGerms
     };
