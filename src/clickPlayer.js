@@ -3,6 +3,12 @@
 var clickPlayer = function() {
 
     function clickPlayer(action, info, citymap) {
+        if (info.misc.airlift_location || info.misc.gov_grant) {
+            return;
+        }
+        if (info.misc.airlift_player) {
+            alert('to do');
+        }
         if (action == info.players.plyr_move) {
             return;
         }

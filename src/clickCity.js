@@ -10,6 +10,31 @@ var clickCity = function() {
     }
 
     function clickCity(action, info, citymap) {
+        if (info.misc.airlift_player) {
+            return;
+        }
+        if (info.misc.airlift_location) {
+            alert('to do airlift');
+        }
+        if (info.misc.gov_grant) {
+            var newr = citymap.byname[action].number;
+            var okayloc = true;
+            for (var irsc=0; irsc<info.misc.research_stations.length; irsc++) {
+                if (info.misc.research_stations[irsc] == newr) {
+                    okayloc = false;
+                    break;
+                }
+            }
+            if (okayloc) {
+                info.misc.research_stations.push(newr);
+                if (info.misc.research_stations.length > utilities.R_STA_MAX) {
+                    useSpecWindow.tooManyStations(info, citymap);
+                }
+                info.misc.gov_grant = false;
+            }
+            handleInput.update_page(info);
+            return;
+        }
         var mover = info.players.plyr_move;
         var disptch = false;
         if (info.players.plist[mover].name == 'D') {

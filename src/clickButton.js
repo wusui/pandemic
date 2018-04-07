@@ -58,7 +58,6 @@ var clickButton = function() {
         }
         if (info.misc.research_stations.length > utilities.R_STA_MAX) {
             useSpecWindow.tooManyStations(info, citymap);
-            return;
         }
         info.players.moves_left--;
     }
@@ -120,6 +119,11 @@ var clickButton = function() {
     var button_tbl = {'Heal': buttonHeal, 'Build': buttonBuild, 'Cure': buttonCure, 'Reset': buttonReset, 'Skip': buttonSkip, 'Help': buttonHelp, 'Quit': buttonQuit};
 
     function clickButton(button, info, citymap) {
+        if (button != 'Help') {
+            if (info.misc.airlift_player || info.misc.airlift_location || info.misc.gov_grant) {
+                return;
+            }
+        }
         button_tbl[button](info, citymap);
         handleInput.update_page(info);
         return;

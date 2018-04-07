@@ -36,6 +36,12 @@ var htmlInterface = function() {
             var letter = cmd.substring(LETTER_PART);
             var dptr = "ABCD".indexOf(letter);
             if (dptr < 0) {
+                var sptr = "HIJKL".indexOf(letter);
+                if (sptr < 0) {
+                    return;
+                }
+                info.players.plist[p].cards.push(sptr + utilities.FIRST_SPECIAL_CARD);
+                handleInput.update_page(info);
                 return;
             }
             var dindx = utilities.get_color_name(dptr);

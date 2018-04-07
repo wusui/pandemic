@@ -136,6 +136,9 @@ var handleInput = function() {
                     if (info.display.special_callback == "EXTRA_CURE_CALLBACK") {
                         useSpecWindow.cure_callback(x,y,info);
                     }
+                    if (info.display.special_callback == "MESSAGE_CALLBACK") {
+                        useSpecWindow.message_callback(x,y,info);
+                    }
                 }
             }
         }
