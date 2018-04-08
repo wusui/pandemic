@@ -1,4 +1,4 @@
-/* globals handleInput, clickCard */
+/* globals handleInput, clickCard, utilities, useSpecWindow */
 /* exported clickCity */
 var clickCity = function() {
 
@@ -14,7 +14,11 @@ var clickCity = function() {
             return;
         }
         if (info.misc.airlift_location) {
-            alert('to do airlift');
+            info.players.plist[info.misc.airlifted_player].xlocation = citymap.byname[action].number;
+            info.misc.airlift_location = false;
+            info.misc.airlifted_player = -1;
+            handleInput.update_page(info);
+            return;
         }
         if (info.misc.gov_grant) {
             var newr = citymap.byname[action].number;

@@ -1,4 +1,4 @@
-/* global handleInput, utilities */
+/* global handleInput, utilities, useSpecWindow */
 /* exported clickCard */
 var clickCard = function() {
 
@@ -15,13 +15,17 @@ var clickCard = function() {
 
     function specialCard(action, info, citymap) {
         var cval = action - utilities.FIRST_SPECIAL_CARD;
-        if (cval == 0) {
+        if (cval === 0) {
             info.misc.quiet_night = true;
-            var line_filler = useSpecWindow.print_message(info, citymap, ["Quiet Night Card Played"]);
+            useSpecWindow.print_message(info, citymap, ["Quiet Night Card Played"]);
         }
-        if (cval == 2) {
+        if (cval === 1) {
+            info.misc.airlift_player = true;
+            useSpecWindow.print_message(info, citymap, ["Airlift Card Played", "After this box is cleared,", "click on the player that you", "ant to airlift"]);
+        }
+        if (cval === 2) {
             info.misc.gov_grant = true;
-            var line_filler = useSpecWindow.print_message(info, citymap, ["Government Grant Card Played", "After this box is cleared,", "click on the new research", "station location"]);
+            useSpecWindow.print_message(info, citymap, ["Government Grant Card Played", "After this box is cleared,", "click on the new research", "station location"]);
         }
         info.misc.card_played = action;
         discard(info);

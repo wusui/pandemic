@@ -83,7 +83,7 @@ var clickButton = function() {
             info.display.cure_cards = ccount;
             info.display.cure_c_needed = needed;
             useSpecWindow.tooManyCureCards(info, citymap);
-            return
+            return;
         }
         info.players.moves_left--;
     }

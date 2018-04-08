@@ -1,4 +1,4 @@
-/* globals handleInput */
+/* globals handleInput, utilities, useSpecWindow */
 /* exported clickPlayer */
 var clickPlayer = function() {
 
@@ -7,7 +7,15 @@ var clickPlayer = function() {
             return;
         }
         if (info.misc.airlift_player) {
-            alert('to do');
+            info.misc.airlift_player = false;
+            info.misc.airlift_location = true;
+            info.misc.airlifted_player = action;
+            var occupation = utilities.occupation_name(info.players.plist[action].name);
+            var msg1 = occupation + " has been selected";
+            var msg2 = occupation + " will be airlifted.";
+            useSpecWindow.print_message(info, citymap, [msg1, "to be airlifted.", " ", "After this box is cleared,", "click on the city to which", msg2]);
+            handleInput.update_page(info);
+            return;
         }
         if (action == info.players.plyr_move) {
             return;
