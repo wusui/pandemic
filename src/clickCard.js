@@ -4,13 +4,14 @@ var clickCard = function() {
 
     function discard(info) {
         info.card_decks.player_disc.push(info.misc.card_played);
-        var indx = info.players.plyr_move;
-        var rindx = info.players.plist[indx].cards.indexOf(info.misc.card_played);
-        if (rindx >= 0) {
-            info.players.plist[indx].cards.splice(rindx, 1);
+        for (var indx=0; indx<info.players.plist.length; indx++) {
+            var rindx = info.players.plist[indx].cards.indexOf(info.misc.card_played);
+            if (rindx >= 0) {
+                info.players.plist[indx].cards.splice(rindx, 1);
+                info.misc.card_played = -1;
+                handleInput.update_page(info);
+            }
         }
-        info.misc.card_played = -1;
-        handleInput.update_page(info);
     }
 
     function specialCard(action, info, citymap) {
@@ -21,7 +22,7 @@ var clickCard = function() {
         }
         if (cval === 1) {
             info.misc.airlift_player = true;
-            useSpecWindow.print_message(info, citymap, ["Airlift Card Played", "After this box is cleared,", "click on the player that you", "ant to airlift"]);
+            useSpecWindow.print_message(info, citymap, ["Airlift Card Played", "After this box is cleared,", "click on the player that you", "want to airlift"]);
         }
         if (cval === 2) {
             info.misc.gov_grant = true;
@@ -46,6 +47,8 @@ var clickCard = function() {
                 handleInput.update_page(info);
                 return;
             }
+        }
+        if (action >= utilities.MAX_INF_CITIES) {
             specialCard(action, info, citymap);
         }
         for (var ii=0; ii<info.players.plist.length; ii++) {
