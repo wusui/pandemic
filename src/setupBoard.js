@@ -17,10 +17,8 @@ var setupBoard = function() {
 
     function initialize(params) {
         misc_data.quiet_night = false;
-        misc_data.airlift_player = false;
-        misc_data.airlift_location = false;
         misc_data.airlifted_player = -1;
-        misc_data.gov_grant = false;
+        misc_data.special_action = 0;
         misc_data.research_stations = [0];
         misc_data.outbreak_count = 0;
         misc_data.epid_counter = 0;

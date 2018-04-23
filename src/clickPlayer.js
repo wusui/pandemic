@@ -3,18 +3,17 @@
 var clickPlayer = function() {
 
     function clickPlayer(action, info, citymap) {
-        if (info.misc.airlift_location || info.misc.gov_grant) {
-            return;
-        }
-        if (info.misc.airlift_player) {
-            info.misc.airlift_player = false;
-            info.misc.airlift_location = true;
+        if (info.misc.special_action ==  utilities.SA_AIRLIFT_PLAYER) {
+            info.misc.special_action = utilities.SA_AIRLIFT_LOCATION;
             info.misc.airlifted_player = action;
             var occupation = utilities.occupation_name(info.players.plist[action].name);
             var msg1 = occupation + " has been selected";
             var msg2 = occupation + " will be airlifted.";
             useSpecWindow.print_message(info, citymap, [msg1, "to be airlifted.", " ", "After this box is cleared,", "click on the city to which", msg2]);
             handleInput.update_page(info);
+            return;
+        }
+        if (info.misc.special_action > 0) {
             return;
         }
         if (action == info.players.plyr_move) {

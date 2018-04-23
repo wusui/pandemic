@@ -10,17 +10,14 @@ var clickCity = function() {
     }
 
     function clickCity(action, info, citymap) {
-        if (info.misc.airlift_player) {
-            return;
-        }
-        if (info.misc.airlift_location) {
+        if (info.misc.special_action == utilities.SA_AIRLIFT_LOCATION) {
             info.players.plist[info.misc.airlifted_player].xlocation = citymap.byname[action].number;
-            info.misc.airlift_location = false;
+            info.misc.special_action = 0;
             info.misc.airlifted_player = -1;
             handleInput.update_page(info);
             return;
         }
-        if (info.misc.gov_grant) {
+        if (info.misc.special_action == utilities.SA_GOV_GRANT) {
             var newr = citymap.byname[action].number;
             var okayloc = true;
             for (var irsc=0; irsc<info.misc.research_stations.length; irsc++) {
@@ -34,9 +31,12 @@ var clickCity = function() {
                 if (info.misc.research_stations.length > utilities.R_STA_MAX) {
                     useSpecWindow.tooManyStations(info, citymap);
                 }
-                info.misc.gov_grant = false;
+                info.misc.special_action = 0;
             }
             handleInput.update_page(info);
+            return;
+        }
+        if (info.misc.special_action > 0) {
             return;
         }
         var mover = info.players.plyr_move;

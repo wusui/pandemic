@@ -120,7 +120,7 @@ var clickButton = function() {
 
     function clickButton(button, info, citymap) {
         if (button != 'Help') {
-            if (info.misc.airlift_player || info.misc.airlift_location || info.misc.gov_grant) {
+            if (info.misc.special_action > 0) {
                 return;
             }
         }

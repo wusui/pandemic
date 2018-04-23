@@ -21,11 +21,11 @@ var clickCard = function() {
             useSpecWindow.print_message(info, citymap, ["Quiet Night Card Played"]);
         }
         if (cval === 1) {
-            info.misc.airlift_player = true;
+            info.misc.special_action = utilities.SA_AIRLIFT_PLAYER;
             useSpecWindow.print_message(info, citymap, ["Airlift Card Played", "After this box is cleared,", "click on the player that you", "want to airlift"]);
         }
         if (cval === 2) {
-            info.misc.gov_grant = true;
+            info.misc.special_action = utilities.SA_GOV_GRANT;
             useSpecWindow.print_message(info, citymap, ["Government Grant Card Played", "After this box is cleared,", "click on the new research", "station location"]);
         }
         if (cval === 3) {
@@ -37,7 +37,7 @@ var clickCard = function() {
     }
 
     function clickCard(action, info, citymap) {
-        if (info.misc.airlift_player || info.misc.airlift_location || info.misc.gov_grant) {
+        if (info.misc.special_action > 0) {
             return;
         }
         var curp = info.players.plyr_move;

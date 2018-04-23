@@ -23,6 +23,9 @@ var utilities = function() {
     var FIRST_SPECIAL_CARD = 50;
     var BEYOND_LAST_SPECIAL_CARD = 55;
     var EPIDEMIC = 60;
+    var SA_AIRLIFT_PLAYER = 1;
+    var SA_AIRLIFT_LOCATION = 2;
+    var SA_GOV_GRANT = 3;
 
     function cread(callback) {
         $.ajax({
@@ -99,6 +102,9 @@ var utilities = function() {
         BEYOND_LAST_SPECIAL_CARD:BEYOND_LAST_SPECIAL_CARD,
         EPIDEMIC:EPIDEMIC,
         EVENT_CARD_TYPE:EVENT_CARD_TYPE,
-        NO_CARDS_TO_CURE:NO_CARDS_TO_CURE
+        NO_CARDS_TO_CURE:NO_CARDS_TO_CURE,
+        SA_AIRLIFT_PLAYER:SA_AIRLIFT_PLAYER,
+        SA_AIRLIFT_LOCATION:SA_AIRLIFT_LOCATION,
+        SA_GOV_GRANT:SA_GOV_GRANT
     };
 }();
