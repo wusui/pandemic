@@ -36,6 +36,9 @@ var htmlInterface = function() {
             var letter = cmd.substring(LETTER_PART);
             var dptr = "ABCD".indexOf(letter);
             if (dptr < 0) {
+                if (letter == "Z") {
+                    alert(JSON.stringify(info));
+                }
                 var sptr = "HIJKL".indexOf(letter);
                 if (sptr < 0) {
                     return;

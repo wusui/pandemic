@@ -9,6 +9,21 @@ var useSpecWindow = function() {
     var y_line_count;
     var lcitymap;
 
+    var RES_STA_CALLBACK = "RES_STA_CALLBACK";
+    var HEAL_CALLBACK = "HEAL_CALLBACK";
+    var EXTRA_CURE_CALLBACK = "EXTRA_CURE_CALLBACK";
+    var MESSAGE_CALLBACK = "MESSAGE_CALLBACK";
+    var branch_table = {
+        RES_STA_CALLBACK: res_callback,
+        HEAL_CALLBACK: heal_callback,
+        EXTRA_CURE_CALLBACK: cure_callback,
+        MESSAGE_CALLBACK: message_callback
+    };
+
+    function do_callback(x, y, info) {
+        branch_table[info.display.special_callback](x,y,info);
+    }
+
     function common_stuff(info, citymap) {
         lcitymap = citymap;
         midpoint = left_pt + Math.floor(boardLocations.TEXT_WINDOW_WIDTH / 2);
@@ -65,7 +80,7 @@ var useSpecWindow = function() {
         inp_lines.push('to unlock and continue.');
         var line_filler = print_head(inp_lines);
         info.display.special_text_fields = line_filler;
-        info.display.special_callback = "MESSAGE_CALLBACK";
+        info.display.special_callback = MESSAGE_CALLBACK;
     }
 
     function print_head(inp_lines) {
@@ -157,7 +172,7 @@ var useSpecWindow = function() {
             }
         }
         info.display.special_text_fields = line_filler;
-        info.display.special_callback = "HEAL_CALLBACK";
+        info.display.special_callback = HEAL_CALLBACK;
     }
 
     function tooManyStations(info, citymap) {
@@ -171,7 +186,7 @@ var useSpecWindow = function() {
             nline_no++;
         }
         info.display.special_text_fields = line_filler;
-        info.display.special_callback = "RES_STA_CALLBACK";
+        info.display.special_callback = RES_STA_CALLBACK;
     }
 
     function tooManyCureCards(info, citymap) {
@@ -192,14 +207,11 @@ var useSpecWindow = function() {
             nline_no++;
         }
         info.display.special_text_fields = line_filler;
-        info.display.special_callback = "EXTRA_CURE_CALLBACK";
+        info.display.special_callback = EXTRA_CURE_CALLBACK;
     }
 
     return {
-        message_callback:message_callback,
-        res_callback:res_callback,
-        heal_callback:heal_callback,
-        cure_callback:cure_callback,
+        do_callback: do_callback,
         print_message:print_message,
         tooManyCureCards:tooManyCureCards,
         tooManyStations:tooManyStations,

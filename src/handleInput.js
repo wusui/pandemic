@@ -126,19 +126,8 @@ var handleInput = function() {
             if (xx > 0 && xx < boardLocations.TEXT_WINDOW_WIDTH) {
                 var yy = y - boardLocations.TEXT_WINDOW_TOP;
                 if (yy > 0 && yy <  boardLocations.TEXT_WINDOW_HEIGHT) {
-                    //alert(x.toString()+":"+y.toString());
-                    if (info.display.special_callback == "RES_STA_CALLBACK") {
-                        useSpecWindow.res_callback(x,y,info);
-                    }
-                    if (info.display.special_callback == "HEAL_CALLBACK") {
-                        useSpecWindow.heal_callback(x,y,info);
-                    }
-                    if (info.display.special_callback == "EXTRA_CURE_CALLBACK") {
-                        useSpecWindow.cure_callback(x,y,info);
-                    }
-                    if (info.display.special_callback == "MESSAGE_CALLBACK") {
-                        useSpecWindow.message_callback(x,y,info);
-                    }
+                    // alert(x.toString()+":"+y.toString());
+                    useSpecWindow.do_callback(x,y,info);
                 }
             }
         }

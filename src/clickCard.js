@@ -28,6 +28,10 @@ var clickCard = function() {
             info.misc.gov_grant = true;
             useSpecWindow.print_message(info, citymap, ["Government Grant Card Played", "After this box is cleared,", "click on the new research", "station location"]);
         }
+        if (cval === 3) {
+            alert("this is a forecast card\nthis is the second line");
+            alert(JSON.stringify(info.card_decks.infections));
+        }
         info.misc.card_played = action;
         discard(info);
     }
