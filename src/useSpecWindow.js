@@ -1,8 +1,8 @@
-/* globals boardLocations, utilities, drawBoard, handleInput, clickButton */
+/* globals boardLocations, utilities, drawBoard, handleInput, clickButton, specialSpecial */
 /* exported useSpecWindow */
 var useSpecWindow = function() {
 
-    var ctx;
+    // var ctx;
     var left_pt = boardLocations.TEXT_WINDOW_LEFT;
     var top_pt = boardLocations.TEXT_WINDOW_TOP;
     var midpoint;
@@ -13,11 +13,13 @@ var useSpecWindow = function() {
     var HEAL_CALLBACK = "HEAL_CALLBACK";
     var EXTRA_CURE_CALLBACK = "EXTRA_CURE_CALLBACK";
     var MESSAGE_CALLBACK = "MESSAGE_CALLBACK";
+    var FORECAST_CALLBACK = "FORECAST_CALLBACK";
     var branch_table = {
         RES_STA_CALLBACK: res_callback,
         HEAL_CALLBACK: heal_callback,
         EXTRA_CURE_CALLBACK: cure_callback,
-        MESSAGE_CALLBACK: message_callback
+        MESSAGE_CALLBACK: message_callback,
+        FORECAST_CALLBACK: forecast_callback
     };
 
     function do_callback(x, y, info) {
@@ -30,14 +32,14 @@ var useSpecWindow = function() {
         y_line_count = 0;
         info.display.card_start = midpoint - boardLocations.CARD_WIDTH / 2;
         info.misc.use_special_window = 1;
-        ctx = drawBoard.get_ctx();
     }
 
     function setup_line(text, lineno) {
         var txt_sline = {};
         txt_sline.font = drawBoard.MEDIUM_FONT;
         txt_sline.text = text;
-        var sz = ctx.measureText(text).width;
+        var lctx = drawBoard.get_ctx();
+        var sz = lctx.measureText(text).width;
         var bckoff = Math.floor(sz / 2);
         txt_sline.left = midpoint - bckoff;
         txt_sline.top = top_pt + boardLocations.CARD_SPACING*lineno;
@@ -71,6 +73,10 @@ var useSpecWindow = function() {
         var cindex = Math.floor(incard/utilities.CITIES_PER_DISEASE);
         txt_line.color = utilities.get_card_color(cindex);
         return txt_line;
+    }
+
+    function forecast_callback(x, y, info) {
+        specialSpecial.forecast_callback(x, y, info);
     }
 
     function print_message(info, citymap, inp_lines) {
@@ -211,10 +217,14 @@ var useSpecWindow = function() {
     }
 
     return {
-        do_callback: do_callback,
+        FORECAST_CALLBACK: FORECAST_CALLBACK,
+        do_callback:do_callback,
         print_message:print_message,
         tooManyCureCards:tooManyCureCards,
         tooManyStations:tooManyStations,
-        tooManyGerms:tooManyGerms
+        tooManyGerms:tooManyGerms,
+        common_stuff:common_stuff,
+        print_head:print_head,
+        clean_up:clean_up
     };
 }();

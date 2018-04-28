@@ -26,6 +26,7 @@ var utilities = function() {
     var SA_AIRLIFT_PLAYER = 1;
     var SA_AIRLIFT_LOCATION = 2;
     var SA_GOV_GRANT = 3;
+    var SA_FORECAST = 4;
 
     function cread(callback) {
         $.ajax({
@@ -105,6 +106,7 @@ var utilities = function() {
         NO_CARDS_TO_CURE:NO_CARDS_TO_CURE,
         SA_AIRLIFT_PLAYER:SA_AIRLIFT_PLAYER,
         SA_AIRLIFT_LOCATION:SA_AIRLIFT_LOCATION,
-        SA_GOV_GRANT:SA_GOV_GRANT
+        SA_GOV_GRANT:SA_GOV_GRANT,
+        SA_FORECAST:SA_FORECAST
     };
 }();
