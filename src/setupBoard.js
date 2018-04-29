@@ -85,6 +85,7 @@ var setupBoard = function() {
         l_display.card_start = 0;
         l_display.special_callback = "";
         l_display.special_text_fields = [];
+        l_display.special_text_buttons = [];
         l_display.special_germs = [];
         l_display.cure_cards = [];
         l_display.cure_c_needed = -1;

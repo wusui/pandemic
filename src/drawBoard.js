@@ -55,6 +55,7 @@ var drawBoard = function() {
         ctx.lineTo(SEP_X_END, yspot);
         ctx.stroke();
     }
+
     function disp_oth_stats(ctx, otherstats) {
         var yspace = START_OTHER;
         for (var i=0; i < otherstats.length; i++) {
@@ -62,6 +63,19 @@ var drawBoard = function() {
             centerRightTxt(ctx, fstring, yspace);
             yspace += SEP_STATS;
         }
+    }
+
+    function drawButton(otext,locs,color) {
+        ctx.strokeRect(locs[0], locs[1], boardLocations.BUTTON_X_LEN, boardLocations.BUTTON_Y_HGT);
+        if (color) {
+            ctx.fillStyle = WHITE;
+        }
+        else {
+            ctx.fillStyle = GREY;
+        }
+        ctx.fillRect(locs[0], locs[1], boardLocations.BUTTON_X_LEN, boardLocations.BUTTON_Y_HGT);
+        ctx.fillStyle = BLACK;
+        ctx.fillText(otext, locs[2], locs[1] + boardLocations.BUTTON_YDIFF);
     }
 
     function drawBoard() {
@@ -226,16 +240,8 @@ var drawBoard = function() {
         var but_keys = Object.keys(boardLocations.BUTTONS);
         for (bkey=0; bkey < but_keys.length; bkey++) {
             var binfo = but_keys[bkey];
-            ctx.strokeRect(boardLocations.BUTTONS[binfo][0], boardLocations.BUTTONS[binfo][1], boardLocations.BUTTON_X_LEN, boardLocations.BUTTON_Y_HGT);
-            if (moveOps.is_button_useable(binfo)) {
-                ctx.fillStyle = WHITE;
-            }
-            else {
-                ctx.fillStyle = GREY;
-            }
-            ctx.fillRect(boardLocations.BUTTONS[binfo][0], boardLocations.BUTTONS[binfo][1], boardLocations.BUTTON_X_LEN, boardLocations.BUTTON_Y_HGT);
-            ctx.fillStyle = BLACK;
-            ctx.fillText(binfo, boardLocations.BUTTONS[binfo][2], boardLocations.BUTTONS[binfo][1] + boardLocations.BUTTON_YDIFF);
+            var colval = moveOps.is_button_useable(binfo);
+            drawButton(binfo,boardLocations.BUTTONS[binfo],colval);
         }
         draw_sep_line(ctx, SEPLINE1);
 
@@ -291,6 +297,10 @@ var drawBoard = function() {
             ctx.font = txt_data[itxt].font;
             ctx.fillStyle = txt_data[itxt].color;
             ctx.fillText(txt_data[itxt].text, txt_data[itxt].left, txt_data[itxt].top);
+        }
+        for (var ibut=0; ibut<info.display.special_text_buttons.length; ibut++) {
+            var binf = info.display.special_text_buttons[ibut];
+            drawButton(binf.text, binf.locations, true);
         }
 
         var no_contingency = true;

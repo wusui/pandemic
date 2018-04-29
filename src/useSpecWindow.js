@@ -30,7 +30,7 @@ var useSpecWindow = function() {
         lcitymap = citymap;
         midpoint = left_pt + Math.floor(boardLocations.TEXT_WINDOW_WIDTH / 2);
         y_line_count = 0;
-        info.display.card_start = midpoint - boardLocations.CARD_WIDTH / 2;
+        info.display.card_start = Math.floor(midpoint - boardLocations.CARD_WIDTH / 2);
         info.misc.use_special_window = 1;
     }
 
@@ -50,12 +50,13 @@ var useSpecWindow = function() {
         info.misc.use_special_window = 0;
         info.display.special_callback = "";
         info.display.special_text_fields = [];
+        info.display.special_text_buttons = [];
         handleInput.update_page(info);
     }
 
     function write_a_line(text, lineno) {
         var txt_line = setup_line(text, lineno);
-        txt_line.color = '#000000';
+        txt_line.color = drawBoard.BLACK;
         return txt_line;
     }
 
@@ -225,6 +226,7 @@ var useSpecWindow = function() {
         tooManyGerms:tooManyGerms,
         common_stuff:common_stuff,
         print_head:print_head,
+        write_card:write_card,
         clean_up:clean_up
     };
 }();
