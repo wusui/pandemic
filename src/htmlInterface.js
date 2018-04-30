@@ -39,11 +39,17 @@ var htmlInterface = function() {
                 if (letter == "Z") {
                     alert(JSON.stringify(info));
                 }
-                var sptr = "HIJKL".indexOf(letter);
-                if (sptr < 0) {
-                    return;
+                if (letter == "Q") {
+                    info.card_decks.inf_disc.shift();
                 }
-                info.players.plist[p].cards.push(sptr + utilities.FIRST_SPECIAL_CARD);
+                if (letter == "W") {
+                    var ltemp = info.card_decks.infections.shift();
+                    info.card_decks.inf_disc.push(ltemp);
+                }
+                var sptr = "HIJKL".indexOf(letter);
+                if (sptr >= 0) {
+                    info.players.plist[p].cards.push(sptr + utilities.FIRST_SPECIAL_CARD);
+                }
                 handleInput.update_page(info);
                 return;
             }

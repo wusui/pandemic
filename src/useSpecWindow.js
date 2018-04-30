@@ -9,17 +9,20 @@ var useSpecWindow = function() {
     var y_line_count;
     var lcitymap;
 
+    var STD_SPACING = 4;
     var RES_STA_CALLBACK = "RES_STA_CALLBACK";
     var HEAL_CALLBACK = "HEAL_CALLBACK";
     var EXTRA_CURE_CALLBACK = "EXTRA_CURE_CALLBACK";
     var MESSAGE_CALLBACK = "MESSAGE_CALLBACK";
     var FORECAST_CALLBACK = "FORECAST_CALLBACK";
+    var RES_POP_CALLBACK = "RES_POP_CALLBACK";
     var branch_table = {
         RES_STA_CALLBACK: res_callback,
         HEAL_CALLBACK: heal_callback,
         EXTRA_CURE_CALLBACK: cure_callback,
         MESSAGE_CALLBACK: message_callback,
-        FORECAST_CALLBACK: forecast_callback
+        FORECAST_CALLBACK: forecast_callback,
+        RES_POP_CALLBACK: res_pop_callback
     };
 
     function do_callback(x, y, info) {
@@ -80,6 +83,10 @@ var useSpecWindow = function() {
         specialSpecial.forecast_callback(x, y, info);
     }
 
+    function res_pop_callback(x, y, info) {
+        specialSpecial.res_pop_callback(x, y, info);
+    }
+
     function print_message(info, citymap, inp_lines) {
         common_stuff(info, citymap);
         inp_lines.push(' ');
@@ -118,7 +125,7 @@ var useSpecWindow = function() {
     }
 
     function heal_callback(x, y, info) {
-        var indx = gen_callback(x, y, info.display.special_germs.length, 4);
+        var indx = gen_callback(x, y, info.display.special_germs.length, STD_SPACING);
         if (indx < 0) {
             return;
         }
@@ -129,7 +136,7 @@ var useSpecWindow = function() {
     }
 
     function res_callback(x, y, info) {
-        var indx = gen_callback(x, y, 6, 4);
+        var indx = gen_callback(x, y, utilities.R_STA_MAX, STD_SPACING);
         if (indx < 0) {
             return;
         }
@@ -140,7 +147,7 @@ var useSpecWindow = function() {
     function cure_callback(x, y, info) {
         var ccards = info.display.cure_cards;
         var needed = info.display.cure_c_needed;
-        var indx = gen_callback(x, y, ccards.length, 4);
+        var indx = gen_callback(x, y, ccards.length, STD_SPACING);
         if (indx < 0) {
             return;
         }
@@ -166,7 +173,7 @@ var useSpecWindow = function() {
     function tooManyGerms(info, citymap, dvals) {
         common_stuff(info, citymap);
         var line_filler = print_head(["Click on the disease", "that you want to heal"]);
-        var nline_no = 4;
+        var nline_no = STD_SPACING;
         info.display.special_germs = [];
         for (var i=0; i<utilities.NO_OF_GERM_TYPES; i++) {
             if (dvals[i] > 0) {
@@ -185,7 +192,7 @@ var useSpecWindow = function() {
     function tooManyStations(info, citymap) {
         common_stuff(info, citymap);
         var line_filler = print_head(["Research Station Limit Exceeded", "Click on station below to remove"]);
-        var nline_no = 4;
+        var nline_no = STD_SPACING;
         for (var i=0; i<info.misc.research_stations.length; i++) {
             var rnumb = info.misc.research_stations[i];
             var newtxt = write_card(rnumb, nline_no);
@@ -206,7 +213,7 @@ var useSpecWindow = function() {
             headr1 = headr1 + "s";
         }
         var line_filler = print_head([headr1, "Click on card to keep."]);
-        var nline_no = 4;
+        var nline_no = STD_SPACING;
         for (var i=0; i<ccards.length; i++) {
             var rnumb = ccards[i];
             var newtxt = write_card(rnumb, nline_no);
@@ -219,7 +226,9 @@ var useSpecWindow = function() {
 
     return {
         FORECAST_CALLBACK: FORECAST_CALLBACK,
+        RES_POP_CALLBACK: RES_POP_CALLBACK,
         do_callback:do_callback,
+        gen_callback:gen_callback,
         print_message:print_message,
         tooManyCureCards:tooManyCureCards,
         tooManyStations:tooManyStations,

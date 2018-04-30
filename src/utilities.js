@@ -27,6 +27,7 @@ var utilities = function() {
     var SA_AIRLIFT_LOCATION = 2;
     var SA_GOV_GRANT = 3;
     var SA_FORECAST = 4;
+    var SA_RES_POP = 5;
 
     function cread(callback) {
         $.ajax({
@@ -107,6 +108,7 @@ var utilities = function() {
         SA_AIRLIFT_PLAYER:SA_AIRLIFT_PLAYER,
         SA_AIRLIFT_LOCATION:SA_AIRLIFT_LOCATION,
         SA_GOV_GRANT:SA_GOV_GRANT,
-        SA_FORECAST:SA_FORECAST
+        SA_FORECAST:SA_FORECAST,
+        SA_RES_POP:SA_RES_POP
     };
 }();

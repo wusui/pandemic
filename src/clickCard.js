@@ -31,6 +31,9 @@ var clickCard = function() {
         if (cval === 3) {
             specialSpecial.clickedOnForecast(info, citymap);
         }
+        if (cval === 4) {
+            specialSpecial.clickedOnResPop(info, citymap);
+        }
         info.misc.card_played = action;
         discard(info);
     }
