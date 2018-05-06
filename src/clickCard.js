@@ -83,6 +83,7 @@ var clickCard = function() {
             fromguy.splice(fromguy.indexOf(action),1);
             var toguy = info.players.plist[iam];
             toguy.cards.push(action);
+            useSpecWindow.tooManyCards(info, citymap);
             handleInput.update_page(info);
         }
     }

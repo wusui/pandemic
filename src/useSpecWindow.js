@@ -10,19 +10,22 @@ var useSpecWindow = function() {
     var lcitymap;
 
     var STD_SPACING = 4;
+    var HAND_LIMIT = 7;
     var RES_STA_CALLBACK = "RES_STA_CALLBACK";
     var HEAL_CALLBACK = "HEAL_CALLBACK";
     var EXTRA_CURE_CALLBACK = "EXTRA_CURE_CALLBACK";
     var MESSAGE_CALLBACK = "MESSAGE_CALLBACK";
     var FORECAST_CALLBACK = "FORECAST_CALLBACK";
     var RES_POP_CALLBACK = "RES_POP_CALLBACK";
+    var DISCARD_CALLBACK = "DISCARD_CALLBACK";
     var branch_table = {
         RES_STA_CALLBACK: res_callback,
         HEAL_CALLBACK: heal_callback,
         EXTRA_CURE_CALLBACK: cure_callback,
         MESSAGE_CALLBACK: message_callback,
         FORECAST_CALLBACK: forecast_callback,
-        RES_POP_CALLBACK: res_pop_callback
+        RES_POP_CALLBACK: res_pop_callback,
+        DISCARD_CALLBACK: discard_callback
     };
 
     function do_callback(x, y, info) {
@@ -72,6 +75,9 @@ var useSpecWindow = function() {
 
     function write_card(incard, lineno) {
         var cittext = lcitymap.bynumb[incard];
+        if (incard > utilities.MAX_INF_CITIES) {
+            cittext = utilities.id_event_card(incard);
+        }
         var txt_line = setup_line(cittext, lineno);
         txt_line.highlight = true;
         var cindex = Math.floor(incard/utilities.CITIES_PER_DISEASE);
@@ -166,6 +172,25 @@ var useSpecWindow = function() {
         }
     }
 
+    function discard_callback(x, y, info) {
+        var gt_pl = -1;
+        var lptr = info.players.plist;
+        for (var i=0; i<lptr.length; i++) {
+            if (lptr[i].cards.length > HAND_LIMIT) {
+                gt_pl = i;
+                break;
+            }
+        }
+        var indx = gen_callback(x, y, HAND_LIMIT, STD_SPACING);
+        if (indx < 0) {
+            return;
+        }
+        var discrd = info.players.plist[gt_pl].cards;
+        var cty =  discrd.splice(indx,1);
+        info.card_decks.player_disc.push(cty[0]);
+        clean_up(info);
+    }
+
     function message_callback(x, y, info) {
         clean_up(info);
     }
@@ -224,6 +249,31 @@ var useSpecWindow = function() {
         info.display.special_callback = EXTRA_CURE_CALLBACK;
     }
 
+    function tooManyCards(info, citymap) {
+        info.misc.card_parm = [];
+        var lptr = info.players.plist;
+        for (var i=0; i<lptr.length; i++) {
+            if (lptr[i].cards.length > HAND_LIMIT) {
+                common_stuff(info, citymap);
+                var player = utilities.occupation_name(lptr[i].name);
+                var headr1 = player + ' has too many cards';
+                var line_filler = print_head([headr1, "Click on card to discard."]);
+                var nline_no = STD_SPACING;
+                for (var ii=0; ii<lptr[i].cards.length; ii++) {
+                    var rnumb = lptr[i].cards[ii];
+                    var newtxt = write_card(rnumb, nline_no);
+                    line_filler.push(newtxt);
+                    info.misc.card_parm.push(rnumb);
+                    nline_no++;
+                }
+                info.display.special_text_fields = line_filler;
+                info.display.special_callback = DISCARD_CALLBACK;
+                return true;
+            }
+        }
+        return false;
+    }
+
     return {
         FORECAST_CALLBACK: FORECAST_CALLBACK,
         RES_POP_CALLBACK: RES_POP_CALLBACK,
@@ -233,6 +283,7 @@ var useSpecWindow = function() {
         tooManyCureCards:tooManyCureCards,
         tooManyStations:tooManyStations,
         tooManyGerms:tooManyGerms,
+        tooManyCards:tooManyCards,
         common_stuff:common_stuff,
         print_head:print_head,
         write_card:write_card,

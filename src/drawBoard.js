@@ -1,4 +1,4 @@
-/* globals utilities, boardLocations, handleInput, htmlInterface, moveOps*/
+/* globals utilities, boardLocations, handleInput, htmlInterface, moveOps */
 /* exported drawBoard */
 var drawBoard = function() {
 

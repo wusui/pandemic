@@ -29,6 +29,7 @@ var setupBoard = function() {
         misc_data.card_played = -1;
         misc_data.dispatched_player = -1;
         misc_data.use_special_window = 0;
+        misc_data.card_parm = [];
         plyr_move = 0;
         moves_left = utilities.PLAYER_TURNS;
         plyr_list = params[1].split('');

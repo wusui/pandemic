@@ -1,6 +1,7 @@
 /* globals handleInput, utilities, setupCities */
 /* exported htmlInterface, panOnloadFunc */
 var htmlInterface = function() {
+    var DID_LOTS_OF_MOVES = 500;
     var LOTS_OF_MOVES = 1000;
     var NUMBER_PART = 5;
     var LETTER_PART = 3;
@@ -12,7 +13,12 @@ var htmlInterface = function() {
             return;
         }
         if (cmd == "Period") {
-            info.players.moves_left += LOTS_OF_MOVES;
+            if (info.players.moves_left > DID_LOTS_OF_MOVES) {
+                info.players.moves_left = 1;
+            }
+            else {
+                info.players.moves_left += LOTS_OF_MOVES;
+            }
             handleInput.update_page(info);
             return;
         }
@@ -49,6 +55,14 @@ var htmlInterface = function() {
                 var sptr = "HIJKL".indexOf(letter);
                 if (sptr >= 0) {
                     info.players.plist[p].cards.push(sptr + utilities.FIRST_SPECIAL_CARD);
+                }
+                sptr = "BNM".indexOf(letter);
+                if (sptr >= 0) {
+                    var tmpdck = info.card_decks.player_cards;
+                    info.card_decks.player_cards = [];
+                    for (var ii=0; ii<info.card_decks.player_cards.length; ii++) {
+                        info.cards.decks.player_cards.push(tmpdck[ii]);
+                    }
                 }
                 handleInput.update_page(info);
                 return;
