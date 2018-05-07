@@ -56,12 +56,12 @@ var htmlInterface = function() {
                 if (sptr >= 0) {
                     info.players.plist[p].cards.push(sptr + utilities.FIRST_SPECIAL_CARD);
                 }
-                sptr = "BNM".indexOf(letter);
+                sptr = "PNM".indexOf(letter);
                 if (sptr >= 0) {
                     var tmpdck = info.card_decks.player_cards;
                     info.card_decks.player_cards = [];
-                    for (var ii=0; ii<info.card_decks.player_cards.length; ii++) {
-                        info.cards.decks.player_cards.push(tmpdck[ii]);
+                    for (var ii=0; ii<sptr; ii++) {
+                        info.card_decks.player_cards.push(tmpdck[ii]);
                     }
                 }
                 handleInput.update_page(info);
