@@ -1,4 +1,4 @@
-/* globals handleInput, utilities, setupCities */
+/* globals handleInput, utilities, setupCities, germHandler*/
 /* exported htmlInterface, panOnloadFunc */
 var htmlInterface = function() {
     var DID_LOTS_OF_MOVES = 500;
@@ -69,13 +69,7 @@ var htmlInterface = function() {
             }
             var dindx = utilities.get_color_name(dptr);
             var dizloc = info.players.plist[p].xlocation.toString();
-            if (Object.keys(info.diseases[dindx].infections).includes(dizloc)) {
-                info.diseases[dindx].infections[dizloc]++;
-            }
-            else {
-                info.diseases[dindx].infections[dizloc] = 1;
-            }
-            info.diseases[dindx].count -= 1;
+            germHandler.infect(info, dindx, dizloc, 1);
             handleInput.update_page(info);
         }
     }
