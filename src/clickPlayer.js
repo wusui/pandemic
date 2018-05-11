@@ -41,7 +41,11 @@ var clickPlayer = function() {
                 var toguy = info.players.plist[action];
                 toguy.cards.push(info.misc.card_played);
                 info.misc.card_played = -1;
-                useSpecWindow.tooManyCards(info, citymap);
+                info.display.too_many_in_hand = toguy.cards.slice();
+                if (info.display.too_many_in_hand.length > useSpecWindow.HAND_LIMIT) {
+                    useSpecWindow.tooManyCards(info, citymap);
+                }
+                info.players.moves_left--;
                 handleInput.update_page(info);
             }
         }

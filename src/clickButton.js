@@ -78,14 +78,13 @@ var clickButton = function() {
         }
         if (needed == ccount.length) {
             do_cure(info, ccount);
+            info.players.moves_left--;
         }
         else {
             info.display.cure_cards = ccount;
             info.display.cure_c_needed = needed;
             useSpecWindow.tooManyCureCards(info, citymap);
-            return;
         }
-        info.players.moves_left--;
     }
 
     function buttonReset(info, citymap) {
@@ -103,7 +102,7 @@ var clickButton = function() {
     }
 
     function buttonQuit(info, citymap) {
-        close();
+        useSpecWindow.exit_message(info, citymap, ["YOU QUIT"]);
     }
 
     function do_cure(info, ccount) {
@@ -114,6 +113,13 @@ var clickButton = function() {
             info.misc.card_played = ccount[ii];
             clickCard.discard(info);
         }
+        for (var i=0; i < utilities.NO_OF_GERM_TYPES; i++) {
+            var colr = utilities.get_color_name(i);
+            if (info.diseases[colr].cured === 0) {
+                return;
+            }
+        }
+        info.misc.we_won = true;
     }
 
     var button_tbl = {'Heal': buttonHeal, 'Build': buttonBuild, 'Cure': buttonCure, 'Reset': buttonReset, 'Skip': buttonSkip, 'Help': buttonHelp, 'Quit': buttonQuit};

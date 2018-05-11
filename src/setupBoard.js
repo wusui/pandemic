@@ -16,6 +16,8 @@ var setupBoard = function() {
     var MAGIC_CARD_INFO = 6;
 
     function initialize(params) {
+        misc_data.we_won = false;
+        misc_data.loseInfo = "";
         misc_data.quiet_night = false;
         misc_data.airlifted_player = -1;
         misc_data.special_action = 0;
@@ -90,6 +92,7 @@ var setupBoard = function() {
         l_display.special_germs = [];
         l_display.cure_cards = [];
         l_display.cure_c_needed = -1;
+        l_display.too_many_in_hand = [];
 
         var retv = {"misc": misc_data, "players": plyr_d, "diseases": dis_data, "card_decks": card_data, "display": l_display};
         var results = JSON.stringify(retv);

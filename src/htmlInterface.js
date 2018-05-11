@@ -52,6 +52,11 @@ var htmlInterface = function() {
                     var ltemp = info.card_decks.infections.shift();
                     info.card_decks.inf_disc.push(ltemp);
                 }
+                if (letter == "O") {
+                    info.diseases.BLACK.cured = 1;
+                    info.diseases.YELLOW.cured = 1;
+                    info.diseases.RED.cured = 1;
+                }
                 var sptr = "HIJKL".indexOf(letter);
                 if (sptr >= 0) {
                     info.players.plist[p].cards.push(sptr + utilities.FIRST_SPECIAL_CARD);

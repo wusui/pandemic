@@ -1,4 +1,4 @@
-/* globals utilities, useSpecWindow */
+/* globals utilities, useSpecWindow, handleInput */
 /* exported germHandler */
 var germHandler = function() {
     function infect(info, dcolor, dizloc, numb) {
@@ -10,14 +10,20 @@ var germHandler = function() {
                 info.diseases[dcolor].count += diff;
                 info.diseases[dcolor].infections[dizloc] = utilities.MAX_GERMS;
                 outbreak(info, dcolor, dizloc);
-                return;
+                if (info.misc.outbreak_count > utilities.MAX_OUTBREAKS) {
+                    info.misc.loseInfo = handleInput.OUTBREAK_IND;
+                }
             }
         }
         else {
             info.diseases[dcolor].infections[dizloc] = numb;
         }
         info.diseases[dcolor].count -= numb;
+        if (info.diseases[dcolor].count < 0) {
+            info.misc.loseInfo = dcolor;
+        }
     }
+
     function outbreak(info, dcolor, dizloc) {
         var citymap = JSON.parse(sessionStorage.getItem('citymap'));
         var outb_stk = [];

@@ -3,10 +3,10 @@
 var clickCity = function() {
 
     function moveIt(mover, action, info) {
-       info.players.plist[mover].xlocation = action;
-       info.misc.dispatched_player = -1;
-       info.players.moves_left = info.players.moves_left - 1;
-       handleInput.update_page(info);
+        info.players.plist[mover].xlocation = action;
+        info.misc.dispatched_player = -1;
+        info.players.moves_left--;
+        handleInput.update_page(info);
     }
 
     function clickCity(action, info, citymap) {

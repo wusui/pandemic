@@ -1,4 +1,4 @@
-/* globals boardLocations, utilities, drawBoard, handleInput, clickButton, specialSpecial */
+/* globals boardLocations, utilities, drawBoard, handleInput, clickButton, specialSpecial, clickCard */
 /* exported useSpecWindow */
 var useSpecWindow = function() {
 
@@ -18,11 +18,13 @@ var useSpecWindow = function() {
     var FORECAST_CALLBACK = "FORECAST_CALLBACK";
     var RES_POP_CALLBACK = "RES_POP_CALLBACK";
     var DISCARD_CALLBACK = "DISCARD_CALLBACK";
+    var EXIT_CALLBACK = "EXIT_CALLBACK";
     var branch_table = {
         RES_STA_CALLBACK: res_callback,
         HEAL_CALLBACK: heal_callback,
         EXTRA_CURE_CALLBACK: cure_callback,
         MESSAGE_CALLBACK: message_callback,
+        EXIT_CALLBACK: exit_callback,
         FORECAST_CALLBACK: forecast_callback,
         RES_POP_CALLBACK: res_pop_callback,
         DISCARD_CALLBACK: discard_callback
@@ -93,14 +95,22 @@ var useSpecWindow = function() {
         specialSpecial.res_pop_callback(x, y, info);
     }
 
+    function exit_message(info, citymap, inp_lines) {
+        general_message(info, citymap, inp_lines, EXIT_CALLBACK);
+    }
+
     function print_message(info, citymap, inp_lines) {
+        general_message(info, citymap, inp_lines, MESSAGE_CALLBACK);
+    }
+
+    function general_message(info, citymap, inp_lines, callback) {
         common_stuff(info, citymap);
         inp_lines.push(' ');
         inp_lines.push('Click inside this box');
         inp_lines.push('to unlock and continue.');
         var line_filler = print_head(inp_lines);
         info.display.special_text_fields = line_filler;
-        info.display.special_callback = MESSAGE_CALLBACK;
+        info.display.special_callback = callback;
     }
 
     function print_head(inp_lines) {
@@ -173,26 +183,30 @@ var useSpecWindow = function() {
     }
 
     function discard_callback(x, y, info) {
-        var gt_pl = -1;
-        var lptr = info.players.plist;
-        for (var i=0; i<lptr.length; i++) {
-            if (lptr[i].cards.length > HAND_LIMIT) {
-                gt_pl = i;
-                break;
-            }
-        }
-        var indx = gen_callback(x, y, HAND_LIMIT, STD_SPACING);
+        var ccards = info.display.too_many_in_hand;
+        var indx = gen_callback(x, y, ccards.length, STD_SPACING);
         if (indx < 0) {
             return;
         }
-        var discrd = info.players.plist[gt_pl].cards;
-        var cty =  discrd.splice(indx,1);
-        info.card_decks.player_disc.push(cty[0]);
-        clean_up(info);
+        var cty = ccards.splice(indx,1);
+        info.misc.card_played = cty[0];
+        clickCard.discard(info);
+        info.display.too_many_in_hand = ccards.slice();
+        if (ccards.length > HAND_LIMIT) {
+            tooManyCards(info, lcitymap);
+            handleInput.update_page(info);
+        }
+        else {
+            clean_up(info);
+        }
     }
 
     function message_callback(x, y, info) {
         clean_up(info);
+    }
+
+    function exit_callback(x, y, info) {
+        close();
     }
 
     function tooManyGerms(info, citymap, dvals) {
@@ -250,36 +264,27 @@ var useSpecWindow = function() {
     }
 
     function tooManyCards(info, citymap) {
-        info.misc.card_parm = [];
-        var lptr = info.players.plist;
-        for (var i=0; i<lptr.length; i++) {
-            if (lptr[i].cards.length > HAND_LIMIT) {
-                common_stuff(info, citymap);
-                var player = utilities.occupation_name(lptr[i].name);
-                var headr1 = player + ' has too many cards';
-                var line_filler = print_head([headr1, "Click on card to discard."]);
-                var nline_no = STD_SPACING;
-                for (var ii=0; ii<lptr[i].cards.length; ii++) {
-                    var rnumb = lptr[i].cards[ii];
-                    var newtxt = write_card(rnumb, nline_no);
-                    line_filler.push(newtxt);
-                    info.misc.card_parm.push(rnumb);
-                    nline_no++;
-                }
-                info.display.special_text_fields = line_filler;
-                info.display.special_callback = DISCARD_CALLBACK;
-                return true;
-            }
+        common_stuff(info, citymap);
+        var line_filler = print_head(["Player has too many cards", "Click on card to discard."]);
+        var nline_no = STD_SPACING;
+        for (var ii=0; ii<info.display.too_many_in_hand.length; ii++) {
+            var rnumb = info.display.too_many_in_hand[ii];
+            var newtxt = write_card(rnumb, nline_no);
+            line_filler.push(newtxt);
+            nline_no++;
         }
-        return false;
+        info.display.special_text_fields = line_filler;
+        info.display.special_callback = DISCARD_CALLBACK;
     }
 
     return {
-        FORECAST_CALLBACK: FORECAST_CALLBACK,
-        RES_POP_CALLBACK: RES_POP_CALLBACK,
+        FORECAST_CALLBACK:FORECAST_CALLBACK,
+        RES_POP_CALLBACK:RES_POP_CALLBACK,
+        HAND_LIMIT:HAND_LIMIT,
         do_callback:do_callback,
         gen_callback:gen_callback,
         print_message:print_message,
+        exit_message:exit_message,
         tooManyCureCards:tooManyCureCards,
         tooManyStations:tooManyStations,
         tooManyGerms:tooManyGerms,

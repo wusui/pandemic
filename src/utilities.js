@@ -19,6 +19,7 @@ var utilities = function() {
     var NO_CARDS_TO_CURE = 5;
     var R_STA_MAX = 6;
     var MAX_GERMS_TOTAL = 24;
+    var MAX_OUTBREAKS = 7;
     var MAX_INF_CITIES = 48;
     var FIRST_SPECIAL_CARD = 50;
     var BEYOND_LAST_SPECIAL_CARD = 55;
@@ -100,6 +101,7 @@ var utilities = function() {
         MAX_GERMS_TOTAL:MAX_GERMS_TOTAL,
         R_STA_MAX:R_STA_MAX,
         MAX_INF_CITIES:MAX_INF_CITIES,
+        MAX_OUTBREAKS:MAX_OUTBREAKS,
         FIRST_SPECIAL_CARD:FIRST_SPECIAL_CARD,
         BEYOND_LAST_SPECIAL_CARD:BEYOND_LAST_SPECIAL_CARD,
         EPIDEMIC:EPIDEMIC,

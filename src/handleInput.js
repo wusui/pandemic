@@ -2,6 +2,7 @@
 /* exported handleInput */
 var handleInput = function() {
 
+    var OUTBREAK_IND = "OUTBREAK";
     function mop_up(info) {
         var mloc = -1;
         for (var j=0; j < info.players.plist.length; j++) {
@@ -37,10 +38,61 @@ var handleInput = function() {
     }
 
     function mouseSwitch(evt) {
-        var x = evt.clientX;
-        var y = evt.clientY;
         var info = JSON.parse(sessionStorage.getItem('game_data'));
         var citymap = JSON.parse(sessionStorage.getItem('citymap'));
+        mEventSw(evt, info, citymap);
+        if (info.misc.we_won) {
+            useSpecWindow.exit_message(info, citymap, ["WE WON"]);
+            update_page(info);
+            return;
+        }
+        if (info.players.moves_left === 0) {
+            if (info.card_decks.player_cards.length < 2) {
+                useSpecWindow.exit_message(info, citymap, ["YOU LOSE", "Not enough cards left", "in the player deck"]);
+                update_page(info);
+                return;
+            }
+            var newcards = [];
+            var epids = 0;
+            for (var i=0; i<2; i++) {
+                var card = info.card_decks.player_cards.shift();
+                if (card == utilities.EPIDEMIC) {
+                    epids++;
+                }
+                else {
+                    newcards.push(card);
+                }
+            }
+            var iam = info.players.plyr_move;
+            for (i=0; i<newcards.length; i++) {
+                var ncard = newcards[i];
+                info.players.plist[iam].cards.push(ncard);
+            }
+            var toguy = info.players.plist[iam];
+            info.display.too_many_in_hand = toguy.cards.slice();
+            if (info.display.too_many_in_hand.length > useSpecWindow.HAND_LIMIT) {
+                useSpecWindow.tooManyCards(info, citymap);
+            }
+            info.players.plyr_move++;
+            if (info.players.plyr_move == info.players.plist.length) {
+                info.players.plyr_move = 0;
+            }
+            info.players.moves_left = utilities.PLAYER_TURNS;
+            if (info.misc.loseInfo.length > 0) {
+                if (info.misc.loseInfo === OUTBREAK_IND) {
+                    useSpecWindow.exit_message(info, citymap, ["YOU LOSE", "Too many outbreaks."]);
+                }
+                else {
+                    useSpecWindow.exit_message(info, citymap, ["YOU LOSE", "Too many " + info.misc.loseInfo +" infections."]);
+                }
+            }
+            update_page(info);
+        }
+    }
+
+    function mEventSw(evt, info, citymap) {
+        var x = evt.clientX;
+        var y = evt.clientY;
         x = x - boardLocations.MOUSE_OFFSET;
         y = y - boardLocations.MOUSE_OFFSET;
         if (x < boardLocations.MAP_WIDTH) {
@@ -134,6 +186,7 @@ var handleInput = function() {
     }
 
     return {
+        OUTBREAK_IND:OUTBREAK_IND,
         mouseSwitch:mouseSwitch,
         update_page:update_page
     };
