@@ -82,7 +82,6 @@ var germHandler = function() {
             info.card_decks.infections.unshift(info.card_decks.inf_disc[i]);
         }
         info.card_decks.inf_disc = [];
-        // infect(info, dcolor, info.misc.epid_city.toString(), 3);
         handleInput.update_page(info);
         info.misc.play_out_of_turn = true;
         setTimeout(function(){ infect(info, dcolor, info.misc.epid_city.toString(), 3); }, 500);

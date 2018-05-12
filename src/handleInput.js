@@ -77,6 +77,15 @@ var handleInput = function() {
             for (i=0; i<epids; i++) {
                 germHandler.epidemic(info, citymap);
             }
+            var epidindx = info.misc.epid_counter;
+            var epidrate = info.misc.epid_values[epidindx];
+            for (i=0; i<epidrate; i++) {
+                var ncard = info.card_decks.infections.shift();
+                info.card_decks.inf_disc.push(ncard);
+                var dindx = utilities.card_to_color(ncard);
+                var dizloc = ncard.toString();
+                germHandler.infect(info, dindx, dizloc, 1);
+            }
             info.players.plyr_move++;
             if (info.players.plyr_move == info.players.plist.length) {
                 info.players.plyr_move = 0;
