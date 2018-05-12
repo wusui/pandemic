@@ -200,26 +200,23 @@ var specialSpecial = function() {
     }
 
     function clickedOnResPop(info, citymap) {
+        if (info.card_decks.inf_disc.length === 0) {
+            useSpecWindow.print_message(info, citymap, ["There are no cards in the discard pile."]);
+            setup_page(info);
+            return;
+        }
         saved_info = info;
         saved_citymap = citymap;
         info.misc.special_action = utilities.SA_RES_POP;
         useSpecWindow.common_stuff(info, citymap);
         var inp_lines = [];
-        if (info.card_decks.inf_disc.length === 0) {
-            inp_lines.push('There are no infection discard cards.');
-            inp_lines.push('Click in this box to continue.');
-            line_filler = useSpecWindow.print_head(inp_lines);
-            info.display.special_text_buttons = [];
+        inf_cards = [];
+        for (var i=0; i<info.card_decks.inf_disc.length; i++) {
+            inf_cards.push(info.card_decks.inf_disc[i]);
         }
-        else {
-            inf_cards = [];
-            for (var i=0; i<info.card_decks.inf_disc.length; i++) {
-                inf_cards.push(info.card_decks.inf_disc[i]);
-            }
-            inf_cards.sort(comp_inf);
-            page_no = 0;
-            setup_page(info);
-        }
+        inf_cards.sort(comp_inf);
+        page_no = 0;
+        setup_page(info);
         info.display.special_text_fields = line_filler;
         info.display.special_callback = useSpecWindow.RES_POP_CALLBACK;
     }

@@ -2,26 +2,33 @@
 /* exported germHandler */
 var germHandler = function() {
     function infect(info, dcolor, dizloc, numb) {
+        if (info.diseases[dcolor].eradicated == 1) {
+            return;
+        }
         if (Object.keys(info.diseases[dcolor].infections).includes(dizloc)) {
             info.diseases[dcolor].infections[dizloc] += numb;
             if (info.diseases[dcolor].infections[dizloc] > utilities.MAX_GERMS) {
-                var diff = info.diseases[dcolor].infections[dizloc] - utilities.MAX_GERMS;
+                var diff = utilities.MAX_GERMS - info.diseases[dcolor].infections[dizloc];
                 info.diseases[dcolor].count -= numb;
-                info.diseases[dcolor].count += diff;
+                info.diseases[dcolor].count -= diff;
                 info.diseases[dcolor].infections[dizloc] = utilities.MAX_GERMS;
                 outbreak(info, dcolor, dizloc);
                 if (info.misc.outbreak_count > utilities.MAX_OUTBREAKS) {
                     info.misc.loseInfo = handleInput.OUTBREAK_IND;
                 }
             }
+            else {
+                info.diseases[dcolor].count -= numb;
+            }
         }
         else {
             info.diseases[dcolor].infections[dizloc] = numb;
+            info.diseases[dcolor].count -= numb;
         }
-        info.diseases[dcolor].count -= numb;
         if (info.diseases[dcolor].count < 0) {
             info.misc.loseInfo = dcolor;
         }
+        handleInput.update_page(info);
     }
 
     function outbreak(info, dcolor, dizloc) {
@@ -59,7 +66,30 @@ var germHandler = function() {
         useSpecWindow.print_message(info, citymap, omsg);
     }
 
+    function epidemic(info,citymap) {
+        info.misc.epid_counter++;
+        info.misc.epid_city = info.card_decks.infections.pop();
+        info.card_decks.inf_disc.push(info.misc.epid_city);
+        var city = citymap.bynumb[info.misc.epid_city.toString()];
+        useSpecWindow.epidemic_message(info, citymap, ['Epidemic occurred in '+city]);
+    }
+
+    function epidemic_callback(info) {
+        var dcolor = utilities.card_to_color(info.misc.epid_city);
+        infect(info, dcolor, info.misc.epid_city.toString(), 3);
+        utilities.shuffle(info.card_decks.inf_disc);
+        for (var i=0; i<info.card_decks.inf_disc.length; i++) {
+            info.card_decks.infections.unshift(info.card_decks.inf_disc[i]);
+        }
+        info.card_decks.inf_disc = [];
+        handleInput.update_page(info);
+        var citymap = JSON.parse(sessionStorage.getItem('citymap'));
+        useSpecWindow.print_message(info, citymap, ['this is a test']);
+    }
+
     return {
-        infect:infect
+        infect:infect,
+        epidemic:epidemic,
+        epidemic_callback:epidemic_callback
     };
 }();

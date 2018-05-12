@@ -1,4 +1,4 @@
-/* globals drawBoard, clickPlayer, clickCard, utilities, boardLocations, clickCity, useSpecWindow, moveOps, clickButton */
+/* globals drawBoard, clickPlayer, clickCard, utilities, boardLocations, clickCity, useSpecWindow, moveOps, clickButton, germHandler */
 /* exported handleInput */
 var handleInput = function() {
 
@@ -47,6 +47,7 @@ var handleInput = function() {
             return;
         }
         if (info.players.moves_left === 0) {
+            update_page(info);
             if (info.card_decks.player_cards.length < 2) {
                 useSpecWindow.exit_message(info, citymap, ["YOU LOSE", "Not enough cards left", "in the player deck"]);
                 update_page(info);
@@ -72,6 +73,9 @@ var handleInput = function() {
             info.display.too_many_in_hand = toguy.cards.slice();
             if (info.display.too_many_in_hand.length > useSpecWindow.HAND_LIMIT) {
                 useSpecWindow.tooManyCards(info, citymap);
+            }
+            for (i=0; i<epids; i++) {
+                germHandler.epidemic(info, citymap);
             }
             info.players.plyr_move++;
             if (info.players.plyr_move == info.players.plist.length) {

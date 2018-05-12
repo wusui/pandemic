@@ -1,4 +1,4 @@
-/* globals boardLocations, utilities, drawBoard, handleInput, clickButton, specialSpecial, clickCard */
+/* globals boardLocations, utilities, drawBoard, handleInput, clickButton, specialSpecial, clickCard, germHandler */
 /* exported useSpecWindow */
 var useSpecWindow = function() {
 
@@ -16,6 +16,7 @@ var useSpecWindow = function() {
     var EXTRA_CURE_CALLBACK = "EXTRA_CURE_CALLBACK";
     var MESSAGE_CALLBACK = "MESSAGE_CALLBACK";
     var FORECAST_CALLBACK = "FORECAST_CALLBACK";
+    var EPIDEMIC_CALLBACK = "EPIDEMIC_CALLBACK";
     var RES_POP_CALLBACK = "RES_POP_CALLBACK";
     var DISCARD_CALLBACK = "DISCARD_CALLBACK";
     var EXIT_CALLBACK = "EXIT_CALLBACK";
@@ -27,7 +28,8 @@ var useSpecWindow = function() {
         EXIT_CALLBACK: exit_callback,
         FORECAST_CALLBACK: forecast_callback,
         RES_POP_CALLBACK: res_pop_callback,
-        DISCARD_CALLBACK: discard_callback
+        DISCARD_CALLBACK: discard_callback,
+        EPIDEMIC_CALLBACK: epidemic_callback
     };
 
     function do_callback(x, y, info) {
@@ -93,6 +95,16 @@ var useSpecWindow = function() {
 
     function res_pop_callback(x, y, info) {
         specialSpecial.res_pop_callback(x, y, info);
+    }
+
+    function epidemic_callback(x, y, info) {
+        gen_callback(x, y, 1, STD_SPACING);
+        clean_up(info);
+        germHandler.epidemic_callback(info);
+    }
+
+    function epidemic_message(info, citymap, inp_lines) {
+        general_message(info, citymap, inp_lines, EPIDEMIC_CALLBACK);
     }
 
     function exit_message(info, citymap, inp_lines) {
@@ -283,6 +295,7 @@ var useSpecWindow = function() {
         HAND_LIMIT:HAND_LIMIT,
         do_callback:do_callback,
         gen_callback:gen_callback,
+        epidemic_message:epidemic_message,
         print_message:print_message,
         exit_message:exit_message,
         tooManyCureCards:tooManyCureCards,
