@@ -201,6 +201,7 @@ var specialSpecial = function() {
 
     function clickedOnResPop(info, citymap) {
         if (info.card_decks.inf_disc.length === 0) {
+            info.display.special_text_buttons = [];
             useSpecWindow.print_message(info, citymap, ["There are no cards in the discard pile."]);
             setup_page(info);
             return;

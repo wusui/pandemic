@@ -215,6 +215,9 @@ var useSpecWindow = function() {
 
     function message_callback(x, y, info) {
         clean_up(info);
+        if (info.misc.play_out_of_turn) {
+            germHandler.play_out_of_turn(info);
+        }
     }
 
     function exit_callback(x, y, info) {

@@ -64,6 +64,7 @@ var germHandler = function() {
             omsg.push('in '+outb_stk[j]);
         }
         useSpecWindow.print_message(info, citymap, omsg);
+        handleInput.update_page(info);
     }
 
     function epidemic(info,citymap) {
@@ -76,20 +77,30 @@ var germHandler = function() {
 
     function epidemic_callback(info) {
         var dcolor = utilities.card_to_color(info.misc.epid_city);
-        infect(info, dcolor, info.misc.epid_city.toString(), 3);
         utilities.shuffle(info.card_decks.inf_disc);
         for (var i=0; i<info.card_decks.inf_disc.length; i++) {
             info.card_decks.infections.unshift(info.card_decks.inf_disc[i]);
         }
         info.card_decks.inf_disc = [];
+        // infect(info, dcolor, info.misc.epid_city.toString(), 3);
         handleInput.update_page(info);
-        var citymap = JSON.parse(sessionStorage.getItem('citymap'));
-        useSpecWindow.print_message(info, citymap, ['this is a test']);
+        info.misc.play_out_of_turn = true;
+        setTimeout(function(){ infect(info, dcolor, info.misc.epid_city.toString(), 3); }, 500);
+        if (!(Object.keys(info.diseases[dcolor].infections).includes(info.misc.epid_city.toString()))) {
+            play_out_of_turn(info);
+        }
+    }
+
+    function play_out_of_turn(info) {
+        alert('code to handle out of turn special card play goes here.');
+        info.misc.play_out_of_turn = false;
+        handleInput.update_page(info);
     }
 
     return {
         infect:infect,
         epidemic:epidemic,
-        epidemic_callback:epidemic_callback
+        epidemic_callback:epidemic_callback,
+        play_out_of_turn:play_out_of_turn
     };
 }();
