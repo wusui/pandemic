@@ -1,6 +1,6 @@
 /* globals handleInput, utilities, setupCities, germHandler*/
-/* exported htmlInterface, panOnloadFunc */
-var htmlInterface = function() {
+/* exported topLevel, panOnloadFunc */
+var topLevel = function() {
     var DID_LOTS_OF_MOVES = 500;
     var LOTS_OF_MOVES = 1000;
     var NUMBER_PART = 5;

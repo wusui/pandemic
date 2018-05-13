@@ -1,4 +1,4 @@
-/* globals utilities, boardLocations, handleInput, htmlInterface, moveOps */
+/* globals utilities, boardLocations, handleInput, topLevel, moveOps */
 /* exported drawBoard */
 var drawBoard = function() {
 
@@ -32,7 +32,7 @@ var drawBoard = function() {
         pcanvas = document.getElementById("myMap");
         ctx = pcanvas.getContext("2d");
         pcanvas.addEventListener("click", handleInput.mouseSwitch, false);
-        pcanvas.addEventListener("keypress", htmlInterface.debug, false);
+        pcanvas.addEventListener("keypress", topLevel.debug, false);
         drawBoard();
     }
 
