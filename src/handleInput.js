@@ -2,6 +2,8 @@
 /* exported handleInput */
 var handleInput = function() {
 
+    var TIMEOUT = 250;
+    var TIMELOCK = "timelock";
     var OUTBREAK_IND = "OUTBREAK";
     function mop_up(info) {
         var mloc = -1;
@@ -40,6 +42,11 @@ var handleInput = function() {
     function mouseSwitch(evt) {
         var info = JSON.parse(sessionStorage.getItem('game_data'));
         var citymap = JSON.parse(sessionStorage.getItem('citymap'));
+        if (sessionStorage.getItem(TIMELOCK) == 'on') {
+            return;
+        }
+        sessionStorage.setItem(TIMELOCK, 'on');
+        setTimeout(function(){ sessionStorage.setItem(TIMELOCK, 'off'); }, TIMEOUT);
         mEventSw(evt, info, citymap);
         if (info.misc.we_won) {
             useSpecWindow.exit_message(info, citymap, ["WE WON"]);
@@ -77,15 +84,21 @@ var handleInput = function() {
             for (i=0; i<epids; i++) {
                 germHandler.epidemic(info, citymap);
             }
-            var epidindx = info.misc.epid_counter;
-            var epidrate = info.misc.epid_values[epidindx];
-            for (i=0; i<epidrate; i++) {
-                var ncard = info.card_decks.infections.shift();
-                info.card_decks.inf_disc.push(ncard);
-                var dindx = utilities.card_to_color(ncard);
-                var dizloc = ncard.toString();
-                germHandler.infect(info, dindx, dizloc, 1);
+            if (info.misc.quiet_night) {
+                info.misc.quiet_night = false;
             }
+            else {
+                var epidindx = info.misc.epid_counter;
+                var epidrate = info.misc.epid_values[epidindx];
+                for (i=0; i<epidrate; i++) {
+                    var ncard = info.card_decks.infections.shift();
+                    info.card_decks.inf_disc.push(ncard);
+                    var dindx = utilities.card_to_color(ncard);
+                    var dizloc = ncard.toString();
+                    germHandler.infect(info, dindx, dizloc, 1);
+                }
+            }
+            info.misc.op_exp_used_power = 0;
             info.players.plyr_move++;
             if (info.players.plyr_move == info.players.plist.length) {
                 info.players.plyr_move = 0;

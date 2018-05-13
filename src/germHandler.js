@@ -1,6 +1,7 @@
 /* globals utilities, useSpecWindow, handleInput */
 /* exported germHandler */
 var germHandler = function() {
+    var TIMEOUT = 250;
     function infect(info, dcolor, dizloc, numb) {
         if (info.diseases[dcolor].eradicated == 1) {
             return;
@@ -84,14 +85,14 @@ var germHandler = function() {
         info.card_decks.inf_disc = [];
         handleInput.update_page(info);
         info.misc.play_out_of_turn = true;
-        setTimeout(function(){ infect(info, dcolor, info.misc.epid_city.toString(), 3); }, 500);
+        setTimeout(function(){ infect(info, dcolor, info.misc.epid_city.toString(), 3); }, TIMEOUT);
         if (!(Object.keys(info.diseases[dcolor].infections).includes(info.misc.epid_city.toString()))) {
             play_out_of_turn(info);
         }
     }
 
     function play_out_of_turn(info) {
-        alert('code to handle out of turn special card play goes here.');
+        /* code to handle out of turn special card play goes here. */
         info.misc.play_out_of_turn = false;
         handleInput.update_page(info);
     }

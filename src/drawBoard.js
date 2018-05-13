@@ -281,7 +281,8 @@ var drawBoard = function() {
         var rslcnt = utilities.R_STA_MAX - rsl;
         otherstats.push(["Research Stations Left: ", rslcnt.toString()]);
         otherstats.push(["Actions Left: ",info.players.moves_left.toString()]);
-        otherstats.push(["Player #: ",info.players.plyr_move.toString()]);
+        var display_value = info.players.plyr_move + 1;
+        otherstats.push(["Player #: ", display_value.toString()]);
         disp_oth_stats(ctx, otherstats);
 
         ctx.strokeRect(boardLocations.TEXT_WINDOW_LEFT, boardLocations.TEXT_WINDOW_TOP, boardLocations.TEXT_WINDOW_WIDTH, boardLocations.TEXT_WINDOW_HEIGHT); 

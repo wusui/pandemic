@@ -85,6 +85,7 @@ var htmlInterface = function() {
 }();
 
 function panOnloadFunc() {
+    sessionStorage.setItem(handleInput.TIMELOCK, 'off');
     setupCities.initialize(setupCities.callback);
 }
 
