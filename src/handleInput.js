@@ -54,7 +54,7 @@ var handleInput = function() {
             update_page(info);
             return;
         }
-        if (info.players.moves_left === 0) {
+        if (info.players.moves_left <= 0) {
             update_page(info);
             if (info.card_decks.player_cards.length < 2) {
                 useSpecWindow.exit_message(info, citymap, ["YOU LOSE", "Not enough cards left", "in the player deck"]);
@@ -95,7 +95,7 @@ var handleInput = function() {
 
     function continue_after_cardcheck(info) {
         var citymap = JSON.parse(sessionStorage.getItem('citymap'));
-        for (var i=0; i<info.misc.epid_cnt_for_callback; i++) {
+        if (info.misc.epid_cnt_for_callback > 0) {
             germHandler.epidemic(info, citymap);
         }
         info.misc.epid_cnt_for_callback = -1;
@@ -105,16 +105,32 @@ var handleInput = function() {
         else {
             var epidindx = info.misc.epid_counter;
             var epidrate = info.misc.epid_values[epidindx];
-            for (i=0; i<epidrate; i++) {
+            info.misc.nxt_out = [];
+            for (var i=0; i<epidrate; i++) {
                 var ncard = info.card_decks.infections.shift();
                 info.card_decks.inf_disc.push(ncard);
                 var dindx = utilities.card_to_color(ncard);
                 var dizloc = ncard.toString();
+                if (Object.keys(info.diseases[dindx].infections).includes(dizloc)) {
+                    if (info.diseases[dindx].infections[dizloc] == 3) {
+                        info.misc.nxt_out.push([dindx, dizloc]);
+                        continue;
+                    }
+                }
                 germHandler.infect(info, dindx, dizloc, 1);
             }
         }
+        continue_after_outbreaks(info, citymap);
+    }
+
+    function continue_after_outbreaks(info, citymap) {
+        if (info.misc.nxt_out.length > 0) {
+            germHandler.infect(info, info.misc.nxt_out[0][0], info.misc.nxt_out[0][1], 1);
+        }
         info.misc.op_exp_used_power = 0;
-        info.players.plyr_move++;
+        if (info.misc.use_special_window == 0) {
+            info.players.plyr_move++;
+        }
         if (info.players.plyr_move == info.players.plist.length) {
             info.players.plyr_move = 0;
         }
@@ -229,6 +245,7 @@ var handleInput = function() {
         OUTBREAK_IND:OUTBREAK_IND,
         mouseSwitch:mouseSwitch,
         update_page:update_page,
-        continue_after_cardcheck:continue_after_cardcheck
+        continue_after_cardcheck:continue_after_cardcheck,
+        continue_after_outbreaks:continue_after_outbreaks
     };
 }();

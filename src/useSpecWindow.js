@@ -19,6 +19,7 @@ var useSpecWindow = function() {
     var EPIDEMIC_CALLBACK = "EPIDEMIC_CALLBACK";
     var RES_POP_CALLBACK = "RES_POP_CALLBACK";
     var DISCARD_CALLBACK = "DISCARD_CALLBACK";
+    var EOT_OUTBRK_CALLBACK = "EOT_OUTBRK_CALLBACK";
     var EXIT_CALLBACK = "EXIT_CALLBACK";
     var branch_table = {
         RES_STA_CALLBACK: res_callback,
@@ -29,7 +30,8 @@ var useSpecWindow = function() {
         FORECAST_CALLBACK: forecast_callback,
         RES_POP_CALLBACK: res_pop_callback,
         DISCARD_CALLBACK: discard_callback,
-        EPIDEMIC_CALLBACK: epidemic_callback
+        EPIDEMIC_CALLBACK: epidemic_callback,
+        EOT_OUTBRK_CALLBACK: eot_outbrk_callback
     };
 
     function do_callback(x, y, info) {
@@ -113,6 +115,10 @@ var useSpecWindow = function() {
 
     function print_message(info, citymap, inp_lines) {
         general_message(info, citymap, inp_lines, MESSAGE_CALLBACK);
+    }
+
+    function eot_outbrk_message(info, citymap, inp_lines) {
+        general_message(info, citymap, inp_lines, EOT_OUTBRK_CALLBACK);
     }
 
     function general_message(info, citymap, inp_lines, callback) {
@@ -216,11 +222,14 @@ var useSpecWindow = function() {
         }
     }
 
+    function eot_outbrk_callback(x, y, info) {
+        info.misc.nxt_out.shift();
+        clean_up(info);
+        handleInput.continue_after_outbreaks(info);
+    }
+
     function message_callback(x, y, info) {
         clean_up(info);
-        if (info.misc.play_out_of_turn) {
-            germHandler.play_out_of_turn(info);
-        }
     }
 
     function exit_callback(x, y, info) {
@@ -303,6 +312,7 @@ var useSpecWindow = function() {
         do_callback:do_callback,
         gen_callback:gen_callback,
         epidemic_message:epidemic_message,
+        eot_outbrk_message:eot_outbrk_message,
         print_message:print_message,
         exit_message:exit_message,
         tooManyCureCards:tooManyCureCards,

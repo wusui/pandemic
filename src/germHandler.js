@@ -63,7 +63,7 @@ var germHandler = function() {
             omsg.push('Chain reaction outbreak occurred');
             omsg.push('in '+outb_stk[j]);
         }
-        useSpecWindow.print_message(info, citymap, omsg);
+        useSpecWindow.eot_outbrk_message(info, citymap, omsg);
         handleInput.update_page(info);
     }
 
@@ -82,24 +82,15 @@ var germHandler = function() {
             info.card_decks.infections.unshift(info.card_decks.inf_disc[i]);
         }
         info.card_decks.inf_disc = [];
-        handleInput.update_page(info);
-        info.misc.play_out_of_turn = true;
+        info.misc.epid_cnt_for_callback--;
         infect(info, dcolor, info.misc.epid_city.toString(), 3);
-        if (!(Object.keys(info.diseases[dcolor].infections).includes(info.misc.epid_city.toString()))) {
-            play_out_of_turn(info);
-        }
-    }
-
-    function play_out_of_turn(info) {
-        /* code to handle out of turn special card play goes here. */
-        info.misc.play_out_of_turn = false;
         handleInput.update_page(info);
+        handleInput.continue_after_cardcheck(info);
     }
 
     return {
         infect:infect,
         epidemic:epidemic,
-        epidemic_callback:epidemic_callback,
-        play_out_of_turn:play_out_of_turn
+        epidemic_callback:epidemic_callback
     };
 }();
