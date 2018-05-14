@@ -35,6 +35,7 @@ var setupBoard = function() {
         misc_data.epid_city = -1;
         misc_data.epid_cnt_for_callback = -1;
         misc_data.nxt_out = [];
+        misc_data.no_skip_done_yet = true;
         plyr_move = 0;
         moves_left = utilities.PLAYER_TURNS;
         plyr_list = params[1].split('');

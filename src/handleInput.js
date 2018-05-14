@@ -54,7 +54,11 @@ var handleInput = function() {
             update_page(info);
             return;
         }
-        if (info.players.moves_left <= 0) {
+        if (info.players.moves_left > 0) {
+            info.misc.no_skip_done_yet = true;
+            update_page(info);
+        }
+        else {
             update_page(info);
             if (info.card_decks.player_cards.length < 2) {
                 useSpecWindow.exit_message(info, citymap, ["YOU LOSE", "Not enough cards left", "in the player deck"]);
@@ -128,8 +132,11 @@ var handleInput = function() {
             germHandler.infect(info, info.misc.nxt_out[0][0], info.misc.nxt_out[0][1], 1);
         }
         info.misc.op_exp_used_power = 0;
-        if (info.misc.use_special_window == 0) {
-            info.players.plyr_move++;
+        if (info.misc.no_skip_done_yet) {
+            if (info.players.moves_left == 0) {
+                info.players.plyr_move++;
+            }
+            info.misc.no_skip_done_yet = false;
         }
         if (info.players.plyr_move == info.players.plist.length) {
             info.players.plyr_move = 0;
