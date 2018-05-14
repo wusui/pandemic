@@ -1,7 +1,6 @@
 /* globals utilities, useSpecWindow, handleInput */
 /* exported germHandler */
 var germHandler = function() {
-    var TIMEOUT = 250;
     function infect(info, dcolor, dizloc, numb) {
         if (info.diseases[dcolor].eradicated == 1) {
             return;
@@ -85,7 +84,7 @@ var germHandler = function() {
         info.card_decks.inf_disc = [];
         handleInput.update_page(info);
         info.misc.play_out_of_turn = true;
-        setTimeout(function(){ infect(info, dcolor, info.misc.epid_city.toString(), 3); }, TIMEOUT);
+        infect(info, dcolor, info.misc.epid_city.toString(), 3);
         if (!(Object.keys(info.diseases[dcolor].infections).includes(info.misc.epid_city.toString()))) {
             play_out_of_turn(info);
         }

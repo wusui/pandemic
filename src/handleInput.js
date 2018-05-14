@@ -5,6 +5,7 @@ var handleInput = function() {
     var TIMEOUT = 250;
     var TIMELOCK = "timelock";
     var OUTBREAK_IND = "OUTBREAK";
+
     function mop_up(info) {
         var mloc = -1;
         for (var j=0; j < info.players.plist.length; j++) {
@@ -78,42 +79,55 @@ var handleInput = function() {
             }
             var toguy = info.players.plist[iam];
             info.display.too_many_in_hand = toguy.cards.slice();
+            info.misc.epid_cnt_for_callback = epids;
             if (info.display.too_many_in_hand.length > useSpecWindow.HAND_LIMIT) {
+                if (info.misc.use_special_window == 1) {
+                    return;
+                }
+                info.misc.use_special_window = 1;
                 useSpecWindow.tooManyCards(info, citymap);
             }
-            for (i=0; i<epids; i++) {
-                germHandler.epidemic(info, citymap);
+            else {
+                continue_after_cardcheck(info);
             }
-            if (info.misc.quiet_night) {
-                info.misc.quiet_night = false;
+        }
+    }
+
+    function continue_after_cardcheck(info) {
+        var citymap = JSON.parse(sessionStorage.getItem('citymap'));
+        for (var i=0; i<info.misc.epid_cnt_for_callback; i++) {
+            germHandler.epidemic(info, citymap);
+        }
+        info.misc.epid_cnt_for_callback = -1;
+        if (info.misc.quiet_night) {
+            info.misc.quiet_night = false;
+        }
+        else {
+            var epidindx = info.misc.epid_counter;
+            var epidrate = info.misc.epid_values[epidindx];
+            for (i=0; i<epidrate; i++) {
+                var ncard = info.card_decks.infections.shift();
+                info.card_decks.inf_disc.push(ncard);
+                var dindx = utilities.card_to_color(ncard);
+                var dizloc = ncard.toString();
+                germHandler.infect(info, dindx, dizloc, 1);
+            }
+        }
+        info.misc.op_exp_used_power = 0;
+        info.players.plyr_move++;
+        if (info.players.plyr_move == info.players.plist.length) {
+            info.players.plyr_move = 0;
+        }
+        info.players.moves_left = utilities.PLAYER_TURNS;
+        if (info.misc.loseInfo.length > 0) {
+            if (info.misc.loseInfo === OUTBREAK_IND) {
+                useSpecWindow.exit_message(info, citymap, ["YOU LOSE", "Too many outbreaks."]);
             }
             else {
-                var epidindx = info.misc.epid_counter;
-                var epidrate = info.misc.epid_values[epidindx];
-                for (i=0; i<epidrate; i++) {
-                    var ncard = info.card_decks.infections.shift();
-                    info.card_decks.inf_disc.push(ncard);
-                    var dindx = utilities.card_to_color(ncard);
-                    var dizloc = ncard.toString();
-                    germHandler.infect(info, dindx, dizloc, 1);
-                }
+                useSpecWindow.exit_message(info, citymap, ["YOU LOSE", "Too many " + info.misc.loseInfo +" infections."]);
             }
-            info.misc.op_exp_used_power = 0;
-            info.players.plyr_move++;
-            if (info.players.plyr_move == info.players.plist.length) {
-                info.players.plyr_move = 0;
-            }
-            info.players.moves_left = utilities.PLAYER_TURNS;
-            if (info.misc.loseInfo.length > 0) {
-                if (info.misc.loseInfo === OUTBREAK_IND) {
-                    useSpecWindow.exit_message(info, citymap, ["YOU LOSE", "Too many outbreaks."]);
-                }
-                else {
-                    useSpecWindow.exit_message(info, citymap, ["YOU LOSE", "Too many " + info.misc.loseInfo +" infections."]);
-                }
-            }
-            update_page(info);
         }
+        update_page(info);
     }
 
     function mEventSw(evt, info, citymap) {
@@ -214,6 +228,7 @@ var handleInput = function() {
     return {
         OUTBREAK_IND:OUTBREAK_IND,
         mouseSwitch:mouseSwitch,
-        update_page:update_page
+        update_page:update_page,
+        continue_after_cardcheck:continue_after_cardcheck
     };
 }();

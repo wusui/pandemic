@@ -210,6 +210,9 @@ var useSpecWindow = function() {
         }
         else {
             clean_up(info);
+            if (info.misc.epid_cnt_for_callback >= 0) {
+                handleInput.continue_after_cardcheck(info);
+            }
         }
     }
 
@@ -290,6 +293,7 @@ var useSpecWindow = function() {
         }
         info.display.special_text_fields = line_filler;
         info.display.special_callback = DISCARD_CALLBACK;
+        handleInput.update_page(info);
     }
 
     return {
