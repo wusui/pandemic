@@ -43,7 +43,9 @@ var clickPlayer = function() {
                 info.misc.card_played = -1;
                 info.display.too_many_in_hand = toguy.cards.slice();
                 if (info.display.too_many_in_hand.length > useSpecWindow.HAND_LIMIT) {
+                    info.misc.card_pass_in_progress = true;
                     useSpecWindow.tooManyCards(info, citymap);
+                    return;
                 }
                 info.players.moves_left--;
                 handleInput.update_page(info);

@@ -91,20 +91,6 @@ var useSpecWindow = function() {
         return txt_line;
     }
 
-    function forecast_callback(x, y, info) {
-        specialSpecial.forecast_callback(x, y, info);
-    }
-
-    function res_pop_callback(x, y, info) {
-        specialSpecial.res_pop_callback(x, y, info);
-    }
-
-    function epidemic_callback(x, y, info) {
-        gen_callback(x, y, 1, STD_SPACING);
-        clean_up(info);
-        germHandler.epidemic_callback(info);
-    }
-
     function epidemic_message(info, citymap, inp_lines) {
         general_message(info, citymap, inp_lines, EPIDEMIC_CALLBACK);
     }
@@ -124,9 +110,9 @@ var useSpecWindow = function() {
     function general_message(info, citymap, inp_lines, callback) {
         common_stuff(info, citymap);
         inp_lines.push(' ');
-        inp_lines.push('Click inside this box');
-        inp_lines.push('to unlock and continue.');
+        inp_lines.push('Click OKAY to unlock and continue.');
         var line_filler = print_head(inp_lines);
+        info.display.special_text_buttons = [specialSpecial.OKAY_BUTTON];
         info.display.special_text_fields = line_filler;
         info.display.special_callback = callback;
     }
@@ -219,21 +205,55 @@ var useSpecWindow = function() {
             if (info.misc.epid_cnt_for_callback >= 0) {
                 handleInput.continue_after_cardcheck(info);
             }
+            if (info.misc.card_pass_in_progress) {
+                info.misccard_pass_in_progress = false;
+                info.players.moves_left--;
+                handleInput.update_page(info);
+            }
         }
     }
 
     function eot_outbrk_callback(x, y, info) {
+        var indx = specialSpecial.hit_button(x, y, info);
+        if (indx < 0) {
+            return;
+        }
         info.misc.nxt_out.shift();
         clean_up(info);
         handleInput.continue_after_outbreaks(info);
     }
 
     function message_callback(x, y, info) {
+        var indx = specialSpecial.hit_button(x, y, info);
+        if (indx < 0) {
+            return;
+        }
         clean_up(info);
     }
 
     function exit_callback(x, y, info) {
+        var indx = specialSpecial.hit_button(x, y, info);
+        if (indx < 0) {
+            return;
+        }
         close();
+    }
+
+    function epidemic_callback(x, y, info) {
+        var indx = specialSpecial.hit_button(x, y, info);
+        if (indx < 0) {
+            return;
+        }
+        clean_up(info);
+        germHandler.epidemic_callback(info);
+    }
+
+    function forecast_callback(x, y, info) {
+        specialSpecial.forecast_callback(x, y, info);
+    }
+
+    function res_pop_callback(x, y, info) {
+        specialSpecial.res_pop_callback(x, y, info);
     }
 
     function tooManyGerms(info, citymap, dvals) {

@@ -27,6 +27,7 @@ var specialSpecial = function() {
     var done_button = {"text": "DONE", "locations": [dbutton_x, dbutton_y, tloc]};
     var prev_button = {"text": "PREV", "locations": [lbutton_x, dbutton_y, tloc-110]};
     var next_button = {"text": "NEXT", "locations": [rbutton_x, dbutton_y, tloc+100]};
+    const OKAY_BUTTON = {"text": "OKAY", "locations": [dbutton_x, dbutton_y, tloc]};
     var frontcards = [];
     var inf_cards = [];
     var page_no = 0;
@@ -132,8 +133,8 @@ var specialSpecial = function() {
                 info.card_decks.infections.unshift(frontcards[i]);
             }
             info.misc.special_action = 0;
-            useSpecWindow.clean_up(info);
             frontcards = [];
+            useSpecWindow.clean_up(info);
         }
     }
 
@@ -174,7 +175,7 @@ var specialSpecial = function() {
         return 0;
     }
 
-    function setup_page(info) {
+    function special_setup_page(info) {
         var inp_lines = [];
         inp_lines.push('Resillient Population Card played.');
         inp_lines.push('Click on card to be removed.');
@@ -203,7 +204,7 @@ var specialSpecial = function() {
         if (info.card_decks.inf_disc.length === 0) {
             info.display.special_text_buttons = [];
             useSpecWindow.print_message(info, citymap, ["There are no cards in the discard pile."]);
-            setup_page(info);
+            special_setup_page(info);
             return;
         }
         saved_info = info;
@@ -217,7 +218,7 @@ var specialSpecial = function() {
         }
         inf_cards.sort(comp_inf);
         page_no = 0;
-        setup_page(info);
+        special_setup_page(info);
         info.display.special_text_fields = line_filler;
         info.display.special_callback = useSpecWindow.RES_POP_CALLBACK;
     }
@@ -230,7 +231,7 @@ var specialSpecial = function() {
             else {
                 page_no--;
             }
-            setup_page(info);
+            special_setup_page(info);
             info.display.special_text_fields = line_filler;
             handleInput.update_page(info);
             return;
@@ -259,6 +260,8 @@ var specialSpecial = function() {
     }
 
     return {
+        OKAY_BUTTON:OKAY_BUTTON,
+        hit_button:hit_button,
         clickedOnForecast:clickedOnForecast,
         forecast_callback:forecast_callback,
         clickedOnResPop:clickedOnResPop,
