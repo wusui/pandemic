@@ -135,6 +135,9 @@ var specialSpecial = function() {
             info.misc.special_action = 0;
             frontcards = [];
             useSpecWindow.clean_up(info);
+            if (info.misc.discarding_special) {
+                useSpecWindow.discard_continue(info, info.misc.card_stash);
+            }
         }
     }
 
@@ -257,6 +260,9 @@ var specialSpecial = function() {
         }
         info.misc.special_action = 0;
         useSpecWindow.clean_up(info);
+        if (info.misc.discarding_special) {
+            useSpecWindow.discard_continue(info, info.misc.card_stash);
+        }
     }
 
     return {

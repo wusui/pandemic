@@ -201,10 +201,24 @@ var useSpecWindow = function() {
         }
         var cty = ccards.splice(indx,1);
         info.misc.card_played = cty[0];
+        info.misc.discarding_special = false;
+        if (cty[0] > utilities.MAX_INF_CITIES) {
+            info.misc.discarding_special = true;
+            info.misc.card_stash = ccards;
+            var citymap = JSON.parse(sessionStorage.getItem('citymap'));
+            clickCard.specialCard(cty[0], info, citymap);
+            return;
+        }
+        discard_continue(info, ccards);
+    }
+
+    function discard_continue(info, ccards) {
+        info.misc.discarding_special = false;
         clickCard.discard(info);
         info.display.too_many_in_hand = ccards.slice();
         if (ccards.length > HAND_LIMIT) {
-            tooManyCards(info, lcitymap);
+            var citymap = JSON.parse(sessionStorage.getItem('citymap'));
+            tooManyCards(info, citymap);
             handleInput.update_page(info);
         }
         else {
@@ -236,6 +250,9 @@ var useSpecWindow = function() {
             return;
         }
         clean_up(info);
+        if (info.misc.discarding_special) {
+            discard_continue(info, info.misc.card_stash);
+        }
     }
 
     function exit_callback(x, y, info) {
@@ -350,6 +367,7 @@ var useSpecWindow = function() {
         common_stuff:common_stuff,
         print_head:print_head,
         write_card:write_card,
+        discard_continue:discard_continue,
         clean_up:clean_up
     };
 }();

@@ -96,6 +96,7 @@ var clickCard = function() {
 
     return {
         discard:discard,
+        specialCard:specialCard,
         clickCard:clickCard
     };
 

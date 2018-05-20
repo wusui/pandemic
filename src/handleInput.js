@@ -60,6 +60,9 @@ var handleInput = function() {
         }
         else {
             update_page(info);
+            if (info.misc.special_action > 0) {
+                return;
+            }
             if (info.card_decks.player_cards.length < 2) {
                 useSpecWindow.exit_message(info, citymap, ["YOU LOSE", "Not enough cards left", "in the player deck"]);
                 update_page(info);
