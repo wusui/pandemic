@@ -22,11 +22,11 @@ var clickCard = function() {
         }
         if (cval === 1) {
             info.misc.special_action = utilities.SA_AIRLIFT_PLAYER;
-            useSpecWindow.print_message(info, citymap, ["Airlift Card Played", "After this box is cleared,", "click on the player that you", "want to airlift"]);
+            useSpecWindow.special_message(info, citymap, ["Airlift Card Played", "Click on the player that you", "want to airlift"]);
         }
         if (cval === 2) {
             info.misc.special_action = utilities.SA_GOV_GRANT;
-            useSpecWindow.print_message(info, citymap, ["Government Grant Card Played", "After this box is cleared,", "click on the new research", "station location"]);
+            useSpecWindow.special_message(info, citymap, ["Government Grant Card Played", "Click on the new research", "station location"]);
         }
         if (cval === 3) {
             specialSpecial.clickedOnForecast(info, citymap);

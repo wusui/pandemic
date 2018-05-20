@@ -14,7 +14,7 @@ var clickCity = function() {
             info.players.plist[info.misc.airlifted_player].xlocation = citymap.byname[action].number;
             info.misc.special_action = 0;
             info.misc.airlifted_player = -1;
-            handleInput.update_page(info);
+            useSpecWindow.clean_up(info);
             return;
         }
         if (info.misc.special_action == utilities.SA_GOV_GRANT) {
@@ -30,10 +30,12 @@ var clickCity = function() {
                 info.misc.research_stations.push(newr);
                 if (info.misc.research_stations.length > utilities.R_STA_MAX) {
                     useSpecWindow.tooManyStations(info, citymap);
+                    info.misc.special_action = 0;
+                    return;
                 }
                 info.misc.special_action = 0;
             }
-            handleInput.update_page(info);
+            useSpecWindow.clean_up(info);
             return;
         }
         if (info.misc.special_action > 0) {

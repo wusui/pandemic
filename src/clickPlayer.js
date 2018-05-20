@@ -9,7 +9,7 @@ var clickPlayer = function() {
             var occupation = utilities.occupation_name(info.players.plist[action].name);
             var msg1 = occupation + " has been selected";
             var msg2 = occupation + " will be airlifted.";
-            useSpecWindow.print_message(info, citymap, [msg1, "to be airlifted.", " ", "After this box is cleared,", "click on the city to which", msg2]);
+            useSpecWindow.special_message(info, citymap, [msg1, "to be airlifted.", " ", "Click on the city to which", msg2]);
             handleInput.update_page(info);
             return;
         }

@@ -107,6 +107,13 @@ var useSpecWindow = function() {
         general_message(info, citymap, inp_lines, EOT_OUTBRK_CALLBACK);
     }
 
+    function special_message(info, citymap, inp_lines) {
+        common_stuff(info, citymap);
+        info.misc.use_special_window = 0;
+        var line_filler = print_head(inp_lines);
+        info.display.special_text_fields = line_filler;
+    }
+
     function general_message(info, citymap, inp_lines, callback) {
         common_stuff(info, citymap);
         inp_lines.push(' ');
@@ -334,6 +341,7 @@ var useSpecWindow = function() {
         epidemic_message:epidemic_message,
         eot_outbrk_message:eot_outbrk_message,
         print_message:print_message,
+        special_message:special_message,
         exit_message:exit_message,
         tooManyCureCards:tooManyCureCards,
         tooManyStations:tooManyStations,
