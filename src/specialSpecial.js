@@ -1,4 +1,4 @@
-/* globals useSpecWindow, boardLocations, utilities, drawBoard, handleInput */
+/* globals useSpecWindow, boardLocations, utilities, drawBoard, handleInput, germHandler */
 /* exported specialSpecial */
 var specialSpecial = function() {
 
@@ -27,8 +27,8 @@ var specialSpecial = function() {
     var done_button = {"text": "DONE", "locations": [dbutton_x, dbutton_y, tloc]};
     var prev_button = {"text": "PREV", "locations": [lbutton_x, dbutton_y, tloc-110]};
     var next_button = {"text": "NEXT", "locations": [rbutton_x, dbutton_y, tloc+100]};
-    const OKAY_BUTTON = {"text": "OKAY", "locations": [dbutton_x, dbutton_y, tloc]};
-    const SKIP_BUTTON = {"text": "SKIP", "locations": [dbutton_x, dbutton_y, tloc]};
+    var OKAY_BUTTON = {"text": "OKAY", "locations": [dbutton_x, dbutton_y, tloc]};
+    var SKIP_BUTTON = {"text": "SKIP", "locations": [dbutton_x, dbutton_y, tloc]};
     var frontcards = [];
     var inf_cards = [];
     var page_no = 0;
@@ -218,7 +218,6 @@ var specialSpecial = function() {
         saved_citymap = citymap;
         info.misc.special_action = utilities.SA_RES_POP;
         useSpecWindow.common_stuff(info, citymap);
-        var inp_lines = [];
         inf_cards = [];
         for (var i=0; i<info.card_decks.inf_disc.length; i++) {
             inf_cards.push(info.card_decks.inf_disc[i]);

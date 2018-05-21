@@ -136,7 +136,7 @@ var handleInput = function() {
         }
         info.misc.op_exp_used_power = 0;
         if (info.misc.no_skip_done_yet) {
-            if (info.players.moves_left == 0) {
+            if (info.players.moves_left === 0) {
                 info.players.plyr_move++;
             }
             info.misc.no_skip_done_yet = false;

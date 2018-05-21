@@ -91,14 +91,14 @@ var germHandler = function() {
     function epid_continue(info) {
         var sp_cards =[];
         for (var i=0; i<info.players.plist.length; i++) {
-            cardv = info.players.plist[i].cards;
+            var cardv = info.players.plist[i].cards;
             for (var j=0; j<cardv.length; j++) {
                 if (cardv[j] >= utilities.MAX_INF_CITIES) {
                     sp_cards.push(cardv[j]);
                 }
             }
         }
-        if (sp_cards.length == 0) {
+        if (sp_cards.length === 0) {
             handleInput.continue_after_cardcheck(info);
         }
         else {

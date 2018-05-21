@@ -1,4 +1,4 @@
-/* globals handleInput, clickCard, utilities, useSpecWindow */
+/* globals handleInput, clickCard, utilities, useSpecWindow, germHandler */
 /* exported clickCity */
 var clickCity = function() {
 

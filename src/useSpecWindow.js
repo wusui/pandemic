@@ -250,7 +250,7 @@ var useSpecWindow = function() {
         var citymap = JSON.parse(sessionStorage.getItem('citymap'));
         var indx = specialSpecial.hit_button(x, y, info);
         info.misc.special_between_turns = false;
-        if (indx == 0) {
+        if (indx === 0) {
             clean_up(info);
             handleInput.continue_after_cardcheck(info);
             return;
