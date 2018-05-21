@@ -21,6 +21,7 @@ var useSpecWindow = function() {
     var DISCARD_CALLBACK = "DISCARD_CALLBACK";
     var EOT_OUTBRK_CALLBACK = "EOT_OUTBRK_CALLBACK";
     var EXIT_CALLBACK = "EXIT_CALLBACK";
+    var BETWEEN_MOVE_CALLBACK = "BETWEEN_MOVE_CALLBACK";
     var branch_table = {
         RES_STA_CALLBACK: res_callback,
         HEAL_CALLBACK: heal_callback,
@@ -31,7 +32,8 @@ var useSpecWindow = function() {
         RES_POP_CALLBACK: res_pop_callback,
         DISCARD_CALLBACK: discard_callback,
         EPIDEMIC_CALLBACK: epidemic_callback,
-        EOT_OUTBRK_CALLBACK: eot_outbrk_callback
+        EOT_OUTBRK_CALLBACK: eot_outbrk_callback,
+        BETWEEN_MOVE_CALLBACK: between_move_callback
     };
 
     function do_callback(x, y, info) {
@@ -244,6 +246,28 @@ var useSpecWindow = function() {
         handleInput.continue_after_outbreaks(info);
     }
 
+    function between_move_callback(x, y, info) {
+        var citymap = JSON.parse(sessionStorage.getItem('citymap'));
+        var indx = specialSpecial.hit_button(x, y, info);
+        info.misc.special_between_turns = false;
+        if (indx == 0) {
+            clean_up(info);
+            handleInput.continue_after_cardcheck(info);
+            return;
+        }
+        indx = gen_callback(x, y, info.misc.avail_specials, 5);
+        if (indx < 0) {
+            return;
+        }
+        if (indx < info.misc.avail_specials.length) {
+            info.misc.special_between_turns = true;
+            clickCard.specialCard(info.misc.avail_specials[indx], info, citymap);
+            return;
+        }
+        clean_up(info);
+        germHandler.epid_continue(info);
+    }
+
     function message_callback(x, y, info) {
         var indx = specialSpecial.hit_button(x, y, info);
         if (indx < 0) {
@@ -252,6 +276,9 @@ var useSpecWindow = function() {
         clean_up(info);
         if (info.misc.discarding_special) {
             discard_continue(info, info.misc.card_stash);
+        }
+        if (info.misc.special_between_turns) {
+            germHandler.epid_continue(info);
         }
     }
 
@@ -352,6 +379,7 @@ var useSpecWindow = function() {
     return {
         FORECAST_CALLBACK:FORECAST_CALLBACK,
         RES_POP_CALLBACK:RES_POP_CALLBACK,
+        BETWEEN_MOVE_CALLBACK:BETWEEN_MOVE_CALLBACK,
         HAND_LIMIT:HAND_LIMIT,
         do_callback:do_callback,
         gen_callback:gen_callback,

@@ -1,4 +1,4 @@
-/* globals utilities, useSpecWindow, handleInput */
+/* globals utilities, useSpecWindow, handleInput, specialSpecial */
 /* exported germHandler */
 var germHandler = function() {
     function infect(info, dcolor, dizloc, numb) {
@@ -85,12 +85,31 @@ var germHandler = function() {
         info.misc.epid_cnt_for_callback--;
         infect(info, dcolor, info.misc.epid_city.toString(), 3);
         handleInput.update_page(info);
-        handleInput.continue_after_cardcheck(info);
+        epid_continue(info);
+    }
+
+    function epid_continue(info) {
+        var sp_cards =[];
+        for (var i=0; i<info.players.plist.length; i++) {
+            cardv = info.players.plist[i].cards;
+            for (var j=0; j<cardv.length; j++) {
+                if (cardv[j] >= utilities.MAX_INF_CITIES) {
+                    sp_cards.push(cardv[j]);
+                }
+            }
+        }
+        if (sp_cards.length == 0) {
+            handleInput.continue_after_cardcheck(info);
+        }
+        else {
+            specialSpecial.set_up_between_move_specials(info, sp_cards);
+        }
     }
 
     return {
         infect:infect,
         epidemic:epidemic,
-        epidemic_callback:epidemic_callback
+        epidemic_callback:epidemic_callback,
+        epid_continue:epid_continue
     };
 }();

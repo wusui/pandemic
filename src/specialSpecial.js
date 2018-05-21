@@ -28,6 +28,7 @@ var specialSpecial = function() {
     var prev_button = {"text": "PREV", "locations": [lbutton_x, dbutton_y, tloc-110]};
     var next_button = {"text": "NEXT", "locations": [rbutton_x, dbutton_y, tloc+100]};
     const OKAY_BUTTON = {"text": "OKAY", "locations": [dbutton_x, dbutton_y, tloc]};
+    const SKIP_BUTTON = {"text": "SKIP", "locations": [dbutton_x, dbutton_y, tloc]};
     var frontcards = [];
     var inf_cards = [];
     var page_no = 0;
@@ -44,10 +45,10 @@ var specialSpecial = function() {
         return -1;
     }
 
-    function setCards() {
-        var nline_no = HEADER_LINES;
-        for (var i=0; i<frontcards.length; i++) {
-            var rnumb = frontcards[i];
+    function setCards(headlines, clist) {
+        var nline_no = headlines;
+        for (var i=0; i<clist.length; i++) {
+            var rnumb = clist[i];
             var newtxt = useSpecWindow.write_card(rnumb, nline_no);
             line_filler.push(newtxt);
             nline_no++;
@@ -79,7 +80,7 @@ var specialSpecial = function() {
             line_filler.push({"font": drawBoard.MEDIUM_FONT, "text": "-", "color": 'black', "highlight": false, "left": info.display.card_start+boardLocations.CARD_WIDTH+MINUS_OFFSET, "top": vloc});
             vloc += boardLocations.CARD_SPACING;
         }
-        setCards();
+        setCards(HEADER_LINES, frontcards);
         info.display.special_text_fields = line_filler;
         info.display.special_text_buttons = [done_button];
         info.display.special_callback = useSpecWindow.FORECAST_CALLBACK;
@@ -123,7 +124,7 @@ var specialSpecial = function() {
                 for (var iii=0; iii<frontcards.length; iii++) {
                     line_filler.pop();
                 }
-                setCards();
+                setCards(HEADER_LINES, frontcards);
                 info.display.special_text_fields = line_filler;
                 handleInput.update_page(info);
             }
@@ -137,6 +138,9 @@ var specialSpecial = function() {
             useSpecWindow.clean_up(info);
             if (info.misc.discarding_special) {
                 useSpecWindow.discard_continue(info, info.misc.card_stash);
+            }
+            if (info.misc.special_between_turns) {
+                germHandler.epid_continue(info);
             }
         }
     }
@@ -263,11 +267,28 @@ var specialSpecial = function() {
         if (info.misc.discarding_special) {
             useSpecWindow.discard_continue(info, info.misc.card_stash);
         }
+        if (info.misc.special_between_turns) {
+            germHandler.epid_continue(info);
+        }
+    }
+
+    function set_up_between_move_specials(info, sp_cards) {
+        var inp_lines = ['Select any special card', 'that you want to play before', 'infection cards are drawn'];
+        var citymap = JSON.parse(sessionStorage.getItem('citymap'));
+        useSpecWindow.common_stuff(info, citymap);
+        line_filler = useSpecWindow.print_head(inp_lines);
+        setCards(5, sp_cards);
+        info.display.special_text_fields = line_filler;
+        info.display.special_text_buttons = [SKIP_BUTTON];
+        info.display.special_callback = useSpecWindow.BETWEEN_MOVE_CALLBACK;
+        info.misc.avail_specials = sp_cards;
+        handleInput.update_page(info);
     }
 
     return {
         OKAY_BUTTON:OKAY_BUTTON,
         hit_button:hit_button,
+        set_up_between_move_specials:set_up_between_move_specials,
         clickedOnForecast:clickedOnForecast,
         forecast_callback:forecast_callback,
         clickedOnResPop:clickedOnResPop,

@@ -39,6 +39,7 @@ var setupBoard = function() {
         misc_data.card_pass_in_progress = false;
         misc_data.discarding_special = false;
         misc_data.card_stash = [];
+        misc_data.avail_specials = [];
         plyr_move = 0;
         moves_left = utilities.PLAYER_TURNS;
         plyr_list = params[1].split('');

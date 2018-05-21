@@ -18,6 +18,9 @@ var clickCity = function() {
             if (info.misc.discarding_special) {
                 useSpecWindow.discard_continue(info, info.misc.card_stash);
             }
+            if (info.misc.special_between_turns) {
+                germHandler.epid_continue(info);
+            }
             return;
         }
         if (info.misc.special_action == utilities.SA_GOV_GRANT) {
@@ -37,6 +40,9 @@ var clickCity = function() {
                     if (info.misc.discarding_special) {
                         useSpecWindow.discard_continue(info, info.misc.card_stash);
                     }
+                    if (info.misc.special_between_turns) {
+                        germHandler.epid_continue(info);
+                    }
                     return;
                 }
                 info.misc.special_action = 0;
@@ -44,6 +50,9 @@ var clickCity = function() {
             useSpecWindow.clean_up(info);
             if (info.misc.discarding_special) {
                 useSpecWindow.discard_continue(info, info.misc.card_stash);
+            }
+            if (info.misc.special_between_turns) {
+                germHandler.epid_continue(info);
             }
             return;
         }
