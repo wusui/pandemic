@@ -1,6 +1,7 @@
 /* globals $ */
 /* exported handleFirstPage */
 var handleFirstPage = function() {
+    var MSG1 = "<div>The number of roles must be greater than or equal to the number of players.</div>";
     function readradio(element) {
         var radios = document.getElementsByName(element);
         for (var i = 0; i < radios.length; i++) {
@@ -23,7 +24,7 @@ var handleFirstPage = function() {
             }
         }
         if (oroles.length < plyrs) {
-            $("<div>Number of roles must be greater than or equal to the number of players.</div>").dialog(
+            $(MSG1).dialog(
                 {modal: true, height: 140, width: 400, title: 'ERROR'});
             return;
         }

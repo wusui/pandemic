@@ -1,5 +1,6 @@
 /* global utilities */
 /* exported setupBoard */
+
 var setupBoard = function() {
 
     var misc_data = {};

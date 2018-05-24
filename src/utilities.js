@@ -7,7 +7,7 @@ var utilities = function() {
     var xcard_color = ['#0000ff', '#000000', '#c08000', '#ff0000', '#00ff00'];
     var color_name = ['BLUE', 'BLACK', 'YELLOW', 'RED'];
     var occupations = {'M': "MEDIC", 'R': "RESEARCHER", 'S': "SCIENTIST", 'D': "DISPATCHER", 'O': "OPERATIONS EXP.", 'Q': "QUARANTINER", 'C': "CONT. PLANNER"};
-    var event_cards = ['Quiet Night', 'Airlift', 'Gov. Grant', 'Forecast', 'Resillient Pop.'];
+    var special_cards = ['Quiet Night', 'Airlift', 'Gov. Grant', 'Forecast', 'Resillient Pop.'];
     var num_text_val = ['zero', 'one', 'two', 'three'];
 
     var BOARD_WIDTH = 11;
@@ -20,9 +20,9 @@ var utilities = function() {
     var R_STA_MAX = 6;
     var MAX_GERMS_TOTAL = 24;
     var MAX_OUTBREAKS = 7;
-    var MAX_INF_CITIES = 48;
+    var MAX_INF_CITIES = NO_OF_GERM_TYPES * CITIES_PER_DISEASE;
     var FIRST_SPECIAL_CARD = 50;
-    var BEYOND_LAST_SPECIAL_CARD = 55;
+    var BEYOND_LAST_SPECIAL_CARD = FIRST_SPECIAL_CARD + special_cards.length;
     var EPIDEMIC = 60;
     var SA_AIRLIFT_PLAYER = 1;
     var SA_AIRLIFT_LOCATION = 2;
@@ -76,12 +76,12 @@ var utilities = function() {
         return occupations[abbrev];
     }
 
-    function id_event_card(numb) {
+    function id_special_card(numb) {
         var ider = numb;
         if (numb >= FIRST_SPECIAL_CARD) {
             ider = ider - FIRST_SPECIAL_CARD;
         }
-        return event_cards[ider];
+        return special_cards[ider];
     }
 
     return {
@@ -91,7 +91,7 @@ var utilities = function() {
         get_color_name:get_color_name,
         get_card_color:get_card_color,
         occupation_name:occupation_name,
-        id_event_card:id_event_card,
+        id_special_card:id_special_card,
         card_to_color:card_to_color,
         BOARD_WIDTH:BOARD_WIDTH,
         CITIES_PER_DISEASE:CITIES_PER_DISEASE,

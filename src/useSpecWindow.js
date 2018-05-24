@@ -84,7 +84,7 @@ var useSpecWindow = function() {
     function write_card(incard, lineno) {
         var cittext = lcitymap.bynumb[incard];
         if (incard > utilities.MAX_INF_CITIES) {
-            cittext = utilities.id_event_card(incard);
+            cittext = utilities.id_special_card(incard);
         }
         var txt_line = setup_line(cittext, lineno);
         txt_line.highlight = true;
@@ -255,7 +255,7 @@ var useSpecWindow = function() {
             handleInput.continue_after_cardcheck(info);
             return;
         }
-        indx = gen_callback(x, y, info.misc.avail_specials, 5);
+        indx = gen_callback(x, y, info.misc.avail_specials, STD_SPACING+1);
         if (indx < 0) {
             return;
         }
@@ -274,12 +274,7 @@ var useSpecWindow = function() {
             return;
         }
         clean_up(info);
-        if (info.misc.discarding_special) {
-            discard_continue(info, info.misc.card_stash);
-        }
-        if (info.misc.special_between_turns) {
-            germHandler.epid_continue(info);
-        }
+        special_return(info);
     }
 
     function exit_callback(x, y, info) {
@@ -376,11 +371,21 @@ var useSpecWindow = function() {
         handleInput.update_page(info);
     }
 
+    function special_return(info) {
+        if (info.misc.discarding_special) {
+            discard_continue(info, info.misc.card_stash);
+        }
+        if (info.misc.special_between_turns) {
+            germHandler.epid_continue(info);
+        }
+    }
+
     return {
         FORECAST_CALLBACK:FORECAST_CALLBACK,
         RES_POP_CALLBACK:RES_POP_CALLBACK,
         BETWEEN_MOVE_CALLBACK:BETWEEN_MOVE_CALLBACK,
         HAND_LIMIT:HAND_LIMIT,
+        STD_SPACING:STD_SPACING,
         do_callback:do_callback,
         gen_callback:gen_callback,
         epidemic_message:epidemic_message,
@@ -396,6 +401,7 @@ var useSpecWindow = function() {
         print_head:print_head,
         write_card:write_card,
         discard_continue:discard_continue,
-        clean_up:clean_up
+        clean_up:clean_up,
+        special_return:special_return
     };
 }();

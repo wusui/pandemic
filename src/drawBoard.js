@@ -212,7 +212,7 @@ var drawBoard = function() {
             var vline = boardLocations.PLAYER_Y_COORD;
             for (var card=0; card < deck.length; card++) {
                 if (deck[card] >= utilities.FIRST_SPECIAL_CARD) {
-                    ctext = utilities.id_event_card(deck[card]);
+                    ctext = utilities.id_special_card(deck[card]);
                 }
                 else {
                     ctext = citymap.bynumb[deck[card]];

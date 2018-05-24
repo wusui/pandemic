@@ -15,12 +15,7 @@ var clickCity = function() {
             info.misc.special_action = 0;
             info.misc.airlifted_player = -1;
             useSpecWindow.clean_up(info);
-            if (info.misc.discarding_special) {
-                useSpecWindow.discard_continue(info, info.misc.card_stash);
-            }
-            if (info.misc.special_between_turns) {
-                germHandler.epid_continue(info);
-            }
+            useSpecWindow.special_return(info);
             return;
         }
         if (info.misc.special_action == utilities.SA_GOV_GRANT) {
@@ -37,23 +32,13 @@ var clickCity = function() {
                 if (info.misc.research_stations.length > utilities.R_STA_MAX) {
                     useSpecWindow.tooManyStations(info, citymap);
                     info.misc.special_action = 0;
-                    if (info.misc.discarding_special) {
-                        useSpecWindow.discard_continue(info, info.misc.card_stash);
-                    }
-                    if (info.misc.special_between_turns) {
-                        germHandler.epid_continue(info);
-                    }
+                    useSpecWindow.special_return(info);
                     return;
                 }
                 info.misc.special_action = 0;
             }
             useSpecWindow.clean_up(info);
-            if (info.misc.discarding_special) {
-                useSpecWindow.discard_continue(info, info.misc.card_stash);
-            }
-            if (info.misc.special_between_turns) {
-                germHandler.epid_continue(info);
-            }
+            useSpecWindow.special_return(info);
             return;
         }
         if (info.misc.special_action > 0) {

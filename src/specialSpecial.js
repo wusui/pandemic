@@ -136,12 +136,7 @@ var specialSpecial = function() {
             info.misc.special_action = 0;
             frontcards = [];
             useSpecWindow.clean_up(info);
-            if (info.misc.discarding_special) {
-                useSpecWindow.discard_continue(info, info.misc.card_stash);
-            }
-            if (info.misc.special_between_turns) {
-                germHandler.epid_continue(info);
-            }
+            useSpecWindow.special_return(info);
         }
     }
 
@@ -263,12 +258,7 @@ var specialSpecial = function() {
         }
         info.misc.special_action = 0;
         useSpecWindow.clean_up(info);
-        if (info.misc.discarding_special) {
-            useSpecWindow.discard_continue(info, info.misc.card_stash);
-        }
-        if (info.misc.special_between_turns) {
-            germHandler.epid_continue(info);
-        }
+        useSpecWindow.special_return(info);
     }
 
     function set_up_between_move_specials(info, sp_cards) {
@@ -276,7 +266,7 @@ var specialSpecial = function() {
         var citymap = JSON.parse(sessionStorage.getItem('citymap'));
         useSpecWindow.common_stuff(info, citymap);
         line_filler = useSpecWindow.print_head(inp_lines);
-        setCards(5, sp_cards);
+        setCards(useSpecWindow.STD_SPACING+1, sp_cards);
         info.display.special_text_fields = line_filler;
         info.display.special_text_buttons = [SKIP_BUTTON];
         info.display.special_callback = useSpecWindow.BETWEEN_MOVE_CALLBACK;
