@@ -7,8 +7,10 @@ var germHandler = function() {
         }
         if (Object.keys(info.diseases[dcolor].infections).includes(dizloc)) {
             info.diseases[dcolor].infections[dizloc] += numb;
-            if (info.diseases[dcolor].infections[dizloc] > utilities.MAX_GERMS) {
-                var diff = utilities.MAX_GERMS - info.diseases[dcolor].infections[dizloc];
+            if (info.diseases[dcolor].infections[dizloc] >
+                           utilities.MAX_GERMS) {
+                var diff = utilities.MAX_GERMS -
+                           info.diseases[dcolor].infections[dizloc];
                 info.diseases[dcolor].count -= numb;
                 info.diseases[dcolor].count -= diff;
                 info.diseases[dcolor].infections[dizloc] = utilities.MAX_GERMS;
@@ -72,7 +74,8 @@ var germHandler = function() {
         info.misc.epid_city = info.card_decks.infections.pop();
         info.card_decks.inf_disc.push(info.misc.epid_city);
         var city = citymap.bynumb[info.misc.epid_city.toString()];
-        useSpecWindow.epidemic_message(info, citymap, ['Epidemic occurred in '+city]);
+        useSpecWindow.epidemic_message(info, citymap,
+                                       ['Epidemic occurred in '+city]);
     }
 
     function epidemic_callback(info) {

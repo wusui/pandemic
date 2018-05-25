@@ -59,7 +59,8 @@ var topLevel = function() {
                 }
                 var sptr = "HIJKL".indexOf(letter);
                 if (sptr >= 0) {
-                    info.players.plist[p].cards.push(sptr + utilities.FIRST_SPECIAL_CARD);
+                    info.players.plist[p].cards.push(sptr +
+                            utilities.FIRST_SPECIAL_CARD);
                 }
                 sptr = "PNM".indexOf(letter);
                 if (sptr >= 0) {

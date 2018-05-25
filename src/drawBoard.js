@@ -66,14 +66,16 @@ var drawBoard = function() {
     }
 
     function drawButton(otext,locs,color) {
-        ctx.strokeRect(locs[0], locs[1], boardLocations.BUTTON_X_LEN, boardLocations.BUTTON_Y_HGT);
+        ctx.strokeRect(locs[0], locs[1], boardLocations.BUTTON_X_LEN,
+                       boardLocations.BUTTON_Y_HGT);
         if (color) {
             ctx.fillStyle = WHITE;
         }
         else {
             ctx.fillStyle = GREY;
         }
-        ctx.fillRect(locs[0], locs[1], boardLocations.BUTTON_X_LEN, boardLocations.BUTTON_Y_HGT);
+        ctx.fillRect(locs[0], locs[1], boardLocations.BUTTON_X_LEN,
+                                       boardLocations.BUTTON_Y_HGT);
         ctx.fillStyle = BLACK;
         ctx.fillText(otext, locs[2], locs[1] + boardLocations.BUTTON_YDIFF);
     }
@@ -84,8 +86,10 @@ var drawBoard = function() {
         ctx.fillStyle = BKGRND_GREEN;
         ctx.fillRect(0, 0, pcanvas.width, pcanvas.height);
         ctx.fillStyle = BKGRND_BLUE;
-        ctx.rect(boardLocations.MARGIN, boardLocations.MARGIN, boardLocations.MAP_WIDTH, boardLocations.MAP_HEIGHT);
-        ctx.fillRect(boardLocations.MARGIN, boardLocations.MARGIN, boardLocations.MAP_WIDTH, boardLocations.MAP_HEIGHT);
+        ctx.rect(boardLocations.MARGIN, boardLocations.MARGIN,
+                 boardLocations.MAP_WIDTH, boardLocations.MAP_HEIGHT);
+        ctx.fillRect(boardLocations.MARGIN, boardLocations.MARGIN,
+                     boardLocations.MAP_WIDTH, boardLocations.MAP_HEIGHT);
         ctx.stroke();
         ctx.strokeStyle = PURPLE;
         var klist = Object.keys(citymap.byname);
@@ -93,8 +97,10 @@ var drawBoard = function() {
             var key = klist[ii];
             var neighbors = citymap.byname[key].neighbors;
             for (var tocity=0; tocity < neighbors.length; tocity++) {
-                var x1 = boardLocations.conv_to_map(citymap.byname[neighbors[tocity]].xcoord);
-                var y1 = boardLocations.conv_to_map(citymap.byname[neighbors[tocity]].ycoord);
+                var x1 = boardLocations.conv_to_map(
+                         citymap.byname[neighbors[tocity]].xcoord);
+                var y1 = boardLocations.conv_to_map(
+                         citymap.byname[neighbors[tocity]].ycoord);
                 var x2 = boardLocations.conv_to_map(citymap.byname[key].xcoord);
                 var y2 = boardLocations.conv_to_map(citymap.byname[key].ycoord);
                 if (Math.abs(x1-x2) < boardLocations.WRAP_SIZE) {
@@ -115,8 +121,10 @@ var drawBoard = function() {
                     ctx.lineTo(boardLocations.OFFSET_TO_CENTER,smally);
                     ctx.stroke();
                     ctx.beginPath();
-                    ctx.moveTo(boardLocations.WRAP_SIZE+boardLocations.OFFSET_TO_CENTER,bigy);
-                    ctx.lineTo(boardLocations.MAP_WIDTH+boardLocations.MARGIN,newy);
+                    ctx.moveTo(boardLocations.WRAP_SIZE +
+                               boardLocations.OFFSET_TO_CENTER,bigy);
+                    ctx.lineTo(boardLocations.MAP_WIDTH +
+                               boardLocations.MARGIN,newy);
                     ctx.stroke();
                 }
             }
@@ -125,18 +133,22 @@ var drawBoard = function() {
         var lklist = Object.keys(citymap.byname);
         for (var li=0; li < lklist.length; li++) {
             var key1 = lklist[li];
-            var xc = boardLocations.conv_to_map(citymap.byname[key1].xcoord) - boardLocations.CITY_SIZE/2;
-            var yc = boardLocations.conv_to_map(citymap.byname[key1].ycoord) - boardLocations.CITY_SIZE/2;
+            var xc = boardLocations.conv_to_map(citymap.byname[key1].xcoord)
+                             - boardLocations.CITY_SIZE/2;
+            var yc = boardLocations.conv_to_map(citymap.byname[key1].ycoord)
+                             - boardLocations.CITY_SIZE/2;
             var cname = citymap.byname[key1].name;
             var numb = parseInt(citymap.byname[key1].number);
             ctx.fillStyle = WHITE;
             if (info.misc.research_stations.includes(numb)) {
                 ctx.fillStyle = MEDIUM_GREEN;
             }
-            ctx.fillRect(xc, yc, boardLocations.CITY_SIZE, boardLocations.CITY_SIZE);
+            ctx.fillRect(xc, yc, boardLocations.CITY_SIZE,
+                                 boardLocations.CITY_SIZE);
             var dtype = Math.floor(numb/utilities.CITIES_PER_DISEASE);
             ctx.strokeStyle = utilities.get_card_color(dtype);
-            ctx.strokeRect(xc, yc, boardLocations.CITY_SIZE, boardLocations.CITY_SIZE);
+            ctx.strokeRect(xc, yc, boardLocations.CITY_SIZE,
+                                   boardLocations.CITY_SIZE);
             ctx.fillStyle = ctx.strokeStyle;
             ctx.font = SMALL_FONT;
             ctx.fillText(cname, xc, yc-boardLocations.TEXT_ADJUSTMENT1);
@@ -163,7 +175,9 @@ var drawBoard = function() {
             var yv = parseInt(citymap.byname[ocity].ycoord);
             var otext = cur_locs[cnumb];
             var sval = Math.floor(ctx.measureText(otext).width/2);
-            ctx.fillText(otext, boardLocations.conv_to_map(xv)-sval, boardLocations.conv_to_map(yv)+boardLocations.PLAYER_OFFSET);
+            ctx.fillText(otext, boardLocations.conv_to_map(xv) - sval,
+                                boardLocations.conv_to_map(yv) +
+                                boardLocations.PLAYER_OFFSET);
         }
         for (var dcount=0; dcount<utilities.NO_OF_GERM_TYPES; dcount++) {
             var dname = utilities.get_color_name(dcount);
@@ -173,13 +187,18 @@ var drawBoard = function() {
             for (var icity=0; icity < ckeylst.length; icity++) {
                 var citnm = ckeylst[icity];
                 var cityz = citymap.bynumb[citnm];
-                var xloc = boardLocations.conv_to_map(parseInt(citymap.byname[cityz].xcoord));
-                var yloc = boardLocations.conv_to_map(parseInt(citymap.byname[cityz].ycoord));
+                var xloc = boardLocations.conv_to_map(
+                               parseInt(citymap.byname[cityz].xcoord));
+                var yloc = boardLocations.conv_to_map(
+                               parseInt(citymap.byname[cityz].ycoord));
                 var xoff = boardLocations.get_dis_locs(dcount);
                 var cnt = parseInt(info.diseases[dname].infections[citnm]);
                 for (var gcount=0; gcount<cnt; gcount++) {
-                    var yoff = boardLocations.get_dis_locs(utilities.MAX_GERMS-gcount);
-                    ctx.fillRect(xloc+xoff, yloc+yoff, boardLocations.DISEASE_SIZE, boardLocations.DISEASE_SIZE);
+                    var yoff = boardLocations.get_dis_locs(
+                               utilities.MAX_GERMS-gcount);
+                    ctx.fillRect(xloc+xoff, yloc+yoff,
+                                 boardLocations.DISEASE_SIZE,
+                                 boardLocations.DISEASE_SIZE);
                 }
             }
         }
@@ -221,12 +240,17 @@ var drawBoard = function() {
                 indent = Math.floor((spacing - maxn) / 2);
                 xover = ncount * spacing + indent + boardLocations.CITY_SIZE;
                 vline += boardLocations.CARD_SPACING;
-                var nindent = Math.floor((spacing - boardLocations.CARD_WIDTH) / 2);
-                var cdsp = ncount * spacing + nindent + boardLocations.CITY_SIZE;
+                var nindent = Math.floor((spacing - boardLocations.CARD_WIDTH)
+                                          / 2);
+                var cdsp = ncount * spacing + nindent +
+                           boardLocations.CITY_SIZE;
                 cdsp = Math.floor(cdsp);
                 ctx.fillStyle = OFF_YELLOW;
-                ctx.fillRect(cdsp, vline-boardLocations.CARD_OFFSET, boardLocations.CARD_WIDTH, boardLocations.CARD_HEIGHT);
-                var cindex = Math.floor(deck[card]/utilities.CITIES_PER_DISEASE);
+                ctx.fillRect(cdsp, vline-boardLocations.CARD_OFFSET,
+                             boardLocations.CARD_WIDTH,
+                             boardLocations.CARD_HEIGHT);
+                var cindex = Math.floor(
+                             deck[card]/utilities.CITIES_PER_DISEASE);
                 ctx.fillStyle = utilities.get_card_color(cindex);
                 ctx.fillText(ctext, xover, vline);
             }
@@ -275,8 +299,10 @@ var drawBoard = function() {
         otherstats.push(["Outbreaks: ", info.misc.outbreak_count.toString()]);
         var epidindx = info.misc.epid_counter;
         var epidrate = info.misc.epid_values[epidindx];
-        otherstats.push(["Infection Rate: ", epidrate, '(', epidindx.toString(), ')']);
-        otherstats.push(["Cards Left: ",info.card_decks.player_cards.length.toString()]);
+        otherstats.push(["Infection Rate: ", epidrate, '(',
+                        epidindx.toString(), ')']);
+        otherstats.push(["Cards Left: ",
+                        info.card_decks.player_cards.length.toString()]);
         var rsl = info.misc.research_stations.length;
         var rslcnt = utilities.R_STA_MAX - rsl;
         otherstats.push(["Research Stations Left: ", rslcnt.toString()]);
@@ -285,21 +311,32 @@ var drawBoard = function() {
         otherstats.push(["Player #: ", display_value.toString()]);
         disp_oth_stats(ctx, otherstats);
 
-        ctx.strokeRect(boardLocations.TEXT_WINDOW_LEFT, boardLocations.TEXT_WINDOW_TOP, boardLocations.TEXT_WINDOW_WIDTH, boardLocations.TEXT_WINDOW_HEIGHT); 
+        ctx.strokeRect(boardLocations.TEXT_WINDOW_LEFT,
+                       boardLocations.TEXT_WINDOW_TOP,
+                       boardLocations.TEXT_WINDOW_WIDTH,
+                       boardLocations.TEXT_WINDOW_HEIGHT); 
         ctx.fillStyle = WHITE;
-        ctx.fillRect(boardLocations.TEXT_WINDOW_LEFT, boardLocations.TEXT_WINDOW_TOP, boardLocations.TEXT_WINDOW_WIDTH, boardLocations.TEXT_WINDOW_HEIGHT); 
+        ctx.fillRect(boardLocations.TEXT_WINDOW_LEFT,
+                     boardLocations.TEXT_WINDOW_TOP,
+                     boardLocations.TEXT_WINDOW_WIDTH,
+                     boardLocations.TEXT_WINDOW_HEIGHT); 
         ctx.fillStyle = BLACK;
         var txt_data = info.display.special_text_fields;
         for (var itxt=0; itxt<txt_data.length; itxt++) {
             if (txt_data[itxt].highlight) {
                 ctx.fillStyle = OFF_YELLOW;
-                ctx.fillRect(info.display.card_start, txt_data[itxt].top-boardLocations.CARD_OFFSET, boardLocations.CARD_WIDTH, boardLocations.CARD_HEIGHT);
+                ctx.fillRect(info.display.card_start,
+                             txt_data[itxt].top-boardLocations.CARD_OFFSET,
+                             boardLocations.CARD_WIDTH,
+                             boardLocations.CARD_HEIGHT);
             }
             ctx.font = txt_data[itxt].font;
             ctx.fillStyle = txt_data[itxt].color;
-            ctx.fillText(txt_data[itxt].text, txt_data[itxt].left, txt_data[itxt].top);
+            ctx.fillText(txt_data[itxt].text, txt_data[itxt].left,
+                         txt_data[itxt].top);
         }
-        for (var ibut=0; ibut<info.display.special_text_buttons.length; ibut++) {
+        for (var ibut=0; ibut<info.display.special_text_buttons.length;
+                 ibut++) {
             var binf = info.display.special_text_buttons[ibut];
             drawButton(binf.text, binf.locations, true);
         }
@@ -317,7 +354,8 @@ var drawBoard = function() {
 
         var no_card_avail = true;
         for (ii=0; ii<info.card_decks.player_disc.length; ii++) {
-            if (info.card_decks.player_disc[ii] >= utilities.FIRST_SPECIAL_CARD) {
+            if (info.card_decks.player_disc[ii] >=
+                        utilities.FIRST_SPECIAL_CARD) {
                 no_card_avail = false;
                 break;
             }
@@ -327,12 +365,15 @@ var drawBoard = function() {
             ctx.fillStyle = GREY;
         }
         else {
-            ctx.fillStyle = utilities.get_card_color(utilities.EVENT_CARD_TYPE);
+            ctx.fillStyle = utilities.get_card_color(
+                            utilities.EVENT_CARD_TYPE);
         }
         if (info.misc.contingency_card > 0) {
-            cardval = utilities.xcard_color[info.misc.contingency_card - utilities.FIRST_SPECIAL_CARD];
+            cardval = utilities.xcard_color[info.misc.contingency_card -
+                      utilities.FIRST_SPECIAL_CARD];
         }
-        ctx.fillText(cardval, boardLocations.CONTINGENCY_CARD_X, boardLocations.CONTINGENCY_CARD_Y);
+        ctx.fillText(cardval, boardLocations.CONTINGENCY_CARD_X,
+                              boardLocations.CONTINGENCY_CARD_Y);
     }
 
     return {

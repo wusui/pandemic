@@ -1,8 +1,7 @@
-/* globals boardLocations, utilities, drawBoard, handleInput, clickButton, specialSpecial, clickCard, germHandler */
+/* globals boardLocations, utilities, drawBoard, handleInput, clickButton,
+   specialSpecial, clickCard, germHandler */
 /* exported useSpecWindow */
 var useSpecWindow = function() {
-
-    // var ctx;
     var left_pt = boardLocations.TEXT_WINDOW_LEFT;
     var top_pt = boardLocations.TEXT_WINDOW_TOP;
     var midpoint;
@@ -44,7 +43,8 @@ var useSpecWindow = function() {
         lcitymap = citymap;
         midpoint = left_pt + Math.floor(boardLocations.TEXT_WINDOW_WIDTH / 2);
         y_line_count = 0;
-        info.display.card_start = Math.floor(midpoint - boardLocations.CARD_WIDTH / 2);
+        info.display.card_start = Math.floor(midpoint -
+                                  boardLocations.CARD_WIDTH / 2);
         info.misc.use_special_window = 1;
     }
 
@@ -154,7 +154,8 @@ var useSpecWindow = function() {
     }
 
     function heal_callback(x, y, info) {
-        var indx = gen_callback(x, y, info.display.special_germs.length, STD_SPACING);
+        var indx = gen_callback(x, y, info.display.special_germs.length,
+                                STD_SPACING);
         if (indx < 0) {
             return;
         }
@@ -261,7 +262,8 @@ var useSpecWindow = function() {
         }
         if (indx < info.misc.avail_specials.length) {
             info.misc.special_between_turns = true;
-            clickCard.specialCard(info.misc.avail_specials[indx], info, citymap);
+            clickCard.specialCard(info.misc.avail_specials[indx], info,
+                                  citymap);
             return;
         }
         clean_up(info);
@@ -304,7 +306,8 @@ var useSpecWindow = function() {
 
     function tooManyGerms(info, citymap, dvals) {
         common_stuff(info, citymap);
-        var line_filler = print_head(["Click on the disease", "that you want to heal"]);
+        var line_filler = print_head(["Click on the disease",
+                                      "that you want to heal"]);
         var nline_no = STD_SPACING;
         info.display.special_germs = [];
         for (var i=0; i<utilities.NO_OF_GERM_TYPES; i++) {
@@ -323,7 +326,8 @@ var useSpecWindow = function() {
 
     function tooManyStations(info, citymap) {
         common_stuff(info, citymap);
-        var line_filler = print_head(["Research Station Limit Exceeded", "Click on station below to remove"]);
+        var line_filler = print_head(["Research Station Limit Exceeded",
+                                      "Click on station below to remove"]);
         var nline_no = STD_SPACING;
         for (var i=0; i<info.misc.research_stations.length; i++) {
             var rnumb = info.misc.research_stations[i];
@@ -340,7 +344,8 @@ var useSpecWindow = function() {
         var needed = info.display.cure_c_needed;
         common_stuff(info, citymap);
         var extras = ccards.length - needed;
-        var headr1 = "You have " + utilities.num_to_text(extras)  + " extra cure card";
+        var headr1 = "You have " + utilities.num_to_text(extras) +
+                     " extra cure card";
         if (extras > 1) {
             headr1 = headr1 + "s";
         }
@@ -358,7 +363,8 @@ var useSpecWindow = function() {
 
     function tooManyCards(info, citymap) {
         common_stuff(info, citymap);
-        var line_filler = print_head(["Player has too many cards", "Click on card to discard."]);
+        var line_filler = print_head(["Player has too many cards",
+                                      "Click on card to discard."]);
         var nline_no = STD_SPACING;
         for (var ii=0; ii<info.display.too_many_in_hand.length; ii++) {
             var rnumb = info.display.too_many_in_hand[ii];

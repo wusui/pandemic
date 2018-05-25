@@ -6,8 +6,11 @@ var utilities = function() {
     var exec_func;
     var xcard_color = ['#0000ff', '#000000', '#c08000', '#ff0000', '#00ff00'];
     var color_name = ['BLUE', 'BLACK', 'YELLOW', 'RED'];
-    var occupations = {'M': "MEDIC", 'R': "RESEARCHER", 'S': "SCIENTIST", 'D': "DISPATCHER", 'O': "OPERATIONS EXP.", 'Q': "QUARANTINER", 'C': "CONT. PLANNER"};
-    var special_cards = ['Quiet Night', 'Airlift', 'Gov. Grant', 'Forecast', 'Resillient Pop.'];
+    var occupations = {'M': "MEDIC", 'R': "RESEARCHER", 'S': "SCIENTIST",
+                       'D': "DISPATCHER", 'O': "OPERATIONS EXP.",
+                       'Q': "QUARANTINER", 'C': "CONT. PLANNER"};
+    var special_cards = ['Quiet Night', 'Airlift', 'Gov. Grant',
+                         'Forecast', 'Resillient Pop.'];
     var num_text_val = ['zero', 'one', 'two', 'three'];
 
     var BOARD_WIDTH = 11;

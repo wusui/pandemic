@@ -11,7 +11,8 @@ var clickCity = function() {
 
     function clickCity(action, info, citymap) {
         if (info.misc.special_action == utilities.SA_AIRLIFT_LOCATION) {
-            info.players.plist[info.misc.airlifted_player].xlocation = citymap.byname[action].number;
+            info.players.plist[info.misc.airlifted_player].xlocation =
+                        citymap.byname[action].number;
             info.misc.special_action = 0;
             info.misc.airlifted_player = -1;
             useSpecWindow.clean_up(info);
@@ -66,7 +67,8 @@ var clickCity = function() {
                 return;
             }
         }
-        if (info.misc.research_stations.includes(oloc) && info.misc.research_stations.includes(mloc)) {
+        if (info.misc.research_stations.includes(oloc) &&
+                        info.misc.research_stations.includes(mloc)) {
             moveIt(mover, mloc, info);
             return;
         }
@@ -84,7 +86,8 @@ var clickCity = function() {
             return;
         }
         if (info.players.plist[mover].name == 'O') {
-            if (info.misc.op_exp_used_power === 0 && info.misc.card_played >= 0) {
+            if (info.misc.op_exp_used_power === 0 &&
+                        info.misc.card_played >= 0) {
                 info.misc.op_exp_used_power = 1;
                 moveIt(mover, mloc, info);
                 clickCard.discard(info);

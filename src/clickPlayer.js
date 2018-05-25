@@ -6,10 +6,13 @@ var clickPlayer = function() {
         if (info.misc.special_action ==  utilities.SA_AIRLIFT_PLAYER) {
             info.misc.special_action = utilities.SA_AIRLIFT_LOCATION;
             info.misc.airlifted_player = action;
-            var occupation = utilities.occupation_name(info.players.plist[action].name);
+            var occupation = utilities.occupation_name(
+                        info.players.plist[action].name);
             var msg1 = occupation + " has been selected";
             var msg2 = occupation + " will be airlifted.";
-            useSpecWindow.special_message(info, citymap, [msg1, "to be airlifted.", " ", "Click on the city to which", msg2]);
+            useSpecWindow.special_message(info, citymap,
+                        [msg1, "to be airlifted.", " ",
+                         "Click on the city to which", msg2]);
             handleInput.update_page(info);
             return;
         }
@@ -42,7 +45,8 @@ var clickPlayer = function() {
                 toguy.cards.push(info.misc.card_played);
                 info.misc.card_played = -1;
                 info.display.too_many_in_hand = toguy.cards.slice();
-                if (info.display.too_many_in_hand.length > useSpecWindow.HAND_LIMIT) {
+                if (info.display.too_many_in_hand.length >
+                                useSpecWindow.HAND_LIMIT) {
                     info.misc.card_pass_in_progress = true;
                     useSpecWindow.tooManyCards(info, citymap);
                     return;

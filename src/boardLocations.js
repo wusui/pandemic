@@ -36,7 +36,10 @@ var boardLocations = function() {
     var TEXT_WINDOW_WIDTH = WIDTH_RIGHT_PART - 2 * MINIMUM_GAP;
     var TEXT_WINDOW_TOP = 420;
     var TEXT_WINDOW_HEIGHT = 270;
-    var BUTTONS = {'Reset': [1052, 43, 1058], 'Help': [1122, 43, 1133], 'Quit': [1192, 43, 1203], 'Build': [1016, 78, 1024], 'Heal': [1083, 78, 1094], 'Cure': [1152, 78, 1162], 'Skip': [1223, 78, 1234]};
+    var BUTTONS = {'Reset': [1052, 43, 1058], 'Help': [1122, 43, 1133],
+                   'Quit': [1192, 43, 1203], 'Build': [1016, 78, 1024],
+                   'Heal': [1083, 78, 1094], 'Cure': [1152, 78, 1162],
+                   'Skip': [1223, 78, 1234]};
 
     function conv_to_map(loc) {
         return loc * SQ_SIZE + OFFSET_TO_CENTER;

@@ -56,7 +56,9 @@ var setupBoard = function() {
         plyr_d.moves_left = moves_left;
 
         for (i=0; i<utilities.NO_OF_GERM_TYPES; i++) {
-            dis_data[utilities.get_color_name(i)] = {'count': utilities.MAX_GERMS_TOTAL, 'infections': {}, 'inf_type': i, 'cured': 0, 'eradicated': 0};
+            dis_data[utilities.get_color_name(i)] = 
+                    {'count': utilities.MAX_GERMS_TOTAL, 'infections': {},
+                     'inf_type': i, 'cured': 0, 'eradicated': 0};
         }
 
         var pcards = [];
@@ -66,7 +68,8 @@ var setupBoard = function() {
             pcards.push(i);
         }
         utilities.shuffle(infections);
-        for (i=utilities.FIRST_SPECIAL_CARD; i < utilities.BEYOND_LAST_SPECIAL_CARD; i++) {
+        for (i=utilities.FIRST_SPECIAL_CARD;
+             i < utilities.BEYOND_LAST_SPECIAL_CARD; i++) {
             pcards.push(i);
         }
         utilities.shuffle(pcards);
@@ -91,7 +94,8 @@ var setupBoard = function() {
         for (i=0; i < epid_count; i++) {
             ndeck = ndeck.concat(pdecks[i]);
         }
-        var card_data = {"infections": infections, "inf_disc": [], "player_cards": ndeck, "player_disc": []};
+        var card_data = {"infections": infections, "inf_disc": [],
+                         "player_cards": ndeck, "player_disc": []};
 
         var l_display = {};
         l_display.card_start = 0;
@@ -103,7 +107,9 @@ var setupBoard = function() {
         l_display.cure_c_needed = -1;
         l_display.too_many_in_hand = [];
 
-        var retv = {"misc": misc_data, "players": plyr_d, "diseases": dis_data, "card_decks": card_data, "display": l_display};
+        var retv = {"misc": misc_data, "players": plyr_d,
+                    "diseases": dis_data, "card_decks": card_data,
+                    "display": l_display};
         var results = JSON.stringify(retv);
         sessionStorage.setItem('game_data', results);
         return results;

@@ -18,7 +18,8 @@ var setupCities = function() {
             cdata.ycoord = parseInt(coords[1]);
             city_by_name[iname] = cdata;
             city_by_numb[city] = iname;
-            city_by_coord[cdata.ycoord*utilities.BOARD_WIDTH + cdata.xcoord] = iname;
+            city_by_coord[cdata.ycoord*utilities.BOARD_WIDTH + cdata.xcoord] =
+                          iname;
         }
         cont_function(params);
     }
@@ -32,7 +33,8 @@ var setupCities = function() {
             if (query[i] === "")
                 continue;
             var param = query[i].split("=");
-            htmlparm[decodeURIComponent(param[0])] = decodeURIComponent(param[1] || "");
+            htmlparm[decodeURIComponent(param[0])] =
+                     decodeURIComponent(param[1] || "");
         }
         cont_function = in_function;
         params = [];
@@ -51,7 +53,8 @@ var setupCities = function() {
     }
 
     function save_me() {
-        var mapped_data = {"byname": city_by_name, "bynumb": city_by_numb, "bycoord": city_by_coord};
+        var mapped_data = {"byname": city_by_name, "bynumb": city_by_numb,
+                           "bycoord": city_by_coord};
         var rval = JSON.stringify(mapped_data);
         sessionStorage.setItem("citymap", rval);
         return rval;

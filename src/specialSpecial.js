@@ -1,4 +1,5 @@
-/* globals useSpecWindow, boardLocations, utilities, drawBoard, handleInput, germHandler */
+/* globals useSpecWindow, boardLocations, utilities, drawBoard, handleInput,
+   germHandler */
 /* exported specialSpecial */
 var specialSpecial = function() {
 
@@ -19,16 +20,23 @@ var specialSpecial = function() {
     var saved_info;
     var line_filler;
 
-    var dbutton_y = boardLocations.TEXT_WINDOW_TOP + boardLocations.TEXT_WINDOW_HEIGHT - BUT_LOC_FROM_BOT;
-    var dbutton_x = boardLocations.TEXT_WINDOW_LEFT + boardLocations.TEXT_WINDOW_WIDTH - BUT_TXT_LOC;
+    var dbutton_y = boardLocations.TEXT_WINDOW_TOP +
+                    boardLocations.TEXT_WINDOW_HEIGHT - BUT_LOC_FROM_BOT;
+    var dbutton_x = boardLocations.TEXT_WINDOW_LEFT +
+                    boardLocations.TEXT_WINDOW_WIDTH - BUT_TXT_LOC;
     var lbutton_x = dbutton_x - 110;
     var rbutton_x = dbutton_x + 100;
     var tloc = dbutton_x + BUT_TXT_OFF;
-    var done_button = {"text": "DONE", "locations": [dbutton_x, dbutton_y, tloc]};
-    var prev_button = {"text": "PREV", "locations": [lbutton_x, dbutton_y, tloc-110]};
-    var next_button = {"text": "NEXT", "locations": [rbutton_x, dbutton_y, tloc+100]};
-    var OKAY_BUTTON = {"text": "OKAY", "locations": [dbutton_x, dbutton_y, tloc]};
-    var SKIP_BUTTON = {"text": "SKIP", "locations": [dbutton_x, dbutton_y, tloc]};
+    var done_button = {"text": "DONE", "locations":
+                       [dbutton_x, dbutton_y, tloc]};
+    var prev_button = {"text": "PREV", "locations":
+                       [lbutton_x, dbutton_y, tloc-110]};
+    var next_button = {"text": "NEXT", "locations":
+                       [rbutton_x, dbutton_y, tloc+100]};
+    var OKAY_BUTTON = {"text": "OKAY", "locations":
+                       [dbutton_x, dbutton_y, tloc]};
+    var SKIP_BUTTON = {"text": "SKIP", "locations":
+                       [dbutton_x, dbutton_y, tloc]};
     var frontcards = [];
     var inf_cards = [];
     var page_no = 0;
@@ -36,8 +44,10 @@ var specialSpecial = function() {
     function hit_button(x, y, info) {
         for (var ib=0; ib<info.display.special_text_buttons.length; ib++) {
             var bloc = info.display.special_text_buttons[ib];
-            if (x > bloc.locations[0] && x < bloc.locations[0] + boardLocations.BUTTON_X_LEN) {
-                if (y > bloc.locations[1] && y < bloc.locations[1] + boardLocations.BUTTON_Y_HGT) {
+            if (x > bloc.locations[0] && x < bloc.locations[0] +
+                     boardLocations.BUTTON_X_LEN) {
+                if (y > bloc.locations[1] && y < bloc.locations[1] +
+                         boardLocations.BUTTON_Y_HGT) {
                     return ib;
                 }
             }
@@ -57,7 +67,8 @@ var specialSpecial = function() {
 
     function clickedOnForecast(info, citymap) {
         info.misc.special_action = utilities.SA_FORECAST;
-        top_offset = boardLocations.TEXT_WINDOW_TOP + HEADER_LINES * boardLocations.CARD_SPACING;
+        top_offset = boardLocations.TEXT_WINDOW_TOP +
+                     HEADER_LINES * boardLocations.CARD_SPACING;
         useSpecWindow.common_stuff(info, citymap);
         var inp_lines = [];
         inp_lines.push('Forecast Card played.');
@@ -72,12 +83,19 @@ var specialSpecial = function() {
         }
         var vloc = top_offset + boardLocations.CARD_SPACING;
         for (i=0; i<FORECAST_SIZE-1; i++) {
-            line_filler.push({"font": drawBoard.MEDIUM_FONT, "text": "+", "color": 'black', "highlight": false, "left": info.display.card_start-PLUS_OFFSET, "top": vloc});
+            line_filler.push({"font": drawBoard.MEDIUM_FONT, "text": "+",
+                              "color": 'black', "highlight": false,
+                              "left": info.display.card_start - PLUS_OFFSET,
+                              "top": vloc});
             vloc += boardLocations.CARD_SPACING;
         }
         vloc = top_offset;
         for (i=0; i<FORECAST_SIZE-1; i++) {
-            line_filler.push({"font": drawBoard.MEDIUM_FONT, "text": "-", "color": 'black', "highlight": false, "left": info.display.card_start+boardLocations.CARD_WIDTH+MINUS_OFFSET, "top": vloc});
+            line_filler.push({"font": drawBoard.MEDIUM_FONT, "text": "-",
+                              "color": 'black', "highlight": false,
+                              "left": info.display.card_start +
+                              boardLocations.CARD_WIDTH+MINUS_OFFSET,
+                              "top": vloc});
             vloc += boardLocations.CARD_SPACING;
         }
         setCards(HEADER_LINES, frontcards);
@@ -88,8 +106,10 @@ var specialSpecial = function() {
 
     function forecast_callback(x, y, info) {
         plus_x_loc = info.display.card_start-PLUS_OFFSET;
-        minus_x_loc = info.display.card_start+boardLocations.CARD_WIDTH+MINUS_OFFSET;
-        top_offset = boardLocations.TEXT_WINDOW_TOP + HEADER_LINES * boardLocations.CARD_SPACING;
+        minus_x_loc = info.display.card_start + boardLocations.CARD_WIDTH +
+                      MINUS_OFFSET;
+        top_offset = boardLocations.TEXT_WINDOW_TOP +
+                     HEADER_LINES * boardLocations.CARD_SPACING;
         var on_sorter = 0;
         var tst_x = x - plus_x_loc;
         if (tst_x>=0  && tst_x<PLUSMINUS_LEN) {
@@ -205,7 +225,8 @@ var specialSpecial = function() {
     function clickedOnResPop(info, citymap) {
         if (info.card_decks.inf_disc.length === 0) {
             info.display.special_text_buttons = [];
-            useSpecWindow.print_message(info, citymap, ["There are no cards in the discard pile."]);
+            useSpecWindow.print_message(info, citymap,
+                    ["There are no cards in the discard pile."]);
             special_setup_page(info);
             return;
         }
@@ -262,7 +283,9 @@ var specialSpecial = function() {
     }
 
     function set_up_between_move_specials(info, sp_cards) {
-        var inp_lines = ['Select any special card', 'that you want to play before', 'infection cards are drawn'];
+        var inp_lines = ['Select any special card',
+                         'that you want to play before',
+                         'infection cards are drawn'];
         var citymap = JSON.parse(sessionStorage.getItem('citymap'));
         useSpecWindow.common_stuff(info, citymap);
         line_filler = useSpecWindow.print_head(inp_lines);

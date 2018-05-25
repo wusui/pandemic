@@ -1,4 +1,5 @@
-/* globals drawBoard, clickPlayer, clickCard, utilities, boardLocations, clickCity, useSpecWindow, moveOps, clickButton, germHandler */
+/* globals drawBoard, clickPlayer, clickCard, utilities, boardLocations,
+   clickCity, useSpecWindow, moveOps, clickButton, germHandler */
 /* exported handleInput */
 var handleInput = function() {
 
@@ -47,7 +48,8 @@ var handleInput = function() {
             return;
         }
         sessionStorage.setItem(TIMELOCK, 'on');
-        setTimeout(function(){ sessionStorage.setItem(TIMELOCK, 'off'); }, TIMEOUT);
+        setTimeout(function(){ sessionStorage.setItem(TIMELOCK, 'off'); },
+                               TIMEOUT);
         mEventSw(evt, info, citymap);
         if (info.misc.we_won) {
             useSpecWindow.exit_message(info, citymap, ["WE WON"]);
@@ -64,7 +66,8 @@ var handleInput = function() {
                 return;
             }
             if (info.card_decks.player_cards.length < 2) {
-                useSpecWindow.exit_message(info, citymap, ["YOU LOSE", "Not enough cards left", "in the player deck"]);
+                useSpecWindow.exit_message(info, citymap, ["YOU LOSE",
+                        "Not enough cards left", "in the player deck"]);
                 update_page(info);
                 return;
             }
@@ -87,7 +90,8 @@ var handleInput = function() {
             var toguy = info.players.plist[iam];
             info.display.too_many_in_hand = toguy.cards.slice();
             info.misc.epid_cnt_for_callback = epids;
-            if (info.display.too_many_in_hand.length > useSpecWindow.HAND_LIMIT) {
+            if (info.display.too_many_in_hand.length >
+                                 useSpecWindow.HAND_LIMIT) {
                 if (info.misc.use_special_window == 1) {
                     return;
                 }
@@ -118,7 +122,8 @@ var handleInput = function() {
                 info.card_decks.inf_disc.push(ncard);
                 var dindx = utilities.card_to_color(ncard);
                 var dizloc = ncard.toString();
-                if (Object.keys(info.diseases[dindx].infections).includes(dizloc)) {
+                if (Object.keys(
+                        info.diseases[dindx].infections).includes(dizloc)) {
                     if (info.diseases[dindx].infections[dizloc] == 3) {
                         info.misc.nxt_out.push([dindx, dizloc]);
                         continue;
@@ -132,7 +137,8 @@ var handleInput = function() {
 
     function continue_after_outbreaks(info, citymap) {
         if (info.misc.nxt_out.length > 0) {
-            germHandler.infect(info, info.misc.nxt_out[0][0], info.misc.nxt_out[0][1], 1);
+            germHandler.infect(info, info.misc.nxt_out[0][0],
+                               info.misc.nxt_out[0][1], 1);
         }
         info.misc.op_exp_used_power = 0;
         if (info.misc.no_skip_done_yet) {
@@ -147,10 +153,13 @@ var handleInput = function() {
         info.players.moves_left = utilities.PLAYER_TURNS;
         if (info.misc.loseInfo.length > 0) {
             if (info.misc.loseInfo === OUTBREAK_IND) {
-                useSpecWindow.exit_message(info, citymap, ["YOU LOSE", "Too many outbreaks."]);
+                useSpecWindow.exit_message(info, citymap,
+                             ["YOU LOSE", "Too many outbreaks."]);
             }
             else {
-                useSpecWindow.exit_message(info, citymap, ["YOU LOSE", "Too many " + info.misc.loseInfo +" infections."]);
+                useSpecWindow.exit_message(info, citymap,
+                              ["YOU LOSE", "Too many " + info.misc.loseInfo +
+                               " infections."]);
             }
         }
         update_page(info);
@@ -178,19 +187,22 @@ var handleInput = function() {
                 }
                 var sqind = yoff * utilities.BOARD_WIDTH + xoff;
                 if (Object.keys(citymap.bycoord).includes(sqind.toString())) {
-                    clickCity.clickCity(citymap.bycoord[sqind.toString()], info, citymap);
+                    clickCity.clickCity(citymap.bycoord[sqind.toString()],
+                                        info, citymap);
                 }
             }
             else {
                 var lxcoord = -1;
-                var spacing = boardLocations.PLAYER_AREA_XSIZE / info.players.plist.length;
+                var spacing = boardLocations.PLAYER_AREA_XSIZE /
+                              info.players.plist.length;
                 var txtsize = boardLocations.CARD_WIDTH;
                 if (y < boardLocations.EDGE_OF_NAMES) {
                     txtsize = boardLocations.PNAME_WIDTH;
                 }
                 var indent = Math.floor((spacing - txtsize) / 2);
                 for (var ncount=0; ncount<info.players.plist.length; ncount++) {
-                    var xover = ncount * spacing + indent + boardLocations.CITY_SIZE;
+                    var xover = ncount * spacing + indent +
+                                boardLocations.CITY_SIZE;
                     if (x > xover && x < xover+txtsize) {
                         lxcoord = ncount;
                         break;
@@ -207,14 +219,16 @@ var handleInput = function() {
                     return;
                 }
                 var yindx = y - boardLocations.PLAYER_Y_COORD;
-                if ((yindx % boardLocations.CARD_SPACING) > boardLocations.CARD_OFFSET) {
+                if ((yindx % boardLocations.CARD_SPACING) >
+                            boardLocations.CARD_OFFSET) {
                     return;
                 }
                 var cindx = Math.floor(yindx / boardLocations.CARD_SPACING);
                 if (cindx >= info.players.plist[lxcoord].cards.length) {
                     return;
                 }
-                var deck = info.players.plist[lxcoord].cards.sort(function(a,b){return a-b;});
+                var deck = info.players.plist[lxcoord].cards.sort(
+                           function(a,b){return a-b;});
                 clickCard.clickCard(deck[cindx], info, citymap);
             }
         }
@@ -227,8 +241,10 @@ var handleInput = function() {
                         continue;
                     }
                 }
-                var tx = boardLocations.BUTTONS[butn][0] - boardLocations.MARGIN;
-                var ty = boardLocations.BUTTONS[butn][1] - boardLocations.MARGIN;
+                var tx = boardLocations.BUTTONS[butn][0] -
+                         boardLocations.MARGIN;
+                var ty = boardLocations.BUTTONS[butn][1] -
+                         boardLocations.MARGIN;
                 var txl = tx + boardLocations.BUTTON_X_LEN;
                 var tyl = ty + boardLocations.BUTTON_Y_HGT;
                 if (x >= tx && x <= txl && y >= ty && y <=tyl) {

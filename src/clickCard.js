@@ -5,7 +5,8 @@ var clickCard = function() {
     function discard(info) {
         info.card_decks.player_disc.push(info.misc.card_played);
         for (var indx=0; indx<info.players.plist.length; indx++) {
-            var rindx = info.players.plist[indx].cards.indexOf(info.misc.card_played);
+            var rindx = info.players.plist[indx].cards.indexOf(
+                        info.misc.card_played);
             if (rindx >= 0) {
                 info.players.plist[indx].cards.splice(rindx, 1);
                 info.misc.card_played = -1;
@@ -18,15 +19,22 @@ var clickCard = function() {
         var cval = action - utilities.FIRST_SPECIAL_CARD;
         if (cval === 0) {
             info.misc.quiet_night = true;
-            useSpecWindow.print_message(info, citymap, ["Quiet Night Card Played"]);
+            useSpecWindow.print_message(info, citymap,
+                                        ["Quiet Night Card Played"]);
         }
         if (cval === 1) {
             info.misc.special_action = utilities.SA_AIRLIFT_PLAYER;
-            useSpecWindow.special_message(info, citymap, ["Airlift Card Played", "Click on the player that you", "want to airlift"]);
+            useSpecWindow.special_message(info, citymap,
+                                          ["Airlift Card Played",
+                                           "Click on the player that you", 
+                                           "want to airlift"]);
         }
         if (cval === 2) {
             info.misc.special_action = utilities.SA_GOV_GRANT;
-            useSpecWindow.special_message(info, citymap, ["Government Grant Card Played", "Click on the new research", "station location"]);
+            useSpecWindow.special_message(info, citymap,
+                                          ["Government Grant Card Played",
+                                           "Click on the new research",
+                                           "station location"]);
         }
         if (cval === 3) {
             specialSpecial.clickedOnForecast(info, citymap);
@@ -84,7 +92,8 @@ var clickCard = function() {
             var toguy = info.players.plist[iam];
             toguy.cards.push(action);
             info.display.too_many_in_hand = toguy.cards.slice();
-            if (info.display.too_many_in_hand.length > useSpecWindow.HAND_LIMIT) {
+            if (info.display.too_many_in_hand.length >
+                        useSpecWindow.HAND_LIMIT) {
                 info.misc.card_pass_in_progress = true;
                 useSpecWindow.tooManyCards(info, citymap);
                 return;

@@ -35,7 +35,8 @@ var moveOps = function() {
         var cmax = 0;
         var snumb = 0;
         for (var indx=0; indx < weare.cards.length; indx++) {
-            var dindx = Math.floor(weare.cards[indx] / utilities.CITIES_PER_DISEASE);
+            var dindx = Math.floor(weare.cards[indx] /
+                        utilities.CITIES_PER_DISEASE);
             if (dindx < utilities.NO_OF_GERM_TYPES) {
                 hist[dindx]++;
                 if (hist[dindx] > cmax) {
@@ -82,7 +83,9 @@ var moveOps = function() {
         return true;
     }
 
-    var button_table = {'Heal': canHeal, 'Build': canBuild, 'Cure': canCure, 'Reset': canReset};
+    var button_table = {'Heal': canHeal, 'Build': canBuild, 'Cure': canCure,
+                        'Reset': canReset};
+
     function is_button_useable(keyname) {
         if (!(Object.keys(button_table).includes(keyname))) {
             return true;

@@ -6,7 +6,8 @@ var clickButton = function() {
         var iam = info.players.plyr_move;
         var iamat = info.players.plist[iam].xlocation;
         var dcured = 1;
-        if (info.players.plist[iam].name == 'M' || info.diseases[cval].cured > 0) {
+        if (info.players.plist[iam].name == 'M' ||
+                    info.diseases[cval].cured > 0) {
             dcured = info.diseases[cval].infections[iamat];
         }
         info.diseases[cval].infections[iamat] -= dcured;
@@ -122,7 +123,10 @@ var clickButton = function() {
         info.misc.we_won = true;
     }
 
-    var button_tbl = {'Heal': buttonHeal, 'Build': buttonBuild, 'Cure': buttonCure, 'Reset': buttonReset, 'Skip': buttonSkip, 'Help': buttonHelp, 'Quit': buttonQuit};
+    var button_tbl = {'Heal': buttonHeal, 'Build': buttonBuild,
+                      'Cure': buttonCure, 'Reset': buttonReset,
+                      'Skip': buttonSkip, 'Help': buttonHelp,
+                      'Quit': buttonQuit};
 
     function clickButton(button, info, citymap) {
         if (button != 'Help') {
