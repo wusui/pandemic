@@ -1,5 +1,6 @@
 /* globals drawBoard, clickPlayer, clickCard, utilities, boardLocations,
-   clickCity, useSpecWindow, moveOps, clickButton, germHandler */
+   clickCity, useSpecWindow, moveOps, clickButton, germHandler,
+   specialSpecial */
 /* exported handleInput */
 var handleInput = function() {
 
@@ -58,10 +59,14 @@ var handleInput = function() {
         }
         if (info.players.moves_left > 0) {
             info.misc.no_skip_done_yet = true;
+            info.misc.draw_lock = false;
             update_page(info);
         }
         else {
             update_page(info);
+            if (info.misc.new_epids >= 0) {
+                return;
+            }
             if (info.misc.special_action > 0) {
                 return;
             }
@@ -71,6 +76,11 @@ var handleInput = function() {
                 update_page(info);
                 return;
             }
+            if (info.misc.draw_lock) {
+                continue_after_draw(info);
+                return;
+            }
+            info.misc.draw_lock = true;
             var newcards = [];
             var epids = 0;
             for (var i=0; i<2; i++) {
@@ -82,25 +92,35 @@ var handleInput = function() {
                     newcards.push(card);
                 }
             }
-            var iam = info.players.plyr_move;
-            for (i=0; i<newcards.length; i++) {
-                var ncard = newcards[i];
-                info.players.plist[iam].cards.push(ncard);
+            info.misc.new_epids = epids;
+            info.misc.new_cards = newcards;
+            specialSpecial.show_new_draw(info, newcards);
+        }
+    }
+
+    function continue_after_card_draw(info) {
+        var citymap = JSON.parse(sessionStorage.getItem('citymap'));
+        var epids = info.misc.new_epids;
+        info.misc.new_epids = -1;
+        var newcards = info.misc.new_cards;
+        var iam = info.players.plyr_move;
+        for (var i=0; i<newcards.length; i++) {
+            var ncard = newcards[i];
+            info.players.plist[iam].cards.push(ncard);
+        }
+        var toguy = info.players.plist[iam];
+        info.display.too_many_in_hand = toguy.cards.slice();
+        info.misc.epid_cnt_for_callback = epids;
+        if (info.display.too_many_in_hand.length >
+                             useSpecWindow.HAND_LIMIT) {
+            if (info.misc.use_special_window == 1) {
+                return;
             }
-            var toguy = info.players.plist[iam];
-            info.display.too_many_in_hand = toguy.cards.slice();
-            info.misc.epid_cnt_for_callback = epids;
-            if (info.display.too_many_in_hand.length >
-                                 useSpecWindow.HAND_LIMIT) {
-                if (info.misc.use_special_window == 1) {
-                    return;
-                }
-                info.misc.use_special_window = 1;
-                useSpecWindow.tooManyCards(info, citymap);
-            }
-            else {
-                continue_after_cardcheck(info);
-            }
+            info.misc.use_special_window = 1;
+            useSpecWindow.tooManyCards(info, citymap);
+        }
+        else {
+            continue_after_cardcheck(info);
         }
     }
 
@@ -272,6 +292,7 @@ var handleInput = function() {
         mouseSwitch:mouseSwitch,
         update_page:update_page,
         continue_after_cardcheck:continue_after_cardcheck,
-        continue_after_outbreaks:continue_after_outbreaks
+        continue_after_outbreaks:continue_after_outbreaks,
+        continue_after_card_draw:continue_after_card_draw
     };
 }();

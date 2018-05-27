@@ -35,7 +35,7 @@ var specialSpecial = function() {
                        [rbutton_x, dbutton_y, tloc+100]};
     var OKAY_BUTTON = {"text": "OKAY", "locations":
                        [dbutton_x, dbutton_y, tloc]};
-    var SKIP_BUTTON = {"text": "SKIP", "locations":
+    var SKIP_BUTTON = {"text": " SKIP", "locations":
                        [dbutton_x, dbutton_y, tloc]};
     var frontcards = [];
     var inf_cards = [];
@@ -297,6 +297,26 @@ var specialSpecial = function() {
         handleInput.update_page(info);
     }
 
+    function show_new_draw(info, new_cards) {
+        var iam = info.players.plyr_move;
+        var myname =  info.players.plist[iam].name;
+        var showname = utilities.occupation_name(myname);
+        var citymap = JSON.parse(sessionStorage.getItem('citymap'));
+        useSpecWindow.common_stuff(info, citymap);
+        line_filler = useSpecWindow.print_head([showname + " draws:"]);
+        setCards(useSpecWindow.STD_SPACING+1, new_cards);
+        var lineno = useSpecWindow.STD_SPACING + new_cards.length + 1;
+        for (var i=0; i<info.misc.new_epids; i++) {
+            var txt_line = useSpecWindow.write_a_line("EPIDEMIC", lineno);
+            line_filler.push(txt_line);
+            lineno++;
+        }
+        info.display.special_text_fields = line_filler;
+        info.display.special_text_buttons = [OKAY_BUTTON];
+        info.display.special_callback = useSpecWindow.MESSAGE_CALLBACK;
+        handleInput.update_page(info);
+    }
+
     return {
         OKAY_BUTTON:OKAY_BUTTON,
         hit_button:hit_button,
@@ -304,6 +324,7 @@ var specialSpecial = function() {
         clickedOnForecast:clickedOnForecast,
         forecast_callback:forecast_callback,
         clickedOnResPop:clickedOnResPop,
-        res_pop_callback:res_pop_callback
+        res_pop_callback:res_pop_callback,
+        show_new_draw:show_new_draw
     };
 }();

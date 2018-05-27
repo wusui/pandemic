@@ -384,9 +384,13 @@ var useSpecWindow = function() {
         if (info.misc.special_between_turns) {
             germHandler.epid_continue(info);
         }
+        if (info.misc.new_epids >= 0) {
+            handleInput.continue_after_card_draw(info);
+        }
     }
 
     return {
+        MESSAGE_CALLBACK:MESSAGE_CALLBACK,
         FORECAST_CALLBACK:FORECAST_CALLBACK,
         RES_POP_CALLBACK:RES_POP_CALLBACK,
         BETWEEN_MOVE_CALLBACK:BETWEEN_MOVE_CALLBACK,
@@ -408,6 +412,7 @@ var useSpecWindow = function() {
         write_card:write_card,
         discard_continue:discard_continue,
         clean_up:clean_up,
+        write_a_line:write_a_line,
         special_return:special_return
     };
 }();
