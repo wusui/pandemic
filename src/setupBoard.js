@@ -44,6 +44,7 @@ var setupBoard = function() {
         misc_data.new_cards = [];
         misc_data.new_epids = -1;
         misc_data.draw_lock = false;
+        misc_data.inf_disp_lock = false;
         plyr_move = 0;
         moves_left = utilities.PLAYER_TURNS;
         plyr_list = params[1].split('');

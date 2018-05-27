@@ -378,6 +378,10 @@ var useSpecWindow = function() {
     }
 
     function special_return(info) {
+        if (info.misc.inf_disp_lock) {
+            var citymap = JSON.parse(sessionStorage.getItem('citymap'));
+            handleInput.continue_after_inf_disp(info, citymap);
+        }
         if (info.misc.discarding_special) {
             discard_continue(info, info.misc.card_stash);
         }

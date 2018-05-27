@@ -317,6 +317,22 @@ var specialSpecial = function() {
         handleInput.update_page(info);
     }
 
+    function show_new_inf(info, citymap) {
+        useSpecWindow.common_stuff(info, citymap);
+        line_filler = useSpecWindow.print_head(["Infection cards drawn are:"]);
+        var epidindx = info.misc.epid_counter;
+        var epidrate = info.misc.epid_values[epidindx];
+        var new_cards = [];
+        for (var i=0; i<epidrate; i++) {
+            new_cards.push(info.card_decks.infections[i]);
+        }
+        setCards(useSpecWindow.STD_SPACING+1, new_cards);
+        info.display.special_text_fields = line_filler;
+        info.display.special_text_buttons = [OKAY_BUTTON];
+        info.display.special_callback = useSpecWindow.MESSAGE_CALLBACK;
+        handleInput.update_page(info);
+    }
+
     return {
         OKAY_BUTTON:OKAY_BUTTON,
         hit_button:hit_button,
@@ -325,6 +341,7 @@ var specialSpecial = function() {
         forecast_callback:forecast_callback,
         clickedOnResPop:clickedOnResPop,
         res_pop_callback:res_pop_callback,
-        show_new_draw:show_new_draw
+        show_new_draw:show_new_draw,
+        show_new_inf:show_new_inf
     };
 }();
