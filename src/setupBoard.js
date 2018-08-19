@@ -6,7 +6,6 @@ var setupBoard = function() {
     var misc_data = {};
 
     var plyr_list;
-    var plyr_move;
     var moves_left;
     var plyr_d = {};
 
@@ -45,7 +44,6 @@ var setupBoard = function() {
         misc_data.new_epids = -1;
         misc_data.draw_lock = false;
         misc_data.inf_disp_lock = false;
-        plyr_move = 0;
         moves_left = utilities.PLAYER_TURNS;
         plyr_list = params[1].split('');
         utilities.shuffle(plyr_list);
@@ -56,7 +54,7 @@ var setupBoard = function() {
         }
 
         plyr_d.plist = plist;
-        plyr_d.plyr_move = plyr_move;
+        plyr_d.plyr_move = 0;
         plyr_d.moves_left = moves_left;
 
         for (i=0; i<utilities.NO_OF_GERM_TYPES; i++) {
@@ -106,6 +104,7 @@ var setupBoard = function() {
         l_display.special_callback = "";
         l_display.special_text_fields = [];
         l_display.special_text_buttons = [];
+        l_display.display_stack = [];
         l_display.special_germs = [];
         l_display.cure_cards = [];
         l_display.cure_c_needed = -1;

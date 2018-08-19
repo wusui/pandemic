@@ -55,7 +55,9 @@ var germHandler = function() {
                         continue;
                     }
                 }
-                infect(info, dcolor, i2, 1);
+                if (outb_stk.indexOf(i2) < 0) {
+                    infect(info, dcolor, i2, 1);
+                }
             }
             indx++;
         }

@@ -64,6 +64,7 @@ var clickCard = function() {
         }
         if (action >= utilities.MAX_INF_CITIES) {
             specialCard(action, info, citymap);
+            return;
         }
         for (var ii=0; ii<info.players.plist.length; ii++) {
             var nmhnd = info.players.plist[ii].cards;

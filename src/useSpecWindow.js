@@ -36,6 +36,11 @@ var useSpecWindow = function() {
     };
 
     function do_callback(x, y, info) {
+        var prev_stuff = info.display.display_stack.pop();
+        info.display.special_callback = prev_stuff[0];
+        info.display.special_text_buttons = prev_stuff[1];
+        info.display.special_text_fields = prev_stuff[2];
+        handleInput.update_page(info);
         branch_table[info.display.special_callback](x,y,info);
     }
 
@@ -62,9 +67,18 @@ var useSpecWindow = function() {
 
     function clean_up(info) {
         info.misc.use_special_window = 0;
-        info.display.special_callback = "";
-        info.display.special_text_fields = [];
-        info.display.special_text_buttons = [];
+        if (info.display.display_stack.length == 0) {
+            info.display.special_callback = "";
+            info.display.special_text_fields = [];
+            info.display.special_text_buttons = [];
+        }
+        else {
+            var stkend = info.display.display_stack.length - 1;
+            var lstk = info.display.display_stack[stkend];
+            info.display.special_callback = lstk[0]
+            info.display.special_text_buttons = lstk[1];
+            info.display.special_text_fields = lstk[2];
+        }
         handleInput.update_page(info);
     }
 
@@ -124,6 +138,7 @@ var useSpecWindow = function() {
         info.display.special_text_buttons = [specialSpecial.OKAY_BUTTON];
         info.display.special_text_fields = line_filler;
         info.display.special_callback = callback;
+        disp_stack(info);
     }
 
     function print_head(inp_lines) {
@@ -242,6 +257,8 @@ var useSpecWindow = function() {
         if (indx < 0) {
             return;
         }
+        alert('in eot_outbrk_callback');
+        alert(JSON.stringify(info.misc.nxt_out));
         info.misc.nxt_out.shift();
         clean_up(info);
         handleInput.continue_after_outbreaks(info);
@@ -321,7 +338,9 @@ var useSpecWindow = function() {
             }
         }
         info.display.special_text_fields = line_filler;
+        info.display.special_text_buttons = [];
         info.display.special_callback = HEAL_CALLBACK;
+        disp_stack(info);
     }
 
     function tooManyStations(info, citymap) {
@@ -336,7 +355,9 @@ var useSpecWindow = function() {
             nline_no++;
         }
         info.display.special_text_fields = line_filler;
+        info.display.special_text_buttons = [];
         info.display.special_callback = RES_STA_CALLBACK;
+        disp_stack(info);
     }
 
     function tooManyCureCards(info, citymap) {
@@ -358,7 +379,9 @@ var useSpecWindow = function() {
             nline_no++;
         }
         info.display.special_text_fields = line_filler;
+        info.display.special_text_buttons = [];
         info.display.special_callback = EXTRA_CURE_CALLBACK;
+        disp_stack(info);
     }
 
     function tooManyCards(info, citymap) {
@@ -373,22 +396,33 @@ var useSpecWindow = function() {
             nline_no++;
         }
         info.display.special_text_fields = line_filler;
+        info.display.special_text_buttons = [];
         info.display.special_callback = DISCARD_CALLBACK;
+        disp_stack(info);
         handleInput.update_page(info);
     }
 
+    function disp_stack(info) {
+        var p1 = info.display.special_callback;
+        var p2 = info.display.special_text_buttons.slice();
+        var p3 = info.display.special_text_fields.slice();
+        var prev_call = [p1, p2, p3];
+        info.display.display_stack.push(prev_call);
+    }
+
     function special_return(info) {
+        alert('in special_return');
         if (info.misc.inf_disp_lock) {
             var citymap = JSON.parse(sessionStorage.getItem('citymap'));
             handleInput.continue_after_inf_disp(info, citymap);
         }
-        if (info.misc.discarding_special) {
-            discard_continue(info, info.misc.card_stash);
-        }
         if (info.misc.special_between_turns) {
             germHandler.epid_continue(info);
         }
-        if (info.misc.new_epids >= 0) {
+        if (info.misc.discarding_special) {
+            discard_continue(info, info.misc.card_stash);
+        }
+        if (info.misc.draw_lock) {
             handleInput.continue_after_card_draw(info);
         }
     }
@@ -417,6 +451,7 @@ var useSpecWindow = function() {
         discard_continue:discard_continue,
         clean_up:clean_up,
         write_a_line:write_a_line,
+        disp_stack:disp_stack,
         special_return:special_return
     };
 }();

@@ -1,5 +1,4 @@
-/* globals useSpecWindow, boardLocations, utilities, drawBoard, handleInput,
-   germHandler */
+/* globals useSpecWindow, boardLocations, utilities, drawBoard, handleInput  /
 /* exported specialSpecial */
 var specialSpecial = function() {
 
@@ -102,6 +101,7 @@ var specialSpecial = function() {
         info.display.special_text_fields = line_filler;
         info.display.special_text_buttons = [done_button];
         info.display.special_callback = useSpecWindow.FORECAST_CALLBACK;
+        useSpecWindow.disp_stack(info);
     }
 
     function forecast_callback(x, y, info) {
@@ -227,7 +227,6 @@ var specialSpecial = function() {
             info.display.special_text_buttons = [];
             useSpecWindow.print_message(info, citymap,
                     ["There are no cards in the discard pile."]);
-            special_setup_page(info);
             return;
         }
         saved_info = info;
@@ -241,8 +240,10 @@ var specialSpecial = function() {
         inf_cards.sort(comp_inf);
         page_no = 0;
         special_setup_page(info);
+        info.display.special_text_buttons = [];
         info.display.special_text_fields = line_filler;
         info.display.special_callback = useSpecWindow.RES_POP_CALLBACK;
+        useSpecWindow.disp_stack(info);
     }
 
     function res_pop_callback(x, y, info) {
@@ -294,6 +295,7 @@ var specialSpecial = function() {
         info.display.special_text_buttons = [SKIP_BUTTON];
         info.display.special_callback = useSpecWindow.BETWEEN_MOVE_CALLBACK;
         info.misc.avail_specials = sp_cards;
+        useSpecWindow.disp_stack(info);
         handleInput.update_page(info);
     }
 
@@ -314,6 +316,7 @@ var specialSpecial = function() {
         info.display.special_text_fields = line_filler;
         info.display.special_text_buttons = [OKAY_BUTTON];
         info.display.special_callback = useSpecWindow.MESSAGE_CALLBACK;
+        useSpecWindow.disp_stack(info);
         handleInput.update_page(info);
     }
 
@@ -330,7 +333,9 @@ var specialSpecial = function() {
         info.display.special_text_fields = line_filler;
         info.display.special_text_buttons = [OKAY_BUTTON];
         info.display.special_callback = useSpecWindow.MESSAGE_CALLBACK;
+        useSpecWindow.disp_stack(info);
         handleInput.update_page(info);
+        alert(JSON.stringify(info.display.display_stack));
     }
 
     return {

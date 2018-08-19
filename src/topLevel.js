@@ -57,6 +57,12 @@ var topLevel = function() {
                     info.diseases.YELLOW.cured = 1;
                     info.diseases.RED.cured = 1;
                 }
+                if (letter == "E") {
+                    info.card_decks.player_cards[0] = utilities.EPIDEMIC;
+                }
+                if (letter == "F") {
+                    info.card_decks.player_cards[1] = utilities.EPIDEMIC;
+                }
                 var sptr = "HIJKL".indexOf(letter);
                 if (sptr >= 0) {
                     info.players.plist[p].cards.push(sptr +

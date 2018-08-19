@@ -65,9 +65,11 @@ var handleInput = function() {
         }
         else {
             update_page(info);
+            /*
             if (info.misc.new_epids >= 0) {
                 return;
             }
+            */
             if (info.misc.special_action > 0) {
                 return;
             }
@@ -78,7 +80,8 @@ var handleInput = function() {
                 return;
             }
             if (info.misc.draw_lock) {
-                continue_after_cardcheck(info);
+                info.misc.new_cards = [];
+                continue_after_card_draw(info);
                 return;
             }
             info.misc.draw_lock = true;
@@ -100,13 +103,21 @@ var handleInput = function() {
     }
 
     function continue_after_card_draw(info) {
+        // alert('draw cards');
         var citymap = JSON.parse(sessionStorage.getItem('citymap'));
         var epids = info.misc.new_epids;
-        info.misc.new_epids = -1;
         var newcards = info.misc.new_cards;
         var iam = info.players.plyr_move;
+        /*
+        if (newcards.length == 0) {
+            alert('newcards is empty');
+        }
+        */
         for (var i=0; i<newcards.length; i++) {
             var ncard = newcards[i];
+            if (info.players.plist[iam].cards.includes(ncard)) {
+                continue;
+            }
             info.players.plist[iam].cards.push(ncard);
         }
         var toguy = info.players.plist[iam];
@@ -131,14 +142,14 @@ var handleInput = function() {
             germHandler.epidemic(info, citymap);
             return;
         }
+        info.misc.new_epids = -1;
         info.misc.epid_cnt_for_callback = -1;
         if (info.misc.quiet_night) {
-            info.misc.quiet_night = false;
             continue_after_outbreaks(info, citymap);
             return;
         }
         if (info.misc.inf_disp_lock) {
-            continue_after_inf_disp(info, citymap);
+            continue_after_outbreaks(info, citymap);
             return;
         }
         info.misc.inf_disp_lock = true;
@@ -166,9 +177,12 @@ var handleInput = function() {
     }
 
     function continue_after_outbreaks(info, citymap) {
+        alert('in continue_after_outbreaks');
+        alert(JSON.stringify(info.misc.nxt_out));
         if (info.misc.nxt_out.length > 0) {
             germHandler.infect(info, info.misc.nxt_out[0][0],
                                info.misc.nxt_out[0][1], 1);
+            info.misc.nxt_out.shift();
         }
         info.misc.op_exp_used_power = 0;
         if (info.misc.no_skip_done_yet) {
@@ -180,6 +194,7 @@ var handleInput = function() {
         if (info.players.plyr_move == info.players.plist.length) {
             info.players.plyr_move = 0;
         }
+        info.misc.quiet_night = false;
         info.players.moves_left = utilities.PLAYER_TURNS;
         if (info.misc.loseInfo.length > 0) {
             if (info.misc.loseInfo === OUTBREAK_IND) {
